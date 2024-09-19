@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatApp_server", "chatApp_server\chatApp_server.csproj", "{AA177B83-3D34-4716-811E-B682E6214B3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatApp.Server", "chatApp.Server\chatApp.Server.csproj", "{AA177B83-3D34-4716-811E-B682E6214B3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatApp_client", "chatApp_client\chatApp_client.csproj", "{11203789-FB92-45A6-A811-9CF99502135D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatApp.Client", "chatApp.Client\chatApp.Client.csproj", "{11203789-FB92-45A6-A811-9CF99502135D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.Shared", "ChatApp.Shared\ChatApp.Shared.csproj", "{49D99114-4275-48CA-9CBE-FEFF586FF0C9}"
 EndProject

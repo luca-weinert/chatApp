@@ -9,7 +9,7 @@ class Program
     {
         try
         {
-            var client = new TcpClient("192.168.8.61", 8080);
+            var client = new TcpClient("192.168.178.45", 8080);
             var serverConnection = new TcpConnection(client);
             var messageHandler = new MessageHandler(serverConnection); 
             
