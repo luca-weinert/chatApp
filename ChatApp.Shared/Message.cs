@@ -1,4 +1,4 @@
-﻿namespace chatApp_client;
+﻿namespace ChatApp.Shared;
 
 public class Message
 {

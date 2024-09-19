@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
+using ChatApp.Shared;
 
 namespace chatApp_client;
 

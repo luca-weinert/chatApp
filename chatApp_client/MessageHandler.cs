@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using ChatApp.Shared;
 
 namespace chatApp_client;
 

@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using ChatApp.Shared;
 
 namespace chatApp_client;
 
