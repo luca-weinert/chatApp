@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿/*
+using System.Net.Sockets;
 using ChatApp.Shared;
 
 namespace chatApp_client;
@@ -48,3 +49,6 @@ class Program
         }
     }
 }
+*/
+
+Console.WriteLine("client");

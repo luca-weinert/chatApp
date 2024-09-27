@@ -1,31 +1,48 @@
-﻿using chatApp_server;
-using ChatApp.Shared;
+﻿using chatApp_server.Connection;
+using chatApp_server.user;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-var connectionHandler = new ConnectionHandler();
-var tcpServer = new TcpServer(connectionHandler);
-var messageHandler = new MessageHandler(connectionHandler);
+namespace chatApp_server;
 
-// Start the TCP server in a background task
-var tcpServerTask = tcpServer.StartAsync();
-
-while (true)
+internal static class Program
 {
-    var connection = connectionHandler.GetConnection();
-    if (connection == null) continue;
-
-    Console.WriteLine("Send a message to the client:");
-    var messageContent = Console.ReadLine();
-
-    var message = new Message()
+    public static void Main(string[] args)
     {
-        Content = messageContent,
-        Date = DateTime.Now,
-        Sender = "Server",
-        Target = "Client"
-    };
+        using var host = CreateHostBuilder(args).Build();
+        using var scope = host.Services.CreateScope();
+        var services = scope.ServiceProvider;
 
-    // Send the message to the client
-    await messageHandler.SendAsync(message, connection);
+        try
+        {
+            services.GetRequiredService<App>().Start();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+
+    private static IHostBuilder CreateHostBuilder(string[] strings)
+    {
+        return Host.CreateDefaultBuilder()
+            .ConfigureServices((_, services) =>
+            {
+                
+                services.AddSingleton<IUserRepository, UserRepository>();
+                services.AddSingleton<UserService>();
+                services.AddSingleton<Server.Server>();
+                services.AddSingleton<IConnectionRepository, ConnectionRepository>();
+                services.AddSingleton<ConnectionService>();
+                services.AddSingleton<App>();
+            });
+    }
 }
 
-await tcpServerTask;
+public class App(Server.Server server)
+{
+    public void Start()
+    {
+        server.Start();
+    }   
+}
