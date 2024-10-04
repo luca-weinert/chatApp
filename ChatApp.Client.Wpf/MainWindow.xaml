@@ -1,0 +1,61 @@
+﻿<Window x:Class="ChatApp.Client.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Chat App" Height="600" Width="800" Background="LightGray">
+
+    <Grid>
+        <!-- Definieren von Spalten: eine für Kontakte (links), eine für den Chat (rechts) -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" /> <!-- Kontaktliste -->
+            <ColumnDefinition Width="*" /> <!-- Haupt-Chatbereich -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Kontaktliste links -->
+        <StackPanel Grid.Column="0" Background="#F0F0F0" Margin="10">
+            <TextBlock Text="Contacts" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+            <!-- Kontakt 1 -->
+            <Button Content="User1" HorizontalAlignment="Stretch" Margin="0,5,0,0" Padding="10" Background="White"/>
+            <!-- Kontakt 2 -->
+            <Button Content="User2" HorizontalAlignment="Stretch" Margin="0,5,0,0" Padding="10" Background="White"/>
+            <!-- Weitere Kontakte... -->
+        </StackPanel>
+
+        <!-- Haupt-Chatbereich rechts -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" /> <!-- Nachrichtenbereich -->
+                <RowDefinition Height="Auto" /> <!-- Eingabebereich -->
+            </Grid.RowDefinitions>
+
+            <!-- Nachrichtenanzeige -->
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Background="White" Margin="10">
+                <StackPanel Name="MessagePanel" Margin="10">
+                    <!-- Beispielnachrichten -->
+                    <TextBlock Text="User1: Hello!" Background="LightBlue" Margin="0,5,0,5" Padding="10" FontSize="14"/>
+                    <TextBlock Text="User2: Hi there!" Background="LightGreen" Margin="0,5,0,5" Padding="10" FontSize="14"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Eingabebereich -->
+            <Grid Grid.Row="1" Background="White" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <!-- Erste Spalte: TextBox mit dynamischer Breite -->
+                    <ColumnDefinition Width="*" /> <!-- Nimmt den verfügbaren Platz ein -->
+                    <!-- Zweite Spalte: Button mit fester Breite -->
+                    <ColumnDefinition Width="80" /> <!-- Feste Breite für den Send-Button -->
+                </Grid.ColumnDefinitions>
+
+                <!-- Dynamische TextBox (nutzt den restlichen Platz) -->
+                <TextBox Grid.Column="0" Margin="5" Name="MessageTextBox" FontSize="16" Padding="10" VerticalAlignment="Center"
+                         HorizontalAlignment="Stretch" MinHeight="30" MinWidth="100" />
+
+                <!-- Senden-Button mit fester Breite -->
+                <Button Grid.Column="1" Margin="5" Content="Send" Name="SendButton" Width="70" Height="40" Background="#007ACC" Foreground="White"
+                        FontWeight="Bold" VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

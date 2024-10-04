@@ -36,13 +36,13 @@ internal static class Program
                 services.AddSingleton<ConnectionService>();
                 services.AddSingleton<App>();
             });
-    }
+    }   
 }
 
 public class App(Server.Server server)
 {
-    public void Start()
+    public async Task Start()
     {
-        server.Start();
+        await server.Start();
     }   
 }
