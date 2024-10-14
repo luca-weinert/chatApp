@@ -7,7 +7,7 @@ namespace chatApp_server;
 
 internal static class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         using var host = CreateHostBuilder(args).Build();
         using var scope = host.Services.CreateScope();
@@ -15,7 +15,7 @@ internal static class Program
 
         try
         {
-            services.GetRequiredService<App>().Start();
+            await services.GetRequiredService<App>().InitializeApp(); // Add await
         }
         catch (Exception e)
         {
@@ -23,26 +23,26 @@ internal static class Program
         }
     }
 
+
     private static IHostBuilder CreateHostBuilder(string[] strings)
     {
         return Host.CreateDefaultBuilder()
             .ConfigureServices((_, services) =>
             {
-                
                 services.AddSingleton<IUserRepository, UserRepository>();
                 services.AddSingleton<UserService>();
-                services.AddSingleton<Server.Server>();
+                services.AddSingleton<Server.TcpEndpoint>();
                 services.AddSingleton<IConnectionRepository, ConnectionRepository>();
                 services.AddSingleton<ConnectionService>();
                 services.AddSingleton<App>();
             });
-    }   
+    }
 }
 
-public class App(Server.Server server)
+public class App(Server.TcpEndpoint tcpEndpoint)
 {
-    public async Task Start()
+    public async Task InitializeApp()
     {
-        await server.Start();
-    }   
+        await tcpEndpoint.StartAsync();
+    }
 }

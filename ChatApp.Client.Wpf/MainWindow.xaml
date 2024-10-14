@@ -4,57 +4,84 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Chat App" Height="600" Width="800" Background="LightGray">
+        Title="Chat App" Height="600" Width="800" Background="#2D2D30">
+
+    <Window.Resources>
+        <!-- Define reusable dark theme styles -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#F0F0F0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#3C3C3C"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="ScrollViewer">
+            <Setter Property="Background" Value="#333"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#3C3C3C"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+    </Window.Resources>
 
     <Grid>
-        <!-- Definieren von Spalten: eine für Kontakte (links), eine für den Chat (rechts) -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" /> <!-- Kontaktliste -->
-            <ColumnDefinition Width="*" /> <!-- Haupt-Chatbereich -->
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Kontaktliste links -->
-        <StackPanel Grid.Column="0" Background="#F0F0F0" Margin="10">
-            <TextBlock Text="Contacts" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-            <!-- Kontakt 1 -->
-            <Button Content="User1" HorizontalAlignment="Stretch" Margin="0,5,0,0" Padding="10" Background="White"/>
-            <!-- Kontakt 2 -->
-            <Button Content="User2" HorizontalAlignment="Stretch" Margin="0,5,0,0" Padding="10" Background="White"/>
-            <!-- Weitere Kontakte... -->
+        <!-- Left panel with contacts -->
+        <StackPanel Grid.Column="0" Background="#252526" Margin="10">
+            <TextBlock Text="Contacts" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" />
+            <ItemsControl ItemsSource="{Binding Contacts}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Name}" Click="ContactClick" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
 
-        <!-- Haupt-Chatbereich rechts -->
+        <!-- Chat section -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" /> <!-- Nachrichtenbereich -->
-                <RowDefinition Height="Auto" /> <!-- Eingabebereich -->
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- Nachrichtenanzeige -->
-            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Background="White" Margin="10">
+            <!-- Messages area -->
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="10">
                 <StackPanel Name="MessagePanel" Margin="10">
-                    <!-- Beispielnachrichten -->
-                    <TextBlock Text="User1: Hello!" Background="LightBlue" Margin="0,5,0,5" Padding="10" FontSize="14"/>
-                    <TextBlock Text="User2: Hi there!" Background="LightGreen" Margin="0,5,0,5" Padding="10" FontSize="14"/>
+                    <TextBlock Text="User1: Hello!" Background="#007ACC" Margin="0,5,0,5" Padding="10" FontSize="14" />
+                    <TextBlock Text="User2: Hi there!" Background="#3C763D" Margin="0,5,0,5" Padding="10" FontSize="14" />
                 </StackPanel>
             </ScrollViewer>
 
-            <!-- Eingabebereich -->
-            <Grid Grid.Row="1" Background="White" Margin="10">
+            <!-- Message input section -->
+            <Grid Grid.Row="1" Background="#252526" Margin="10">
                 <Grid.ColumnDefinitions>
-                    <!-- Erste Spalte: TextBox mit dynamischer Breite -->
-                    <ColumnDefinition Width="*" /> <!-- Nimmt den verfügbaren Platz ein -->
-                    <!-- Zweite Spalte: Button mit fester Breite -->
-                    <ColumnDefinition Width="80" /> <!-- Feste Breite für den Send-Button -->
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="80" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Dynamische TextBox (nutzt den restlichen Platz) -->
-                <TextBox Grid.Column="0" Margin="5" Name="MessageTextBox" FontSize="16" Padding="10" VerticalAlignment="Center"
+                <TextBox Grid.Column="0" Margin="5" Name="MessageTextBox" FontSize="16" Padding="10"
+                         VerticalAlignment="Center"
                          HorizontalAlignment="Stretch" MinHeight="30" MinWidth="100" />
 
-                <!-- Senden-Button mit fester Breite -->
-                <Button Grid.Column="1" Margin="5" Content="Send" Name="SendButton" Width="70" Height="40" Background="#007ACC" Foreground="White"
-                        FontWeight="Bold" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Click="SendButtonClick" Margin="5" Content="Send" Name="SendButton" Width="70" Height="40"
+                        Background="#007ACC" Foreground="White"
+                        FontWeight="Bold" VerticalAlignment="Center" />
             </Grid>
         </Grid>
     </Grid>

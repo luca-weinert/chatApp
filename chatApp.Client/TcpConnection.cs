@@ -5,7 +5,7 @@ using ChatApp.Shared;
 
 namespace chatApp_client;
 
-public class TcpConnection(TcpClient tcpClient)
+public abstract class TcpConnection(TcpClient tcpClient)
 {
     private readonly NetworkStream _networkStream = tcpClient.GetStream();
 
