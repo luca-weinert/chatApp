@@ -2,21 +2,19 @@
 
 namespace ChatApp.Client.Wpf;
 
-public abstract class TcpConnector
+public class TcpConnector
 {
     public TcpConnector()
     {
     }
 
-    public static void ConnectToServer(string message)
+    public async Task<Connection> GetConnectionToServer()
     {
         try
         {
-            var tcpClient = new TcpClient("192.168.21.2", 8080);
+            var tcpClient = new TcpClient("172.22.224.1", 8080);
             var stream = tcpClient.GetStream();
-            var data = System.Text.Encoding.ASCII.GetBytes(message);
-            stream.Write(data, 0, data.Length);
-            Console.WriteLine($"sent message to server: {message}");
+            return new Connection(tcpClient, stream);
         }
         catch (Exception e)
         {

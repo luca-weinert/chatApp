@@ -1,7 +1,7 @@
 ﻿namespace ChatApp.Shared;
 
-public class User(string username)
+public class User
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public string Name { set; get; } = username;
+    public string Name { set; get; } = string.Empty;
 }

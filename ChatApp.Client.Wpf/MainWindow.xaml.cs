@@ -25,6 +25,5 @@ public partial class MainWindow : Window
     {
         _messageInputValue = MessageTextBox.Text;
         Console.WriteLine($"message input: {_messageInputValue}");
-        TcpConnector.ConnectToServer(_messageInputValue);
     }
 }

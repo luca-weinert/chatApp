@@ -29,11 +29,11 @@ internal static class Program
         return Host.CreateDefaultBuilder()
             .ConfigureServices((_, services) =>
             {
-                services.AddSingleton<IUserRepository, UserRepository>();
-                services.AddSingleton<UserService>();
-                services.AddSingleton<Server.TcpEndpoint>();
                 services.AddSingleton<IConnectionRepository, ConnectionRepository>();
-                services.AddSingleton<ConnectionService>();
+                services.AddSingleton<IUserRepository, UserRepository>();
+                services.AddSingleton<IUserService, UserService>();
+                services.AddSingleton<IConnectionService, ConnectionService>();
+                services.AddSingleton<Server.TcpEndpoint>();
                 services.AddSingleton<App>();
             });
     }

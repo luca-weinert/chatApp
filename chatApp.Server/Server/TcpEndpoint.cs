@@ -1,23 +1,13 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using chatApp_server.Connection;
 using chatApp_server.user;
 
 namespace chatApp_server.Server;
 
-public class TcpEndpoint
+public class TcpEndpoint(IUserService userService, IConnectionService connectionService)
 {
-    private readonly TcpListener _tcpListener = new(IPAddress.Parse("192.168.21.2"), 8080);
-    private readonly UserService _userService;
-    private readonly ConnectionService _connectionService;
-    private Task _listenerTask;
-
-    public TcpEndpoint(UserService userService, ConnectionService connectionService)
-    {
-        _userService = userService;
-        _connectionService = connectionService;
-    }
+    private readonly TcpListener _tcpListener = new(IPAddress.Parse("172.22.224.1"), 8080);
 
     public async Task StartAsync()
     {
@@ -28,18 +18,20 @@ public class TcpEndpoint
             Console.WriteLine("Waiting for connection...");
             var client = await _tcpListener.AcceptTcpClientAsync();
             Console.WriteLine("Client connected");
-            var stream = client.GetStream();
-            var buffer = new byte[256];
-            var bytesRead = await stream.ReadAsync(buffer);
-            var text = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-            Console.WriteLine("Received: " + text);
-            // Handle client communication, process `bytesRead`
+            await HandleClient(client);
         }
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    private async Task HandleClient(TcpClient client)
+    {
+        var connection = new Connection.Connection(client);
+        var user = await userService.GetUserInformation(connection);
+        connection.RelatedUserId = user.Id;
+        await connectionService.AddConnection(connection);
+    }
+
+    public void StopAsync(CancellationToken cancellationToken)
     {
         _tcpListener.Stop();
-        return _listenerTask ?? Task.CompletedTask; // Ensure that the task completes.
     }
 }

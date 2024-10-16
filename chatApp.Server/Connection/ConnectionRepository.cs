@@ -7,7 +7,6 @@ public class ConnectionRepository : IConnectionRepository
 
     public ConnectionRepository()
     {
-        Console.WriteLine("ConnectionRepository");
     }
     
     private ConcurrentDictionary<Guid, Connection> _connections = new ConcurrentDictionary<Guid, Connection>();
