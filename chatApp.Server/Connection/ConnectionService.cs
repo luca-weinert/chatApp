@@ -2,15 +2,15 @@
 
 public class ConnectionService : IConnectionService
 {
-    private readonly IConnectionRepository _repository;
+    private readonly IConnectionRepository _connectionRepository;
 
-    public ConnectionService(IConnectionRepository repository)
+    public ConnectionService(IConnectionRepository connectionRepository)
     {
-        _repository = repository;
+        _connectionRepository = connectionRepository;
     }
 
-    public Task AddConnection(Connection connection)
+    public async Task AddConnection(Connection connection)
     {
-        throw new NotImplementedException();
+        await _connectionRepository.SaveConnectionAsync(connection);
     }
 }

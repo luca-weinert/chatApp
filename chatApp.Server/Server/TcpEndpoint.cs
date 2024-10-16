@@ -28,6 +28,7 @@ public class TcpEndpoint(IUserService userService, IConnectionService connection
         var user = await userService.GetUserInformation(connection);
         connection.RelatedUserId = user.Id;
         await connectionService.AddConnection(connection);
+        Console.WriteLine($"user received: id: {user.Id}, name: {user.Name}");
     }
 
     public void StopAsync(CancellationToken cancellationToken)
