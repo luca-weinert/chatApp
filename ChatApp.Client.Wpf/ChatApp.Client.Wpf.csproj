@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\chatApp.Server\chatApp.Server.csproj" />
       <ProjectReference Include="..\ChatApp.Shared\ChatApp.Shared.csproj" />
     </ItemGroup>
 

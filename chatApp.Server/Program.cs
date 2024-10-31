@@ -1,4 +1,5 @@
 ﻿using chatApp_server.Connection;
+using chatApp_server.Message;
 using chatApp_server.user;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +33,7 @@ internal static class Program
                 services.AddSingleton<IConnectionRepository, ConnectionRepository>();
                 services.AddSingleton<IUserRepository, UserRepository>();
                 services.AddSingleton<IUserService, UserService>();
+                services.AddSingleton<IMessageService, MessageService>();
                 services.AddSingleton<IConnectionService, ConnectionService>();
                 services.AddSingleton<Server.TcpEndpoint>();
                 services.AddSingleton<App>();

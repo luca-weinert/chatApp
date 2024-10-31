@@ -2,5 +2,5 @@
 
 public interface IMessageService
 {
-    public void handleIncomingMessages(ChatApp.Shared.Message message);
+    public Task HandleIncomingMessages(Connection.Connection connection);
 }

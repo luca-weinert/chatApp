@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using ChatApp.Client.Wpf.Message;
 
 namespace ChatApp.Client.Wpf;
 
@@ -8,6 +9,7 @@ namespace ChatApp.Client.Wpf;
 public partial class MainWindow : Window
 {
     private string _messageInputValue;
+    private readonly IMessageService _messageService;
     
     public MainWindow()
     {
@@ -24,6 +26,10 @@ public partial class MainWindow : Window
     private void SendButtonClick(object sender, RoutedEventArgs e)
     {
         _messageInputValue = MessageTextBox.Text;
+
+        var message = new Shared.Message(Guid.NewGuid(), Guid.NewGuid(), _messageInputValue);
+        _messageService.Send(message);
+        
         Console.WriteLine($"message input: {_messageInputValue}");
     }
 }
