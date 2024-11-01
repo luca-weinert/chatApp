@@ -1,10 +1,8 @@
-﻿using ChatApp.Shared;
-
-namespace chatApp_server.user;
+﻿namespace chatApp_server.User;
 
 public interface IUserRepository
 {
-    public Task SaveUserAsync(User user); 
-    public Task<User?> GetUserByIdAsync(Guid userId);
+    public Task SaveUserAsync(ChatApp.Shared.User.User user); 
+    public Task<ChatApp.Shared.User.User?> GetUserByIdAsync(Guid userId);
     public Task RemoveUserByIdAsync(Guid userId);
 }

@@ -2,7 +2,7 @@
 
 public interface IConnectionRepository
 {
-    public Task SaveConnectionAsync(Connection connection);
-    public Task RemoveConnectionAsync(Connection connection);
-    public Task<Connection?> GetConnectionByUserId(Guid userId);
+    public Task SaveConnectionAsync(ClientConnection clientConnection);
+    public Task RemoveConnectionAsync(ClientConnection clientConnection);
+    public Task<ClientConnection?> GetConnectionByUserId(Guid userId);
 }

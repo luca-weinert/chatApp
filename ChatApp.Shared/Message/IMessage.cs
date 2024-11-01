@@ -1,4 +1,4 @@
-﻿namespace ChatApp.Client.Wpf.Message;
+﻿namespace ChatApp.Shared.Message;
 
 public class IMessage
 {

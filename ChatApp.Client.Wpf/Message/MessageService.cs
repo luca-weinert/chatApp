@@ -1,9 +1,24 @@
-﻿namespace ChatApp.Client.Wpf.Message;
+﻿using System.Text;
+using System.Text.Json;
+using ChatApp.Client.Wpf.Connection;
 
-public class MessageService : IMessageService
+namespace ChatApp.Client.Wpf.Message
 {
-    public Task Send(Connection.Connection connection)
+    public class MessageService : IMessageService
     {
-        throw new NotImplementedException();
+        private readonly ServerConnection _serverConnection;
+
+        public MessageService(ServerConnection serverConnection)
+        {
+            _serverConnection = serverConnection;
+        }
+
+        public async Task SendAsync(Shared.Message.Message message)
+        {
+            var serializedMessage = JsonSerializer.Serialize(message);
+            var bytes = Encoding.UTF8.GetBytes(serializedMessage);
+            await _serverConnection.NetworkStream.WriteAsync(bytes);
+            Console.WriteLine($"Message sent to server: {message.Content}");
+        }
     }
 }

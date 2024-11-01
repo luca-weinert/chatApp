@@ -9,21 +9,21 @@ public class ConnectionRepository : IConnectionRepository
     {
     }
     
-    private ConcurrentDictionary<Guid, Connection> _connections = new ConcurrentDictionary<Guid, Connection>();
+    private ConcurrentDictionary<Guid, ClientConnection> _connections = new ConcurrentDictionary<Guid, ClientConnection>();
     
-    public Task SaveConnectionAsync(Connection connection)
+    public Task SaveConnectionAsync(ClientConnection clientConnection)
     {
-        _connections.TryAdd(connection.Id, connection);
+        _connections.TryAdd(clientConnection.Id, clientConnection);
         return Task.CompletedTask;
     }
 
-    public Task RemoveConnectionAsync(Connection connection)
+    public Task RemoveConnectionAsync(ClientConnection clientConnection)
     {
-        _connections.TryRemove(connection.Id, out _);
+        _connections.TryRemove(clientConnection.Id, out _);
         return Task.CompletedTask;
     }
 
-    public Task<Connection?> GetConnectionByUserId(Guid userId)
+    public Task<ClientConnection?> GetConnectionByUserId(Guid userId)
     {
         var connection = _connections.Values.FirstOrDefault(c => c.RelatedUserId == userId);
         return Task.FromResult(connection);

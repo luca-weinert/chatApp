@@ -5,18 +5,18 @@ namespace ChatApp.Client.Wpf.Connection;
 
 public class ConnectionService : IConnectionService
 {
-    public async Task<Connection> ConnectToAsync(IPEndPoint endpoint)
+    public async Task<ServerConnection?> ConnectToServerAsync(IPEndPoint serverEndPoint)
     {
         Console.WriteLine("trying to connect to endpoint...");
 
         try
         {
-            var tcpClient = new TcpClient(endpoint.Address.ToString(), endpoint.Port);
+            var tcpClient = new TcpClient(serverEndPoint.Address.ToString(), serverEndPoint.Port);
             var stream = tcpClient.GetStream();
             
             Console.WriteLine("Connected to server.");
             
-            return new Connection(tcpClient, stream);
+            return new ServerConnection(tcpClient, stream);
         }
         catch (Exception e)
         {

@@ -9,8 +9,8 @@ public class ConnectionService : IConnectionService
         _connectionRepository = connectionRepository;
     }
 
-    public async Task AddConnection(Connection connection)
+    public async Task AddConnection(ClientConnection clientConnection)
     {
-        await _connectionRepository.SaveConnectionAsync(connection);
+        await _connectionRepository.SaveConnectionAsync(clientConnection);
     }
 }

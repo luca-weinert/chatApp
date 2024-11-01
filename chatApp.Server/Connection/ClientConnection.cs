@@ -2,7 +2,7 @@
 
 namespace chatApp_server.Connection;
 
-public class Connection(TcpClient client)
+public class ClientConnection(TcpClient client)
 {
     public Guid Id = Guid.NewGuid(); 
     public byte[] buffer = new byte[1024];

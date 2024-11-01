@@ -2,14 +2,26 @@
 using System.Net.Sockets;
 using chatApp_server.Connection;
 using chatApp_server.Message;
-using chatApp_server.user;
+using chatApp_server.User;
 
 namespace chatApp_server.Server;
 
-public class TcpEndpoint(IUserService userService, IConnectionService connectionService, IMessageService messageService)
+public class TcpEndpoint
 {
-    private readonly TcpListener _tcpListener = new(IPAddress.Parse("172.26.224.1"), 8080);
+    private readonly IUserService _userService;
+    private readonly IConnectionService _connectionService;
+    private readonly IMessageService _messageService;
+    private readonly TcpListener _tcpListener;
 
+    public TcpEndpoint(IUserService userService, IConnectionService connectionService, IMessageService messageService)
+    {
+        _userService = userService;
+        _connectionService = connectionService;
+        _messageService = messageService;
+        _tcpListener = new TcpListener(IPAddress.Parse("192.168.178.45"), 8080);
+    }
+    
+    
     public async Task StartAsync()
     {
         _tcpListener.Start();
@@ -25,12 +37,25 @@ public class TcpEndpoint(IUserService userService, IConnectionService connection
 
     private async Task HandleClient(TcpClient client)
     {
-        var connection = new Connection.Connection(client);
-        var user = await userService.GetUserInformation(connection);
-        connection.RelatedUserId = user.Id;
-        await connectionService.AddConnection(connection);
-        Console.WriteLine($"user received: id: {user.Id}, name: {user.Name}");
-        await messageService.HandleIncomingMessages(connection);
+        try
+        {
+            var connection = new ClientConnection(client);
+            var user = await _userService.GetUserInformation(connection);
+            connection.RelatedUserId = user.Id;
+            await _connectionService.AddConnection(connection);
+            Console.WriteLine($"User connected: id: {user.Id}, name: {user.Name}");
+
+            await _messageService.HandleIncomingMessagesAsync(connection);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error handling client: {ex.Message}");
+        }
+        finally
+        {
+            // Ensure the client connection is closed properly
+            client.Close();
+        }
     }
 
     public void StopAsync(CancellationToken cancellationToken)

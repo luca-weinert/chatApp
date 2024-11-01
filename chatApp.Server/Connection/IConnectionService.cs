@@ -2,5 +2,5 @@
 
 public interface IConnectionService
 {
-    public Task AddConnection(Connection connection);
+    public Task AddConnection(ClientConnection clientConnection);
 }

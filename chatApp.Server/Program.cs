@@ -1,6 +1,6 @@
 ﻿using chatApp_server.Connection;
 using chatApp_server.Message;
-using chatApp_server.user;
+using chatApp_server.User;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
