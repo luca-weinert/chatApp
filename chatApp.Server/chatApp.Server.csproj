@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ChatApp.Communication\ChatApp.Communication.csproj" />
       <ProjectReference Include="..\ChatApp.Shared\ChatApp.Shared.csproj" />
     </ItemGroup>
 
@@ -16,10 +17,6 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-rc.1.24431.7" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-rc.1.24431.7" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0-rc.1.24431.7" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Communication\" />
     </ItemGroup>
 
 </Project>

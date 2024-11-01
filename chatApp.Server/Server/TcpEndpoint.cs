@@ -1,51 +1,71 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using chatApp_server.Communication;
 using chatApp_server.Connection;
-using chatApp_server.Message;
-using chatApp_server.User;
 
 namespace chatApp_server.Server;
 
 public class TcpEndpoint
 {
-    private readonly IUserService _userService;
+    private readonly ICommunicationService _communicationService;
     private readonly IConnectionService _connectionService;
-    private readonly IMessageService _messageService;
+    private readonly IConnectionRepository _connectionRepository;
     private readonly TcpListener _tcpListener;
 
-    public TcpEndpoint(IUserService userService, IConnectionService connectionService, IMessageService messageService)
+    public TcpEndpoint(
+        IConnectionService connectionService,
+        IConnectionRepository connectionRepository,
+        ICommunicationService communicationService)
     {
-        _userService = userService;
         _connectionService = connectionService;
-        _messageService = messageService;
         _tcpListener = new TcpListener(IPAddress.Parse("192.168.178.45"), 8080);
+        _communicationService = communicationService;
+        _connectionRepository = connectionRepository;
     }
-    
-    
-    public async Task StartAsync()
+
+
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
         _tcpListener.Start();
+        Console.WriteLine($"Server started. Waiting for connections...");
 
-        while (true)
+        try
         {
-            Console.WriteLine("Waiting for connection...");
-            var client = await _tcpListener.AcceptTcpClientAsync();
-            Console.WriteLine("Client connected");
-            await HandleClient(client);
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var client = await _tcpListener.AcceptTcpClientAsync(cancellationToken);
+                Console.WriteLine("Client connected");
+                _ = Task.Run(() => HandleClientAsync(client, cancellationToken), cancellationToken);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            Console.WriteLine("Cancellation requested. Server is stopping.");
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine($"unexpected error: {e.Message}");
+            throw;
+        }
+        finally
+        {
+            _tcpListener.Stop();
+            Console.WriteLine("Server stopped");
         }
     }
 
-    private async Task HandleClient(TcpClient client)
+    private async Task HandleClientAsync(TcpClient client, CancellationToken cancellationToken)
     {
         try
         {
-            var connection = new ClientConnection(client);
-            var user = await _userService.GetUserInformation(connection);
-            connection.RelatedUserId = user.Id;
-            await _connectionService.AddConnection(connection);
-            Console.WriteLine($"User connected: id: {user.Id}, name: {user.Name}");
-
-            await _messageService.HandleIncomingMessagesAsync(connection);
+            var clientConnection = await _connectionService.GetConnectionForClientAsync(client);
+            await _connectionRepository.SaveConnectionAsync(clientConnection);
+            await _communicationService.HandleCommunicationForAsync(clientConnection);
+        }
+        catch (SocketException ex)
+        {
+            Console.WriteLine($"Socket error with client: {ex.Message}");
         }
         catch (Exception ex)
         {
@@ -53,7 +73,6 @@ public class TcpEndpoint
         }
         finally
         {
-            // Ensure the client connection is closed properly
             client.Close();
         }
     }
@@ -61,5 +80,6 @@ public class TcpEndpoint
     public void StopAsync(CancellationToken cancellationToken)
     {
         _tcpListener.Stop();
+        Console.WriteLine("tcpEndpoint stopped");
     }
 }

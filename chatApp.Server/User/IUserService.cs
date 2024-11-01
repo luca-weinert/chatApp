@@ -1,6 +1,9 @@
-﻿namespace chatApp_server.User;
+﻿using chatApp_server.Connection;
+
+namespace chatApp_server.User;
 
 public interface IUserService
 {
-    public Task<ChatApp.Shared.User.User> GetUserInformation(Connection.ClientConnection clientConnection);
+    public Task RequestUserInformationForAsync(ClientConnection clientConnection);
+    public Task HandleUserInformation();
 }

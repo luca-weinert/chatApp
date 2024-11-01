@@ -1,4 +1,6 @@
-﻿namespace chatApp_server.Connection;
+﻿using System.Net.Sockets;
+
+namespace chatApp_server.Connection;
 
 public class ConnectionService : IConnectionService
 {
@@ -9,8 +11,9 @@ public class ConnectionService : IConnectionService
         _connectionRepository = connectionRepository;
     }
 
-    public async Task AddConnection(ClientConnection clientConnection)
+    public async Task<ClientConnection> GetConnectionForClientAsync(TcpClient tcpClient)
     {
-        await _connectionRepository.SaveConnectionAsync(clientConnection);
+        var clientConnection = new ClientConnection(tcpClient);
+        return clientConnection;
     }
 }

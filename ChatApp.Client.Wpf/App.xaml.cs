@@ -4,6 +4,7 @@ using ChatApp.Client.Wpf.Communication;
 using ChatApp.Client.Wpf.Connection;
 using ChatApp.Client.Wpf.Message;
 using ChatApp.Client.Wpf.User;
+using ChatApp.Communication;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ChatApp.Client.Wpf
@@ -18,7 +19,10 @@ namespace ChatApp.Client.Wpf
 
             var services = new ServiceCollection();
             services.AddSingleton<IConnectionService, ConnectionService>();
+            services.AddSingleton<IEventSender, EventSender>();
+            services.AddSingleton<IEventFactory, EventFactory>();
             services.AddSingleton<ICommunicationService, CommunicationService>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IMessageService, MessageService>();
 
             // Establish server connection
