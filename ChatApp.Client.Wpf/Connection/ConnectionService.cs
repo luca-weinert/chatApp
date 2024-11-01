@@ -1,27 +1,32 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace ChatApp.Client.Wpf.Connection;
-
-public class ConnectionService : IConnectionService
+namespace ChatApp.Client.Wpf.Connection
 {
-    public async Task<ServerConnection?> ConnectToServerAsync(IPEndPoint serverEndPoint)
+    public class ConnectionService : IConnectionService
     {
-        Console.WriteLine("trying to connect to endpoint...");
+        public async Task<ServerConnection?> ConnectToServerAsync(IPEndPoint serverEndPoint)
+        {
+            Console.WriteLine("Attempting to connect to the server...");
 
-        try
-        {
-            var tcpClient = new TcpClient(serverEndPoint.Address.ToString(), serverEndPoint.Port);
-            var stream = tcpClient.GetStream();
-            
-            Console.WriteLine("Connected to server.");
-            
-            return new ServerConnection(tcpClient, stream);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
+            try
+            {
+                var tcpClient = new TcpClient();
+                await tcpClient.ConnectAsync(serverEndPoint.Address, serverEndPoint.Port);
+
+                Console.WriteLine("Connection established successfully.");
+                return new ServerConnection(tcpClient);
+            }
+            catch (SocketException ex)
+            {
+                Console.WriteLine($"SocketException: Unable to connect to server at {serverEndPoint}. Error: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error while connecting to server: {ex.Message}");
+                throw;
+            }
         }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using System.Net;
-using System.Text;
-using System.Text.Json;
 using System.Windows;
+using ChatApp.Client.Wpf.Communication;
 using ChatApp.Client.Wpf.Connection;
 using ChatApp.Client.Wpf.Message;
-using ChatApp.Shared;
-using ChatApp.Shared.User;
+using ChatApp.Client.Wpf.User;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ChatApp.Client.Wpf
@@ -20,6 +18,7 @@ namespace ChatApp.Client.Wpf
 
             var services = new ServiceCollection();
             services.AddSingleton<IConnectionService, ConnectionService>();
+            services.AddSingleton<ICommunicationService, CommunicationService>();
             services.AddSingleton<IMessageService, MessageService>();
 
             // Establish server connection
@@ -32,15 +31,14 @@ namespace ChatApp.Client.Wpf
             ServiceProvider = services.BuildServiceProvider();
 
             // Send user info after connection is established
-            await SendUserToServer(serverConnection);
+            if (serverConnection != null) await SendUserToServer();
         }
 
-        private static async Task SendUserToServer(ServerConnection serverConnection)
-        {
-            var serializedUser = JsonSerializer.Serialize(new User { Name = "Luca Weinert" });
-            var bytes = Encoding.ASCII.GetBytes(serializedUser);
-            await serverConnection.NetworkStream.WriteAsync(bytes);
-            Console.WriteLine($"Client: sent following user to server: {serializedUser}");
+        private static async Task SendUserToServer()
+        { 
+            var user = new Shared.User.User("Luca");
+            var authenticationService = ServiceProvider.GetRequiredService<IAuthenticationService>();
+            await authenticationService.AuthenticateUserAsync(user);
         }
     }
 }

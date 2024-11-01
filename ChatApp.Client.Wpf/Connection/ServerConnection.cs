@@ -1,11 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Sockets;
 
-namespace ChatApp.Client.Wpf.Connection;
-
-public class ServerConnection(TcpClient tcpClient, NetworkStream networkStream)
+namespace ChatApp.Client.Wpf.Connection
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
-    public TcpClient Client { get; set; } = tcpClient;
-    public Stream NetworkStream { get; set; } = networkStream;
+    public class ServerConnection : IServerConnection
+    {
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public TcpClient Client { get; private set; }
+        public Stream NetworkStream { get; private set; }
+
+        public ServerConnection(TcpClient tcpClient)
+        {
+            Client = tcpClient;
+            NetworkStream = tcpClient.GetStream(); // Initialize the NetworkStream based on the TcpClient
+        }
+    }
 }

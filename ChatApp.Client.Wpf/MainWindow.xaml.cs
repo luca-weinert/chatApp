@@ -24,18 +24,8 @@ namespace ChatApp.Client.Wpf
 
         private async void SendButtonClick(object sender, RoutedEventArgs e)
         {
-            _messageInputValue = MessageTextBox.Text;
             var message = new Shared.Message.Message(Guid.NewGuid(), Guid.NewGuid(), _messageInputValue);
-
-            if (_messageService != null)
-            {
-                await _messageService.SendAsync(message);
-                Console.WriteLine($"Message input: {_messageInputValue}");
-            }
-            else
-            {
-                Console.WriteLine("MessageService is not available.");
-            }
+            await _messageService.SendAsync(message);
         }
     }
 }
