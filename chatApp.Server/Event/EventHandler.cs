@@ -1,18 +1,15 @@
-﻿using chatApp_server.Message;
-using chatApp_server.User;
+﻿using chatApp_server.User;
 using ChatApp.Communication;
 
-namespace chatApp_server.Communication;
+namespace chatApp_server.Event;
 
 public class ServerEventHandler : IEventHandler
 {
     private readonly IUserService _userService;
-    private readonly IEventTransmitter _eventTransmitter;
     
-    public ServerEventHandler(IUserService userService, IEventTransmitter eventTransmitter)
+    public ServerEventHandler(IUserService userService)
     {
         _userService = userService;
-        _eventTransmitter = eventTransmitter;
     }
     
     public async Task HandleEventAsync<T>(Event<T> eEvent)

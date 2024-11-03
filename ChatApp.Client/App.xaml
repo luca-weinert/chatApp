@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:ChatApp.Client.Wpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

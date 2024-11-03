@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using chatApp_server.Communication;
 using chatApp_server.Connection;
+using ChatApp.Communication;
 
 namespace chatApp_server.Server;
 

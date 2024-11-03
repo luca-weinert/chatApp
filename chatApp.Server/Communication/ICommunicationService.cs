@@ -1,10 +1,9 @@
-﻿using chatApp_server.Connection;
+﻿using ChatApp.Shared.Connection;
 
-namespace chatApp_server.Communication;
+namespace ChatApp.Communication;
 
 public interface ICommunicationService
 {
-    public Task HandleCommunicationAsync(ChatApp.Shared.Connection clientConnection, CancellationToken cancellationToken);
-    public Task<string> ReadFromConnectionAsync(ChatApp.Shared.Connection clientConnection, CancellationToken cancellationToken);
-    public Task WriteOnConnectionAsync(ChatApp.Shared.Connection clientConnection, string message);
+    public Task HandleCommunicationAsync(Connection clientConnection, CancellationToken cancellationToken);
+    public Task SendEventToClientAsync<T>(Connection clientConnection, Event<T> eventToSend);
 }

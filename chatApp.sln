@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatApp.Server", "chatApp.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.Shared", "ChatApp.Shared\ChatApp.Shared.csproj", "{49D99114-4275-48CA-9CBE-FEFF586FF0C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.Client.Wpf", "ChatApp.Client.Wpf\ChatApp.Client.Wpf.csproj", "{4ABF269B-3741-4751-8A77-AAD97989653A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.Client", "ChatApp.Client\ChatApp.Client.csproj", "{4ABF269B-3741-4751-8A77-AAD97989653A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.Communication", "ChatApp.Communication\ChatApp.Communication.csproj", "{58C203C8-33E0-405C-8C9A-94A3A9AC88DB}"
 EndProject

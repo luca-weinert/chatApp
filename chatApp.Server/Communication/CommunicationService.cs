@@ -13,7 +13,7 @@ public class CommunicationService : ICommunicationService
         _eventHandler = eventHandler;
     }
 
-    public async Task HandleCommunicationAsync(ChatApp.Shared.Connection clientConnection,
+    public async Task HandleCommunicationAsync(ChatApp.Shared.Connection.Connection clientConnection,
         CancellationToken cancellationToken)
     {
         try
@@ -32,7 +32,13 @@ public class CommunicationService : ICommunicationService
         }
     }
 
-    public async Task<string> ReadFromConnectionAsync(ChatApp.Shared.Connection clientConnection,
+    public async Task SendEventToClientAsync<T>(ChatApp.Shared.Connection.Connection clientConnection, Event<T> eventToSend)
+    {
+        var serializedEvent = JsonSerializer.Serialize(eventToSend);
+        await WriteOnConnectionAsync(clientConnection, serializedEvent);
+    }
+
+    private static async Task<string> ReadFromConnectionAsync(ChatApp.Shared.Connection.Connection clientConnection,
         CancellationToken cancellationToken)
     {
         var buffer = new byte[1_024];
@@ -55,7 +61,7 @@ public class CommunicationService : ICommunicationService
         return messageBuilder.ToString();
     }
 
-    public async Task WriteOnConnectionAsync(ChatApp.Shared.Connection clientConnection, string message)
+    private static async Task WriteOnConnectionAsync(ChatApp.Shared.Connection.Connection clientConnection, string message)
     {
         var messageBytes = Encoding.UTF8.GetBytes(message);
         await clientConnection.NetworkStream.WriteAsync(messageBytes);

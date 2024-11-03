@@ -14,7 +14,7 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task RequestUserInformationForAsync(ChatApp.Shared.Connection clientConnection)
+    public async Task RequestUserInformationForAsync(ChatApp.Shared.Connection.Connection clientConnection)
     {
         var requestUserInformation = new Event<object>(EventType.UserInformationRequest, null);
     }

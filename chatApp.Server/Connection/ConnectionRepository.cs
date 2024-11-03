@@ -9,21 +9,21 @@ public class ConnectionRepository : IConnectionRepository
     {
     }
     
-    private ConcurrentDictionary<Guid, ChatApp.Shared.Connection> _connections = new ConcurrentDictionary<Guid, ChatApp.Shared.Connection>();
+    private ConcurrentDictionary<Guid, ChatApp.Shared.Connection.Connection> _connections = new ConcurrentDictionary<Guid, ChatApp.Shared.Connection.Connection>();
     
-    public Task SaveConnectionAsync(ChatApp.Shared.Connection clientConnection)
+    public Task SaveConnectionAsync(ChatApp.Shared.Connection.Connection clientConnection)
     {
         _connections.TryAdd(clientConnection.Id, clientConnection);
         return Task.CompletedTask;
     }
 
-    public Task RemoveConnectionAsync(ChatApp.Shared.Connection clientConnection)
+    public Task RemoveConnectionAsync(ChatApp.Shared.Connection.Connection clientConnection)
     {
         _connections.TryRemove(clientConnection.Id, out _);
         return Task.CompletedTask;
     }
 
-    public Task<ChatApp.Shared.Connection?> GetConnectionByUserId(Guid userId)
+    public Task<ChatApp.Shared.Connection.Connection?> GetConnectionByUserId(Guid userId)
     {
         var connection = _connections.Values.FirstOrDefault(c => c.UserId == userId);
         return Task.FromResult(connection);

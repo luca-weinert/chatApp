@@ -2,7 +2,7 @@
 
 public interface IConnectionRepository
 {
-    public Task SaveConnectionAsync(ChatApp.Shared.Connection clientConnection);
-    public Task RemoveConnectionAsync(ChatApp.Shared.Connection clientConnection);
-    public Task<ChatApp.Shared.Connection?> GetConnectionByUserId(Guid userId);
+    public Task SaveConnectionAsync(ChatApp.Shared.Connection.Connection clientConnection);
+    public Task RemoveConnectionAsync(ChatApp.Shared.Connection.Connection clientConnection);
+    public Task<ChatApp.Shared.Connection.Connection?> GetConnectionByUserId(Guid userId);
 }

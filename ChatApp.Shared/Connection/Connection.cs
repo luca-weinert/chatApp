@@ -1,8 +1,8 @@
 ﻿using System.Net.Sockets;
 
-namespace ChatApp.Shared;
+namespace ChatApp.Shared.Connection;
 
-public class Connection
+public class Connection : IConnection
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     

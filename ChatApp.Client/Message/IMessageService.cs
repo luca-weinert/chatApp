@@ -2,5 +2,5 @@
 
 public interface IMessageService
 {
-    public Task SendAsync(Shared.Message.Message message);
+    public Task SendMessageAsync(Shared.Message.Message message);
 }

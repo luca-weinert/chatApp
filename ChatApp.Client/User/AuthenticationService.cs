@@ -1,4 +1,4 @@
-﻿using ChatApp.Client.Wpf.Communication;
+﻿using chatApp_server.Communication;
 using ChatApp.Communication;
 
 namespace ChatApp.Client.Wpf.User;
@@ -15,7 +15,7 @@ public class AuthenticationService : IAuthenticationService
     
     public async Task AuthenticateUserAsync(Shared.User.User user)
     {
-        var userInformationResponseEvent = _eventFactory.CreateUserInformationResponseEvent(user);
-        await _communicationService.SendEventToServerAsync(userInformationResponseEvent);
+        // var userInformationResponseEvent = _eventFactory.CreateUserInformationResponseEvent(user);
+        // await _communicationService.WriteOnConnectionAsync(userInformationResponseEvent);
     }
 }

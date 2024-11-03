@@ -1,5 +1,6 @@
 ﻿using chatApp_server.Communication;
 using chatApp_server.Connection;
+using chatApp_server.Event;
 using chatApp_server.Message;
 using chatApp_server.User;
 using ChatApp.Communication;
@@ -34,7 +35,6 @@ internal static class Program
             .ConfigureServices((_, services) =>
             {
                 services.AddSingleton<IConnectionRepository, ConnectionRepository>();
-                services.AddSingleton<IEventTransmitter, EventTransmitter>();
                 services.AddSingleton<IEventHandler, ServerEventHandler>();
                 services.AddSingleton<IEventFactory, EventFactory>();
                 services.AddSingleton<ICommunicationService, CommunicationService>();
