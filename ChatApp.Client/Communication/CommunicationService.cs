@@ -26,8 +26,9 @@ public class CommunicationService : ICommunicationService
             var eventData = JsonSerializer.Deserialize<Event<object>>(data);
             if (eventData != null)
             {
-                await _eventHandler.HandleEventAsync(eventData);
+                Task.Run(() => _eventHandler.HandleEventAsync(eventData));
             }
+            
         }
         else
         {
