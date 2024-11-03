@@ -27,31 +27,31 @@ public class TcpEndpoint
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         _tcpListener.Start();
-        Console.WriteLine($"Server started. Waiting for connections...");
+        Console.WriteLine($"[Server]: started. Waiting for connections...");
 
         try
         {
             while (!cancellationToken.IsCancellationRequested)
             {
                 var client = await _tcpListener.AcceptTcpClientAsync(cancellationToken);
-                Console.WriteLine("Client connected");
+                Console.WriteLine("[Server]: Client connected");
                 _ = Task.Run(() => HandleClientAsync(client, cancellationToken), cancellationToken);
             }
         }
         catch (OperationCanceledException)
         {
-            Console.WriteLine("Cancellation requested. Server is stopping.");
+            Console.WriteLine("[Server]: Cancellation requested. Server is stopping.");
         }
 
         catch (Exception e)
         {
-            Console.WriteLine($"unexpected error: {e.Message}");
+            Console.WriteLine($"[Server]: unexpected error: {e.Message}");
             throw;
         }
         finally
         {
             _tcpListener.Stop();
-            Console.WriteLine("Server stopped");
+            Console.WriteLine("[Server]: Server stopped");
         }
     }
 
@@ -61,15 +61,15 @@ public class TcpEndpoint
         {
             var clientConnection = await _connectionService.GetConnectionForClientAsync(client);
             await _connectionRepository.SaveConnectionAsync(clientConnection);
-            await _communicationService.HandleCommunicationForAsync(clientConnection);
+            await _communicationService.HandleCommunicationAsync(clientConnection, cancellationToken);
         }
         catch (SocketException ex)
         {
-            Console.WriteLine($"Socket error with client: {ex.Message}");
+            Console.WriteLine($"[Server]: Socket error with client: {ex.Message}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error handling client: {ex.Message}");
+            Console.WriteLine($"[Server]: Error handling client: {ex.Message}");
         }
         finally
         {
@@ -80,6 +80,6 @@ public class TcpEndpoint
     public void StopAsync(CancellationToken cancellationToken)
     {
         _tcpListener.Stop();
-        Console.WriteLine("tcpEndpoint stopped");
+        Console.WriteLine("[Server]: tcpEndpoint stopped");
     }
 }

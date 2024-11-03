@@ -19,7 +19,7 @@ namespace ChatApp.Client.Wpf
 
             var services = new ServiceCollection();
             services.AddSingleton<IConnectionService, ConnectionService>();
-            services.AddSingleton<IEventSender, EventSender>();
+            services.AddSingleton<IEventTransmitter, EventTransmitter>();
             services.AddSingleton<IEventFactory, EventFactory>();
             services.AddSingleton<ICommunicationService, CommunicationService>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();

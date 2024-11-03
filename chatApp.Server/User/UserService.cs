@@ -14,13 +14,14 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task RequestUserInformationForAsync(ClientConnection clientConnection)
+    public async Task RequestUserInformationForAsync(ChatApp.Shared.Connection clientConnection)
     {
         var requestUserInformation = new Event<object>(EventType.UserInformationRequest, null);
     }
 
-    public Task HandleUserInformation()
+    public async Task HandleUserInformationAsync(ChatApp.Shared.User.User user)
     {
-        throw new NotImplementedException();
+        await _userRepository.SaveUserAsync(user);
+        Console.WriteLine($"[Server]: User information for {user.Name} saved successfully.");
     }
 }

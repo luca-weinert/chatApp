@@ -5,6 +5,7 @@ using chatApp_server.User;
 using ChatApp.Communication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using EventHandler = System.EventHandler;
 
 namespace chatApp_server;
 
@@ -33,7 +34,8 @@ internal static class Program
             .ConfigureServices((_, services) =>
             {
                 services.AddSingleton<IConnectionRepository, ConnectionRepository>();
-                services.AddSingleton<IEventSender, EventSender>();
+                services.AddSingleton<IEventTransmitter, EventTransmitter>();
+                services.AddSingleton<IEventHandler, ServerEventHandler>();
                 services.AddSingleton<IEventFactory, EventFactory>();
                 services.AddSingleton<ICommunicationService, CommunicationService>();
                 services.AddSingleton<IUserRepository, UserRepository>();

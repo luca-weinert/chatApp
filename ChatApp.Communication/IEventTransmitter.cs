@@ -1,6 +1,6 @@
 ﻿namespace ChatApp.Communication;
 
-public interface IEventSender
+public interface IEventTransmitter
 {
     public Task SendEventAsync<T>(Event<T> eventToSend, Stream targetStream);
 }

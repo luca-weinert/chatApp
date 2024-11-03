@@ -11,9 +11,8 @@ public class ConnectionService : IConnectionService
         _connectionRepository = connectionRepository;
     }
 
-    public async Task<ClientConnection> GetConnectionForClientAsync(TcpClient tcpClient)
+    public async Task<ChatApp.Shared.Connection> GetConnectionForClientAsync(TcpClient tcpClient)
     {
-        var clientConnection = new ClientConnection(tcpClient);
-        return clientConnection;
+        return new ChatApp.Shared.Connection(tcpClient);
     }
 }

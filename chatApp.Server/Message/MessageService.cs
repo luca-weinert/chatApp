@@ -5,7 +5,7 @@ namespace chatApp_server.Message
 {
     public class MessageService : IMessageService
     {
-        public async Task HandleIncomingMessagesAsync(Connection.ClientConnection clientConnection)
+        public async Task HandleIncomingMessagesAsync(ChatApp.Shared.Connection clientConnection)
         {
             var buffer = new byte[1024];
 
@@ -25,7 +25,7 @@ namespace chatApp_server.Message
                     throw new InvalidOperationException("Received data is empty or invalid.");
 
                 Console.WriteLine($"Received message: {receivedJson}");
-                ;
+                
                 var message = JsonSerializer.Deserialize<ChatApp.Shared.Message.Message>(receivedJson) ??
                               throw new InvalidOperationException("Failed to deserialize the message.");
                 await ProcessMessageAsync(message);
