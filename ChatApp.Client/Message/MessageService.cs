@@ -17,6 +17,7 @@ namespace ChatApp.Client.Wpf.Message
         public async Task SendMessageAsync(Shared.Message.Message message)
         {
             var messageEvent = _eventFactory.CreateSendMessageEvent(message);
+            Console.WriteLine("message");
             await _communicationService.SendEventToServer<Shared.Message.Message>(messageEvent);
         }
     }

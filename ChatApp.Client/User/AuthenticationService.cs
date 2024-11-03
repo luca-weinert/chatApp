@@ -1,21 +1,28 @@
-﻿using chatApp_server.Communication;
+﻿using chatApp_server.User;
 using ChatApp.Communication;
+using ICommunicationService = ChatApp.Client.Wpf.Communication.ICommunicationService;
 
 namespace ChatApp.Client.Wpf.User;
 
 public class AuthenticationService : IAuthenticationService
 {
-    private readonly ICommunicationService _communicationService;
-    public readonly IEventFactory _eventFactory;
-    public AuthenticationService(ICommunicationService communicationService, IEventFactory eventFactory)
+    private readonly IEventFactory _eventFactory;
+    
+    public AuthenticationService(IEventFactory eventFactory)
     {
-        _communicationService = communicationService;
         _eventFactory = eventFactory;
     }
     
-    public async Task AuthenticateUserAsync(Shared.User.User user)
+    public async Task AuthenticateUserAsync()
     {
-        // var userInformationResponseEvent = _eventFactory.CreateUserInformationResponseEvent(user);
-        // await _communicationService.WriteOnConnectionAsync(userInformationResponseEvent);
+        // var testUSer = new Shared.User.User("Luca Weinert");
+        // var userInformationResponseEvent = _eventFactory.CreateUserInformationResponseEvent(testUSer);
+        // await _communicationService.SendEventToServer(userInformationResponseEvent);
+    }
+
+    public Task<Shared.User.User> GetUserInformationAsync()
+    {
+        var testUSer = new Shared.User.User("Luca Weinert");
+        return Task.FromResult<Shared.User.User>(testUSer);
     }
 }

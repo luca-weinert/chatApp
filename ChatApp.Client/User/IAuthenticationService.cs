@@ -2,5 +2,6 @@
 
 public interface IAuthenticationService
 {
-    public Task AuthenticateUserAsync(Shared.User.User user);
+    public Task AuthenticateUserAsync();
+    public Task<Shared.User.User> GetUserInformationAsync();
 }

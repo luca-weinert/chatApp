@@ -2,33 +2,40 @@
 using System.Text;
 using System.Text.Json;
 using ChatApp.Client.Wpf.Connection;
+using ChatApp.Client.Wpf.User;
 using ChatApp.Communication;
+using ChatApp.Shared.Connection;
 
 namespace ChatApp.Client.Wpf.Communication;
 
 public class CommunicationService : ICommunicationService
 {
     private readonly IConnectionService _connectionService;
-    private readonly IEventHandler _eventHandler;
-    private Shared.Connection.Connection? _connection;
+    private readonly IAuthenticationService _authenticationService;
+    private readonly IEventFactory _eventFactory;
+    private readonly IListener _listener;
+    private IConnection? _connection;
 
-    public CommunicationService(IEventHandler eventHandler, IConnectionService connectionService)
+    public CommunicationService(IConnectionService connectionService,
+        IAuthenticationService authenticationService, IEventFactory eventFactory, IListener listener)
     {
         _connectionService = connectionService;
-        _eventHandler = eventHandler;
+        _eventFactory = eventFactory;
+        _listener = listener;
+        _authenticationService = authenticationService;
     }
 
     public async Task HandleCommunicationAsync()
     {
         if (await TryConnectToServerAsync())
         {
-            var data = await ReadFromConnectionAsync();
-            var eventData = JsonSerializer.Deserialize<Event<object>>(data);
-            if (eventData != null)
-            {
-                Task.Run(() => _eventHandler.HandleEventAsync(eventData));
-            }
-            
+            var source = new CancellationTokenSource();
+            var token = source.Token;
+            _ = Task.Run(() => _listener.ListenOnConnection(_connection, token), token);
+
+            var userInformation = await _authenticationService.GetUserInformationAsync();
+            var userInformationEvent = _eventFactory.CreateUserInformationResponseEvent(userInformation);
+            await SendEventToServer(userInformationEvent);
         }
         else
         {
@@ -54,40 +61,6 @@ public class CommunicationService : ICommunicationService
     public async Task SendEventToServer<T>(Event<T> eventToSend)
     {
         var serializedEvent = JsonSerializer.Serialize(eventToSend);
-        await WriteOnConnectionAsync(serializedEvent);
-    }
-
-    private async Task<string> ReadFromConnectionAsync()
-    {
-        var buffer = new byte[1_024];
-        var messageBuilder = new StringBuilder();
-
-        while (true)
-        {
-            var receivedBytes = await _connection.NetworkStream.ReadAsync(buffer);
-            if (receivedBytes == 0)
-            {
-                break;
-            }
-
-            var jsonString = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-            Console.WriteLine($"[Client]: Data received: {jsonString}");
-            messageBuilder.Append(jsonString);
-        }
-
-        return messageBuilder.ToString();
-    }
-
-    private async Task WriteOnConnectionAsync(string message)
-    {
-        try
-        {
-            var bytes = Encoding.UTF8.GetBytes(message);
-            await _connection.NetworkStream.WriteAsync(bytes);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"something went wrong while sending: {ex}");
-        }
+        if (_connection != null) await _connection.WriteAsync(serializedEvent);
     }
 }
