@@ -5,11 +5,11 @@ using ChatApp.Shared.Connection;
 
 namespace chatApp_server.Event;
 
-public class ServerEventHandler : IEventHandler
+public class EventService : IEventService
 {
     private readonly IUserService _userService;
     
-    public ServerEventHandler(IUserService userService)
+    public EventService(IUserService userService)
     {
         _userService = userService;
     }

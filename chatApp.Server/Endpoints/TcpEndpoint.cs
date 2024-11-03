@@ -1,11 +1,11 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using chatApp_server.Connection;
-using ChatApp.Shared.Listener;
+using ChatApp.Communication.Listener;
 
-namespace chatApp_server.Server;
+namespace chatApp_server.Endpoints;
 
-public class TcpEndpoint
+public class TcpEndpoint : IEndpoint
 {
     private readonly IConnectionService _connectionService;
     private readonly IConnectionRepository _connectionRepository;
@@ -64,6 +64,7 @@ public class TcpEndpoint
             var listenerTask = _listener.ListenOnConnection(clientConnection, cancellationToken);
             
             // do some stuff 
+            Console.WriteLine("[Server]: Test");
             
             await listenerTask;
         }
@@ -81,9 +82,10 @@ public class TcpEndpoint
         }
     }
 
-    public void StopAsync(CancellationToken cancellationToken)
+    public Task StopAsync(CancellationToken cancellationToken)
     {
         _tcpListener.Stop();
         Console.WriteLine("[Server]: tcpEndpoint stopped");
+        return Task.CompletedTask;
     }
 }

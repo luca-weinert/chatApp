@@ -3,7 +3,7 @@ using ChatApp.Shared.Connection;
 
 namespace ChatApp.Client.Wpf.Event;
 
-public class CustomEventHandler : IEventHandler
+public class EventService : IEventService
 {
     public Task HandleEventAsync<T>(Event<T> eEvent, IConnection connection)
     {

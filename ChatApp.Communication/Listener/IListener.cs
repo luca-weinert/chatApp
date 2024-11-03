@@ -1,7 +1,6 @@
 ﻿using ChatApp.Shared.Connection;
 
-
-namespace ChatApp.Shared.Listener
+namespace ChatApp.Communication.Listener
 {
     public interface IListener
     {

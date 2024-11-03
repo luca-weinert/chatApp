@@ -4,8 +4,8 @@ using System.Windows;
 using ChatApp.Client.Wpf.Connection;
 using ChatApp.Client.Wpf.User;
 using ChatApp.Communication.Event;
+using ChatApp.Communication.Listener;
 using ChatApp.Shared.Connection;
-using ChatApp.Shared.Listener;
 
 namespace ChatApp.Client.Wpf.Communication;
 
