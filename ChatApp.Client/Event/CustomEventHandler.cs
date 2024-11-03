@@ -1,10 +1,11 @@
-﻿using ChatApp.Communication;
+﻿using ChatApp.Communication.Event;
+using ChatApp.Shared.Connection;
 
 namespace ChatApp.Client.Wpf.Event;
 
 public class CustomEventHandler : IEventHandler
 {
-    public Task HandleEventAsync<T>(Event<T> eEvent)
+    public Task HandleEventAsync<T>(Event<T> eEvent, IConnection connection)
     {
         switch (eEvent.EventType)
         {
@@ -27,6 +28,12 @@ public class CustomEventHandler : IEventHandler
                 Console.WriteLine("[Client]: received unknown event type");
                 throw new ArgumentOutOfRangeException();
         }
+
         return Task.CompletedTask;
+    }
+
+    public Task SendEventToAsync<T>(IConnection clientConnection, Event<T> eventToSend)
+    {
+        throw new NotImplementedException();
     }
 }

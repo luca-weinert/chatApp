@@ -1,7 +1,7 @@
 ﻿using ChatApp.Shared.Message;
 using ChatApp.Shared.User;
 
-namespace ChatApp.Communication;
+namespace ChatApp.Communication.Event;
 
 public interface IEventFactory
 {

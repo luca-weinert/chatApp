@@ -1,5 +1,7 @@
-﻿using chatApp_server.User;
-using ChatApp.Communication;
+﻿using System.Text.Json;
+using chatApp_server.User;
+using ChatApp.Communication.Event;
+using ChatApp.Shared.Connection;
 
 namespace chatApp_server.Event;
 
@@ -12,7 +14,7 @@ public class ServerEventHandler : IEventHandler
         _userService = userService;
     }
     
-    public async Task HandleEventAsync<T>(Event<T> eEvent)
+    public async Task HandleEventAsync<T>(Event<T> eEvent, IConnection clientConnection)
     {
         switch (eEvent.EventType)
         {
@@ -33,7 +35,7 @@ public class ServerEventHandler : IEventHandler
 
                 if (eEvent.Payload is ChatApp.Shared.User.User user)
                 {
-                    await _userService.HandleUserInformationAsync(user);
+                    await _userService.HandleUserInformationAsync(clientConnection, user);
                 }
                 else
                 {
@@ -44,5 +46,11 @@ public class ServerEventHandler : IEventHandler
                 Console.WriteLine("[Server]: received unknown event type");
                 throw new ArgumentOutOfRangeException();
         }
+    }
+    
+    public async Task SendEventToAsync<T>(IConnection clientConnection, Event<T> eventToSend)
+    {
+        var serializedEvent = JsonSerializer.Serialize(eventToSend);
+        await clientConnection.WriteAsync(serializedEvent);
     }
 }

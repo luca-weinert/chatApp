@@ -1,27 +1,31 @@
-﻿using chatApp_server.Communication;
-using chatApp_server.Connection;
-using ChatApp.Communication;
+﻿using ChatApp.Communication.Event;
+using ChatApp.Shared.Connection;
 
 namespace chatApp_server.User;
 
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-    private readonly ICommunicationService _communicationService;
+    private readonly IEventFactory _eventFactory;
     
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IEventFactory eventFactory)
     {
         _userRepository = userRepository;
+        _eventFactory  = eventFactory;
     }
 
-    public async Task RequestUserInformationForAsync(ChatApp.Shared.Connection.Connection clientConnection)
+    public async Task RequestUserInformationForAsync(IConnection clientConnection)
     {
-        var requestUserInformation = new Event<object>(EventType.UserInformationRequest, null);
     }
-
-    public async Task HandleUserInformationAsync(ChatApp.Shared.User.User user)
+    
+    public async Task HandleUserInformationAsync(IConnection clientConnection, ChatApp.Shared.User.User user)
     {
-        await _userRepository.SaveUserAsync(user);
-        Console.WriteLine($"[Server]: User information for {user.Name} saved successfully.");
+        // var msg = new ChatApp.Shared.Message.Message();
+        // var msgEvent = _eventFactory.CreateSendMessageEvent(msg);
+        //
+        // await _communicationService.SendEventToClientAsync(clientConnection, msgEvent);
+        //
+        // await _userRepository.SaveUserAsync(user);
+        // Console.WriteLine($"[Server]: User information for {user.Name} saved successfully.");
     }
 }

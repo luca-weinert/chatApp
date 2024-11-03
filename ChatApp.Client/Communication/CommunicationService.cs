@@ -1,10 +1,11 @@
 ﻿using System.Net;
-using System.Text;
 using System.Text.Json;
+using System.Windows;
 using ChatApp.Client.Wpf.Connection;
 using ChatApp.Client.Wpf.User;
-using ChatApp.Communication;
+using ChatApp.Communication.Event;
 using ChatApp.Shared.Connection;
+using ChatApp.Shared.Listener;
 
 namespace ChatApp.Client.Wpf.Communication;
 
@@ -40,6 +41,7 @@ public class CommunicationService : ICommunicationService
         else
         {
             Console.WriteLine("[Client]: Could not establish a connection to the server.");
+            MessageBox.Show("Could not establish a connection to the server ):");
         }
     }
 

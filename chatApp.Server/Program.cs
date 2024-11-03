@@ -1,12 +1,12 @@
-﻿using chatApp_server.Communication;
-using chatApp_server.Connection;
+﻿using chatApp_server.Connection;
 using chatApp_server.Event;
 using chatApp_server.Message;
 using chatApp_server.User;
-using ChatApp.Communication;
+using ChatApp.Communication.Event;
+using ChatApp.Shared.Connection;
+using ChatApp.Shared.Listener;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using EventHandler = System.EventHandler;
 
 namespace chatApp_server;
 
@@ -35,13 +35,14 @@ internal static class Program
             .ConfigureServices((_, services) =>
             {
                 services.AddSingleton<IConnectionRepository, ConnectionRepository>();
+                services.AddSingleton<IConnectionService, ConnectionService>();
+                services.AddSingleton<IConnection, ChatApp.Shared.Connection.Connection>();
+                services.AddSingleton<IListener, Listener>();
                 services.AddSingleton<IEventHandler, ServerEventHandler>();
                 services.AddSingleton<IEventFactory, EventFactory>();
-                services.AddSingleton<ICommunicationService, CommunicationService>();
                 services.AddSingleton<IUserRepository, UserRepository>();
                 services.AddSingleton<IUserService, UserService>();
                 services.AddSingleton<IMessageService, MessageService>();
-                services.AddSingleton<IConnectionService, ConnectionService>();
                 services.AddSingleton<Server.TcpEndpoint>();
                 services.AddSingleton<App>();
             });

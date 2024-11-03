@@ -17,25 +17,37 @@ public class Connection : IConnection, IDisposable
         NetworkStream = tcpClient.GetStream(); // Initialize the NetworkStream based on the TcpClient
     }
 
-    public async Task<string> ReadAsync()
+    public async Task<string> ReadAsync(CancellationToken cancellationToken)
     {
-        var buffer = new byte[1_024];
+        var buffer = new byte[1024];
         var messageBuilder = new StringBuilder();
 
-        while (true)
+        try
         {
-            var receivedBytes = await NetworkStream.ReadAsync(buffer);
-            if (receivedBytes == 0)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                break;
-            }
+                var receivedBytes = await NetworkStream.ReadAsync(buffer, cancellationToken);
 
-            var jsonString = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
-            messageBuilder.Append(jsonString);
+                if (receivedBytes == 0)
+                {
+                    Console.WriteLine("[Connection]: The connection has been closed.");
+                    break;
+                }
+
+                // Convert the received bytes to a UTF-8 string
+                var jsonString = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+                Console.WriteLine($"[Connection]: Data read: {jsonString}");
+                messageBuilder.Append(jsonString);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Connection]: Error while reading data - {ex.Message}");
         }
 
         return messageBuilder.ToString();
     }
+
 
     public async Task<bool> WriteAsync(string data)
     {
@@ -43,6 +55,7 @@ public class Connection : IConnection, IDisposable
         {
             var bytes = Encoding.UTF8.GetBytes(data);
             await NetworkStream.WriteAsync(bytes);
+            Console.WriteLine("data written");
             return true;
         }
         catch (Exception ex)

@@ -1,26 +1,26 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using chatApp_server.Connection;
-using ChatApp.Communication;
+using ChatApp.Shared.Listener;
 
 namespace chatApp_server.Server;
 
 public class TcpEndpoint
 {
-    private readonly ICommunicationService _communicationService;
     private readonly IConnectionService _connectionService;
     private readonly IConnectionRepository _connectionRepository;
+    private readonly IListener _listener;
     private readonly TcpListener _tcpListener;
 
     public TcpEndpoint(
         IConnectionService connectionService,
         IConnectionRepository connectionRepository,
-        ICommunicationService communicationService)
+        IListener listener)
     {
         _connectionService = connectionService;
         _tcpListener = new TcpListener(IPAddress.Parse("192.168.178.45"), 8080);
-        _communicationService = communicationService;
         _connectionRepository = connectionRepository;
+        _listener = listener;
     }
 
 
@@ -61,7 +61,7 @@ public class TcpEndpoint
         {
             var clientConnection = await _connectionService.GetConnectionForClientAsync(client);
             await _connectionRepository.SaveConnectionAsync(clientConnection);
-            await _communicationService.HandleCommunicationAsync(clientConnection, cancellationToken);
+            _ = Task.Run(() => _listener.ListenOnConnection(clientConnection, cancellationToken), cancellationToken);
         }
         catch (SocketException ex)
         {

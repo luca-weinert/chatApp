@@ -4,7 +4,8 @@ using ChatApp.Client.Wpf.Connection;
 using ChatApp.Client.Wpf.Event;
 using ChatApp.Client.Wpf.Message;
 using ChatApp.Client.Wpf.User;
-using ChatApp.Communication;
+using ChatApp.Communication.Event;
+using ChatApp.Shared.Listener;
 using Microsoft.Extensions.DependencyInjection;
 using ICommunicationService = ChatApp.Client.Wpf.Communication.ICommunicationService;
 
