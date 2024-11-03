@@ -22,9 +22,6 @@ public class UserService : IUserService
     {
         // var msg = new ChatApp.Shared.Message.Message();
         // var msgEvent = _eventFactory.CreateSendMessageEvent(msg);
-        //
-        // await _communicationService.SendEventToClientAsync(clientConnection, msgEvent);
-        //
         // await _userRepository.SaveUserAsync(user);
         // Console.WriteLine($"[Server]: User information for {user.Name} saved successfully.");
     }

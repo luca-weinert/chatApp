@@ -61,7 +61,11 @@ public class TcpEndpoint
         {
             var clientConnection = await _connectionService.GetConnectionForClientAsync(client);
             await _connectionRepository.SaveConnectionAsync(clientConnection);
-            _ = Task.Run(() => _listener.ListenOnConnection(clientConnection, cancellationToken), cancellationToken);
+            var listenerTask = _listener.ListenOnConnection(clientConnection, cancellationToken);
+            
+            // do some stuff 
+            
+            await listenerTask;
         }
         catch (SocketException ex)
         {
