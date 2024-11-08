@@ -1,10 +1,12 @@
-﻿using ChatApp.Communication.Event;
+﻿using ChatApp.Communication.Events;
 using ChatApp.Shared.Connection;
 
 namespace ChatApp.Client.Wpf.Event;
 
 public class EventService : IEventService
 {
+    public event MessageReceivedEventHandler? MessageReceived;
+
     public Task HandleEventAsync<T>(Event<T> eEvent, IConnection connection)
     {
         switch (eEvent.EventType)

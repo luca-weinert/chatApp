@@ -1,4 +1,4 @@
-﻿using ChatApp.Communication.Event;
+﻿using ChatApp.Communication.Events;
 
 namespace ChatApp.Client.Wpf.Communication;
 

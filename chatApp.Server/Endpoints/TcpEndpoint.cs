@@ -11,14 +11,14 @@ public class TcpEndpoint : IEndpoint
     private readonly IConnectionRepository _connectionRepository;
     private readonly IListener _listener;
     private readonly TcpListener _tcpListener;
-
+    
     public TcpEndpoint(
         IConnectionService connectionService,
         IConnectionRepository connectionRepository,
         IListener listener)
     {
         _connectionService = connectionService;
-        _tcpListener = new TcpListener(IPAddress.Parse("192.168.178.45"), 8080);
+        _tcpListener = new TcpListener(IPAddress.Parse("192.168.8.61"), 8080);
         _connectionRepository = connectionRepository;
         _listener = listener;
     }

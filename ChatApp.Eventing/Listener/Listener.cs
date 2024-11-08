@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using ChatApp.Communication.Event;
+using ChatApp.Communication.Events;
 using ChatApp.Shared.Connection;
 
 namespace ChatApp.Communication.Listener

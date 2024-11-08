@@ -1,9 +1,9 @@
 ﻿using chatApp_server.Connection;
 using chatApp_server.Endpoints;
-using chatApp_server.Event;
+using chatApp_server.Events;
 using chatApp_server.Message;
 using chatApp_server.User;
-using ChatApp.Communication.Event;
+using ChatApp.Communication.Events;
 using ChatApp.Communication.Listener;
 using ChatApp.Shared.Connection;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,11 +39,17 @@ internal static class Program
                 services.AddSingleton<IConnectionService, ConnectionService>();
                 services.AddSingleton<IConnection, ChatApp.Shared.Connection.Connection>();
                 services.AddSingleton<IListener, Listener>();
-                services.AddSingleton<IEventService, EventService>();
+                services.AddSingleton<IMessageService, MessageService>();
+                services.AddSingleton<IEventService>(provider =>
+                {
+                    var eventService = new EventService();
+                    var messageService = provider.GetRequiredService<IMessageService>();
+                    eventService.MessageReceived += messageService.OnMessageSend;
+                    return eventService;
+                });
                 services.AddSingleton<IEventFactory, EventFactory>();
                 services.AddSingleton<IUserRepository, UserRepository>();
                 services.AddSingleton<IUserService, UserService>();
-                services.AddSingleton<IMessageService, MessageService>();
                 services.AddSingleton<IEndpoint, TcpEndpoint>();
                 services.AddSingleton<App>();
             });
@@ -52,8 +58,8 @@ internal static class Program
 
 public class App(IEndpoint endpoint)
 {
-    private CancellationTokenSource _cts = new CancellationTokenSource();
-    
+    private readonly CancellationTokenSource _cts = new();
+
     public async Task InitializeApp()
     {
         await endpoint.StartAsync(_cts.Token);

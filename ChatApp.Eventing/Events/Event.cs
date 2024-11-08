@@ -1,4 +1,4 @@
-﻿namespace ChatApp.Communication.Event
+﻿namespace ChatApp.Communication.Events
 {
     public class Event<T>
     {

@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ChatApp.Communication\ChatApp.Communication.csproj" />
+      <ProjectReference Include="..\ChatApp.Eventing\ChatApp.Eventing.csproj" />
       <ProjectReference Include="..\chatApp.Server\chatApp.Server.csproj" />
       <ProjectReference Include="..\ChatApp.Shared\ChatApp.Shared.csproj" />
     </ItemGroup>

@@ -5,6 +5,12 @@ namespace chatApp_server.Message
 {
     public class MessageService : IMessageService
     {
+        public void OnMessageSend(object source, EventArgs args)
+        {
+            Console.WriteLine("MessageSendEvent");
+            Console.WriteLine("in messageService");
+        }
+        
         public async Task HandleIncomingMessagesAsync(ChatApp.Shared.Connection.Connection clientConnection)
         {
             var buffer = new byte[1024];
