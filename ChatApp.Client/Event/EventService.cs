@@ -1,15 +1,17 @@
-﻿using ChatApp.Communication.Events;
-using ChatApp.Shared.Connection;
+﻿using ChatApp.Shared.Connection;
+using ChatApp.Shared.Events;
 
 namespace ChatApp.Client.Wpf.Event;
 
 public class EventService : IEventService
 {
-    public event MessageReceivedEventHandler? MessageReceived;
+    public event EventHandler? MessageReceivedEvent;
+    public event EventHandler<MessageEventArgs>? MessageSentEvent;
+    public event EventHandler? UserInformationReceivedEvent;
 
-    public Task HandleEventAsync<T>(Event<T> eEvent, IConnection connection)
+    public Task HandleEventAsync<T>(Event<T> incomingEvent, IConnection connection)
     {
-        switch (eEvent.EventType)
+        switch (incomingEvent.EventType)
         {
             case EventType.MessageReceived:
                 Console.WriteLine("[Client]: received received message event]");

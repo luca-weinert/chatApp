@@ -2,10 +2,11 @@
 using System.Text.Json;
 using System.Windows;
 using ChatApp.Client.Wpf.Connection;
+using ChatApp.Client.Wpf.Event;
+using ChatApp.Client.Wpf.Listener;
 using ChatApp.Client.Wpf.User;
-using ChatApp.Communication.Events;
-using ChatApp.Communication.Listener;
 using ChatApp.Shared.Connection;
+using ChatApp.Shared.Events;
 
 namespace ChatApp.Client.Wpf.Communication;
 
@@ -49,7 +50,7 @@ public class CommunicationService : ICommunicationService
     {
         try
         {
-            var ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.8.61"), 8080);
+            var ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.178.45"), 8080);
             _connection = await _connectionService.GetConnectionAsync(ipEndPoint);
             return _connection != null;
         }

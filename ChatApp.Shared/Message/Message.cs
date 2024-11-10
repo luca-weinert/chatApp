@@ -2,9 +2,12 @@
 {
     public class Message
     {
-        // Parameterless constructor for deserialization purposes
-        public Message() { }
 
+        public Message()
+        {
+            
+        }
+        
         public Message(Guid senderId, Guid targetId, string content)
         {
             SenderUserId = senderId;

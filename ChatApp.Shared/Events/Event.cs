@@ -1,13 +1,13 @@
-﻿namespace ChatApp.Communication.Events
+﻿namespace ChatApp.Shared.Events
 {
-    public class Event<T>
+    public class Event<TPayloadType>
     {
         public EventType EventType { get; private set; }
         public DateTime TimeStamp { get; private set; }
         public string Version { get; private set; }
-        public T Payload { get; private set; } 
-
-        public Event(EventType eventType, T payload)
+        public TPayloadType Payload { get; private set; } 
+        
+        public Event(EventType eventType, TPayloadType payload)
         {
             EventType = eventType;
             TimeStamp = DateTime.UtcNow;

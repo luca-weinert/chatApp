@@ -1,47 +1,44 @@
 ﻿using System.Text.Json;
-using chatApp_server.User;
-using ChatApp.Communication.Events;
 using ChatApp.Shared.Connection;
+using ChatApp.Shared.Events;
 
 namespace chatApp_server.Events;
 
-public class EventService : IEventService
+public sealed class EventService : IEventService
 {
-    public EventService()
-    {
-    }
+    public event EventHandler? MessageReceivedEvent;
+    public event EventHandler<MessageEventArgs>? MessageSentEvent;
+    public event EventHandler? UserInformationReceivedEvent;
 
-    public event MessageReceivedEventHandler? MessageReceived;
-
-    public async Task HandleEventAsync<T>(Event<T> eEvent, IConnection clientConnection)
+    public async Task HandleEventAsync<T>(Event<T> incomingEvent, IConnection clientConnection)
     {
-        switch (eEvent.EventType)
+        switch (incomingEvent.EventType)
         {
             case EventType.MessageReceived:
-                Console.WriteLine("[Server]: received received message event");
+                Console.WriteLine("[EventService]: received received message event");
                 break;
             case EventType.MessageRead:
-                Console.WriteLine("[Server]: received message read event");
+                Console.WriteLine("[EventService]: received message read event");
                 break;
             case EventType.SendMessage:
-                Console.WriteLine("[Server]: received send message event");
-                OnMessageSend();
+                Console.WriteLine("[EventService]: received send message event");
+                if (incomingEvent.Payload is ChatApp.Shared.Message.Message mgs) OnMessageSend(new MessageEventArgs(mgs));
                 break;
             case EventType.UserInformationRequest:
-                Console.WriteLine("[Server]: received user information request event]");
+                Console.WriteLine("[EventService]: received user information request event]");
                 break;
             case EventType.UserInformationResponse:
-                Console.WriteLine("[Server]: received user information event");
-                break; 
+                Console.WriteLine("[EventService]: received user information event");
+                break;
             default:
-                Console.WriteLine("[Server]: received unknown event type");
+                Console.WriteLine("[EventService]: received unknown event type");
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    protected virtual void OnMessageSend()
+    private void OnMessageSend(MessageEventArgs args)
     {
-         MessageReceived?.Invoke(this, EventArgs.Empty);
+         MessageSentEvent?.Invoke(this, args);
     }
     
     public async Task SendEventToAsync<T>(IConnection clientConnection, Event<T> eventToSend)

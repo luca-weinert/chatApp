@@ -1,14 +1,15 @@
 ﻿using System.Text;
 using System.Text.Json;
+using chatApp_server.Events;
 
 namespace chatApp_server.Message
 {
     public class MessageService : IMessageService
     {
-        public void OnMessageSend(object source, EventArgs args)
+        public void OnMessageSend(object source, MessageEventArgs args)
         {
-            Console.WriteLine("MessageSendEvent");
             Console.WriteLine("in messageService");
+            Console.WriteLine(JsonSerializer.Serialize(args.Message));
         }
         
         public async Task HandleIncomingMessagesAsync(ChatApp.Shared.Connection.Connection clientConnection)

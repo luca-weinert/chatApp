@@ -9,7 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ChatApp.Eventing\ChatApp.Eventing.csproj" />
       <ProjectReference Include="..\ChatApp.Shared\ChatApp.Shared.csproj" />
     </ItemGroup>
 

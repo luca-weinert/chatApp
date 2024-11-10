@@ -24,7 +24,7 @@ namespace ChatApp.Client.Wpf
 
         private async void SendButtonClick(object sender, RoutedEventArgs e)
         {
-            var message = new Shared.Message.Message(Guid.NewGuid(), Guid.NewGuid(), _messageInputValue);
+            var message = new Shared.Message.Message(Guid.NewGuid(), Guid.NewGuid(), "test 1234");
             await _messageService.SendMessageAsync(message);
         }
     }

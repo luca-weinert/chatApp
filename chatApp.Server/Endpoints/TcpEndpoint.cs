@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using chatApp_server.Connection;
-using ChatApp.Communication.Listener;
+using chatApp_server.Listener;
 
 namespace chatApp_server.Endpoints;
 
@@ -18,7 +18,7 @@ public class TcpEndpoint : IEndpoint
         IListener listener)
     {
         _connectionService = connectionService;
-        _tcpListener = new TcpListener(IPAddress.Parse("192.168.8.61"), 8080);
+        _tcpListener = new TcpListener(IPAddress.Parse("192.168.178.45"), 8080);
         _connectionRepository = connectionRepository;
         _listener = listener;
     }
@@ -64,7 +64,6 @@ public class TcpEndpoint : IEndpoint
             var listenerTask = _listener.ListenOnConnection(clientConnection, cancellationToken);
             
             // do some stuff 
-            Console.WriteLine("[Server]: Test");
             
             await listenerTask;
         }

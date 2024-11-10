@@ -1,4 +1,4 @@
-﻿using ChatApp.Communication.Events;
+﻿using ChatApp.Client.Wpf.Event;
 using ICommunicationService = ChatApp.Client.Wpf.Communication.ICommunicationService;
 
 namespace ChatApp.Client.Wpf.Message

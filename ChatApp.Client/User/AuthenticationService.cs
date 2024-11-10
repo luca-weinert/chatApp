@@ -1,6 +1,4 @@
-﻿using chatApp_server.User;
-using ChatApp.Communication.Events;
-using ICommunicationService = ChatApp.Client.Wpf.Communication.ICommunicationService;
+﻿using ChatApp.Client.Wpf.Event;
 
 namespace ChatApp.Client.Wpf.User;
 

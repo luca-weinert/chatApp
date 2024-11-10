@@ -1,4 +1,4 @@
-﻿using ChatApp.Communication.Events;
+﻿using chatApp_server.Events;
 using ChatApp.Shared.Connection;
 
 namespace chatApp_server.User;
@@ -20,11 +20,5 @@ public class UserService : IUserService
     
     public async Task HandleUserInformationAsync(IConnection clientConnection, ChatApp.Shared.User.User user)
     {
-        var msg = new ChatApp.Shared.Message.Message();
-        var msgEvent = _eventFactory.CreateSendMessageEvent(msg);
-        var msgEventString = msgEvent.ToString();
-        await clientConnection.WriteAsync(msgEventString);
-        await _userRepository.SaveUserAsync(user);
-        Console.WriteLine($"[Server]: User information for {user.Name} saved successfully.");
     }
 }

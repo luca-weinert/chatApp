@@ -1,4 +1,4 @@
-﻿namespace ChatApp.Communication.Events;
+﻿namespace ChatApp.Shared.Events;
 
 /// <summary>
 /// Represents the types of events that can occur in the chat application.
