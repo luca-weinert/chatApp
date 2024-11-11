@@ -1,17 +1,26 @@
 ﻿using System.Text;
 using System.Text.Json;
+using chatApp_server.Connection;
 using chatApp_server.Events;
 
 namespace chatApp_server.Message
 {
     public class MessageService : IMessageService
     {
-        public void OnMessageSend(object source, MessageEventArgs args)
+        private readonly IConnectionRepository _connectionRepository;
+
+        public MessageService(IConnectionRepository connectionRepositoryRepository)
         {
-            Console.WriteLine("in messageService");
-            Console.WriteLine(JsonSerializer.Serialize(args.Message));
+            _connectionRepository = connectionRepositoryRepository;
         }
-        
+
+        public async void OnMessageSend(object source, MessageEventArgs args)
+        {
+            Console.WriteLine($"in messageService {args.Message}");
+            // var connection = await _connectionRepository.GetConnectionByUserId(args.Message.TargetUserId);
+            // connection.WriteAsync("Das ist ein Test");
+        }
+
         public async Task HandleIncomingMessagesAsync(ChatApp.Shared.Connection.Connection clientConnection)
         {
             var buffer = new byte[1024];
@@ -32,7 +41,7 @@ namespace chatApp_server.Message
                     throw new InvalidOperationException("Received data is empty or invalid.");
 
                 Console.WriteLine($"Received message: {receivedJson}");
-                
+
                 var message = JsonSerializer.Deserialize<ChatApp.Shared.Message.Message>(receivedJson) ??
                               throw new InvalidOperationException("Failed to deserialize the message.");
                 await ProcessMessageAsync(message);

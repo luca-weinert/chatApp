@@ -16,11 +16,11 @@
             Id = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;
         }
-
-        public Guid Id { get; private set; } // Read-only property
-        public Guid SenderUserId { get; private set; } // Read-only property
-        public Guid TargetUserId { get; private set; } // Read-only property
-        public DateTime CreatedAt { get; private set; } // Read-only property
-        public string Content { get; set; } // Allow content to be set outside if needed
+        
+        public Guid Id { get; init; } 
+        public Guid SenderUserId { get; init; } 
+        public Guid TargetUserId { get; init; } 
+        public DateTime CreatedAt { get; init; } 
+        public string Content { get; init; }
     }
 }

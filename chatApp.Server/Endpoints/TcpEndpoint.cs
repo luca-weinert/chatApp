@@ -33,8 +33,11 @@ public class TcpEndpoint : IEndpoint
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                // waiting for incoming client connections
                 var client = await _tcpListener.AcceptTcpClientAsync(cancellationToken);
                 Console.WriteLine("[Server]: Client connected");
+                
+                // handle current connection on separate task so the endpoint can handle other incoming connections  
                 _ = Task.Run(() => HandleClientAsync(client, cancellationToken), cancellationToken);
             }
         }
@@ -59,6 +62,7 @@ public class TcpEndpoint : IEndpoint
     {
         try
         {
+            // save connection in connection repository 
             var clientConnection = await _connectionService.GetConnectionForClientAsync(client);
             await _connectionRepository.SaveConnectionAsync(clientConnection);
             var listenerTask = _listener.ListenOnConnection(clientConnection, cancellationToken);

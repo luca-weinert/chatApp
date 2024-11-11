@@ -9,6 +9,5 @@
         {
             Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentException("Name cannot be empty", nameof(name));
         }
-        public override string ToString() => $"User(Id: {Id}, Name: {Name})";
     }
 }
