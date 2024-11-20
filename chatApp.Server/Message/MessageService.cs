@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
 using chatApp_server.Connection;
-using chatApp_server.Events;
 
 namespace chatApp_server.Message
 {
@@ -14,11 +13,8 @@ namespace chatApp_server.Message
             _connectionRepository = connectionRepositoryRepository;
         }
 
-        public async void OnMessageSend(object source, MessageEventArgs args)
+        public async void OnMessageSend(object source)
         {
-            Console.WriteLine($"in messageService {args.Message}");
-            // var connection = await _connectionRepository.GetConnectionByUserId(args.Message.TargetUserId);
-            // connection.WriteAsync("Das ist ein Test");
         }
 
         public async Task HandleIncomingMessagesAsync(ChatApp.Shared.Connection.Connection clientConnection)

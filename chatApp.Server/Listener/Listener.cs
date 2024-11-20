@@ -1,13 +1,10 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Nodes;
-using chatApp_server.Events;
 using ChatApp.Shared.Connection;
-using ChatApp.Shared.Events;
 using ChatApp.SuperProtocol;
 
 namespace chatApp_server.Listener
 {
-    public class Listener(IEventService eventService) : IListener
+    public class Listener() : IListener
     {
         public async Task ListenOnConnection(IConnection connection, CancellationToken cancellationToken)
         {
@@ -22,7 +19,6 @@ namespace chatApp_server.Listener
                     if (string.IsNullOrEmpty(receivedData)) continue;
 
                     var chatData = JsonSerializer.Deserialize<ChatAppDataPackage>(receivedData);
-
                     switch (chatData.DataType)
                     {
                         case ChatAppDataTypes.Message:
@@ -51,25 +47,6 @@ namespace chatApp_server.Listener
                             throw new ArgumentOutOfRangeException("chatData.DataType not supported by the server");
                             break;
                     }
-                    
-                    /*// read the current EventType e.g. MessageSendEvent, UserInformationReceivedEvent
-                    var jsNode = JsonNode.Parse(receivedData);
-                    var eventType = (EventType)jsNode?["EventType"]!.GetValue<int>()!;
-                    
-                    // deserialize the event based on the eventType
-                    dynamic? eventData = eventType switch
-                    {
-                        EventType.UserInformation =>
-                            JsonSerializer.Deserialize<Event<ChatApp.Shared.User.User>>(receivedData),
-                        EventType.SendMessage => JsonSerializer.Deserialize<Event<ChatApp.Shared.Message.Message>>(
-                            receivedData),
-                        _ => JsonSerializer.Deserialize<Event<object>>(receivedData)
-                    };
-
-                    if (eventData == null) continue;
-                    Console.WriteLine($"[Listener] related event: {eventData}");
-                    
-                    _ = Task.Run(() => eventService.HandleEventAsync(eventData), cancellationToken);*/
                 }
             }
             catch (JsonException e)
