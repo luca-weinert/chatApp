@@ -1,12 +1,9 @@
 ﻿using System.Text.Json;
-using ChatApp.Client.Wpf.Event;
 using ChatApp.Shared.Connection;
-using ChatApp.Shared.Events;
-using ChatApp.SuperProtocol;
 
 namespace ChatApp.Client.Wpf.Listener
 {
-    public class Listener(IEventService eventService) : IListener
+    public class Listener : IListener
     {
         public async Task ListenOnConnection(IConnection connection, CancellationToken cancellationToken)
         {
@@ -17,11 +14,6 @@ namespace ChatApp.Client.Wpf.Listener
                     var receivedData = await connection.ReadAsync(cancellationToken);
                     Console.WriteLine($"[Listener]: received data: {receivedData}");
                     if (string.IsNullOrEmpty(receivedData)) continue;
-                    
-                    var eventData = JsonSerializer.Deserialize<Event<object>>(receivedData);
-                    if (eventData == null) continue;
-                    Console.WriteLine($"[Listener] Received event: {eventData}");
-                    _ = Task.Run(() => eventService.HandleEventAsync(eventData, connection), cancellationToken);
                 }
             }
             catch (JsonException e)

@@ -4,7 +4,7 @@ using ChatApp.SuperProtocol;
 
 namespace chatApp_server.Listener
 {
-    public class Listener() : IListener
+    public class Listener : IListener
     {
         public async Task ListenOnConnection(IConnection connection, CancellationToken cancellationToken)
         {
@@ -15,7 +15,7 @@ namespace chatApp_server.Listener
                     // waiting for incoming data
                     var receivedData = await connection.ReadAsync(cancellationToken);
                     
-                    Console.WriteLine($"[Listener]: received data: {receivedData}");
+                    Console.WriteLine($"[Server]: received data: {receivedData}");
                     if (string.IsNullOrEmpty(receivedData)) continue;
 
                     var chatData = JsonSerializer.Deserialize<ChatAppDataPackage>(receivedData);

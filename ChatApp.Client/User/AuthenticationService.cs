@@ -1,21 +1,13 @@
-﻿using ChatApp.Client.Wpf.Event;
-
-namespace ChatApp.Client.Wpf.User;
+﻿namespace ChatApp.Client.Wpf.User;
 
 public class AuthenticationService : IAuthenticationService
 {
-    private readonly IEventFactory _eventFactory;
-    
-    public AuthenticationService(IEventFactory eventFactory)
+    public AuthenticationService()
     {
-        _eventFactory = eventFactory;
     }
     
     public async Task AuthenticateUserAsync()
     {
-        // var testUSer = new Shared.User.User("Luca Weinert");
-        // var userInformationResponseEvent = _eventFactory.CreateUserInformationResponseEvent(testUSer);
-        // await _communicationService.SendEventToServer(userInformationResponseEvent);
     }
 
     public Task<Shared.User.User> GetUserInformationAsync()

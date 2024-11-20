@@ -2,11 +2,9 @@
 using System.Text.Json;
 using System.Windows;
 using ChatApp.Client.Wpf.Connection;
-using ChatApp.Client.Wpf.Event;
 using ChatApp.Client.Wpf.Listener;
 using ChatApp.Client.Wpf.User;
 using ChatApp.Shared.Connection;
-using ChatApp.Shared.Events;
 using ChatApp.SuperProtocol;
 
 namespace ChatApp.Client.Wpf.Communication;
@@ -15,15 +13,13 @@ public class CommunicationService : ICommunicationService
 {
     private readonly IConnectionService _connectionService;
     private readonly IAuthenticationService _authenticationService;
-    private readonly IEventFactory _eventFactory;
     private readonly IListener _listener;
     private IConnection? _connection;
 
     public CommunicationService(IConnectionService connectionService,
-        IAuthenticationService authenticationService, IEventFactory eventFactory, IListener listener)
+        IAuthenticationService authenticationService, IListener listener)
     {
         _connectionService = connectionService;
-        _eventFactory = eventFactory;
         _listener = listener;
         _authenticationService = authenticationService;
     }
@@ -35,10 +31,7 @@ public class CommunicationService : ICommunicationService
             var source = new CancellationTokenSource();
             var token = source.Token;
             _ = Task.Run(() => _listener.ListenOnConnection(_connection, token), token);
-
-            var userInformation = await _authenticationService.GetUserInformationAsync();
-            var userInformationEvent = _eventFactory.CreateUserInformationResponseEvent(userInformation);
-          //  await SendEventToServer(userInformationEvent);
+            
             SendChatDataToServer();
         }
         else
@@ -62,13 +55,7 @@ public class CommunicationService : ICommunicationService
             return false;
         }
     }
-
-    public async Task SendEventToServer<T>(Event<T> eventToSend)
-    {
-        var serializedEvent = JsonSerializer.Serialize(eventToSend);
-        if (_connection != null) await _connection.WriteAsync(serializedEvent);
-    }
-
+    
     public void SendChatDataToServer()
     {
         var user = new Shared.User.User("Luca Weinert");

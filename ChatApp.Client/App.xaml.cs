@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using ChatApp.Client.Wpf.Communication;
 using ChatApp.Client.Wpf.Connection;
-using ChatApp.Client.Wpf.Event;
 using ChatApp.Client.Wpf.Listener;
 using ChatApp.Client.Wpf.Message;
 using ChatApp.Client.Wpf.User;
@@ -27,8 +26,6 @@ namespace ChatApp.Client.Wpf
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConnectionService, ConnectionService>();
-            services.AddSingleton<IEventService, EventService>();
-            services.AddSingleton<IEventFactory, EventFactory>();
             services.AddSingleton<IListener, Listener.Listener>();
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IMessageService, MessageService>();

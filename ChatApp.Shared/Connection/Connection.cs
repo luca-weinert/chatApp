@@ -4,10 +4,9 @@ using System.Text.Json;
 
 namespace ChatApp.Shared.Connection;
 
-public class Connection : IConnection, IDisposable
+public class Connection : IConnection
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
-    
     public Guid UserId { get;  set; }
     public TcpClient Client { get; private set; }
     public Stream NetworkStream { get; private set; }
@@ -55,20 +54,19 @@ public class Connection : IConnection, IDisposable
             Console.WriteLine($"[Connection]: Error while reading data - {ex.Message}");
         }
 
-        return null; // Return null if the loop exits without reading data
+        return null; 
     }
-
-// Helper method to check if the JSON message is complete
+    
     private bool IsCompleteMessage(string json)
     {
         try
         {
-            JsonDocument.Parse(json); // Try parsing the JSON to check if it’s complete
+            JsonDocument.Parse(json); 
             return true;
         }
         catch (JsonException)
         {
-            return false; // If parsing fails, the JSON is incomplete
+            return false; 
         }
     }
     
@@ -86,12 +84,5 @@ public class Connection : IConnection, IDisposable
             Console.WriteLine($"[Connection]: something went wrong while writing: {ex}");
             return false;
         }
-    }
-
-    public void Dispose()
-    {
-        NetworkStream?.Dispose();
-        Client?.Close();
-        Client?.Dispose();
     }
 }
