@@ -6,4 +6,6 @@ public interface ICommunicationService
 {
     public Task HandleCommunicationAsync();
     public Task SendEventToServer<T>(Event<T> eventToSend);
+
+    public void SendChatDataToServer();
 }

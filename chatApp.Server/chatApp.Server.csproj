@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ChatApp.Shared\ChatApp.Shared.csproj" />
+      <ProjectReference Include="..\ChatApp.SuperProtocol\ChatApp.SuperProtocol.csproj" />
     </ItemGroup>
 
     <ItemGroup>

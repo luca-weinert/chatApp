@@ -7,6 +7,7 @@ using ChatApp.Client.Wpf.Listener;
 using ChatApp.Client.Wpf.User;
 using ChatApp.Shared.Connection;
 using ChatApp.Shared.Events;
+using ChatApp.SuperProtocol;
 
 namespace ChatApp.Client.Wpf.Communication;
 
@@ -37,7 +38,8 @@ public class CommunicationService : ICommunicationService
 
             var userInformation = await _authenticationService.GetUserInformationAsync();
             var userInformationEvent = _eventFactory.CreateUserInformationResponseEvent(userInformation);
-            await SendEventToServer(userInformationEvent);
+          //  await SendEventToServer(userInformationEvent);
+            SendChatDataToServer();
         }
         else
         {
@@ -65,5 +67,22 @@ public class CommunicationService : ICommunicationService
     {
         var serializedEvent = JsonSerializer.Serialize(eventToSend);
         if (_connection != null) await _connection.WriteAsync(serializedEvent);
+    }
+
+    public void SendChatDataToServer()
+    {
+        var user = new Shared.User.User("Luca Weinert");
+        var serializedUser = JsonSerializer.Serialize(user);
+        
+        var chatAppUserDataPackage = new ChatAppDataPackage(ChatAppDataTypes.User, serializedUser);
+        var serialize = JsonSerializer.Serialize(chatAppUserDataPackage);
+        _connection?.WriteAsync(serialize);
+        
+        var message = new Shared.Message.Message(Guid.NewGuid(), Guid.NewGuid(), "this is a new message");
+        var serializedMessage = JsonSerializer.Serialize(message);
+        
+        var chatAppMessageDataPackage = new ChatAppDataPackage(ChatAppDataTypes.Message, serializedMessage);
+        var serializedChatApplicationData = JsonSerializer.Serialize(chatAppMessageDataPackage);
+        _connection?.WriteAsync(serializedChatApplicationData);
     }
 }

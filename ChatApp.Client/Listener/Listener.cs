@@ -2,6 +2,7 @@
 using ChatApp.Client.Wpf.Event;
 using ChatApp.Shared.Connection;
 using ChatApp.Shared.Events;
+using ChatApp.SuperProtocol;
 
 namespace ChatApp.Client.Wpf.Listener
 {
@@ -16,6 +17,7 @@ namespace ChatApp.Client.Wpf.Listener
                     var receivedData = await connection.ReadAsync(cancellationToken);
                     Console.WriteLine($"[Listener]: received data: {receivedData}");
                     if (string.IsNullOrEmpty(receivedData)) continue;
+                    
                     var eventData = JsonSerializer.Deserialize<Event<object>>(receivedData);
                     if (eventData == null) continue;
                     Console.WriteLine($"[Listener] Received event: {eventData}");

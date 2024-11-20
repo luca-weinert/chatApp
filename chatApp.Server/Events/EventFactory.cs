@@ -11,7 +11,7 @@ public class EventFactory : IEventFactory
 
     public Event<ChatApp.Shared.User.User> CreateUserInformationResponseEvent(ChatApp.Shared.User.User user)
     {
-        return new Event<ChatApp.Shared.User.User>(EventType.UserInformationResponse, user);
+        return new Event<ChatApp.Shared.User.User>(EventType.UserInformation, user);
     }
 
     public Event<object?> CreateUserInformationRequestEvent(ChatApp.Shared.Message.Message message)

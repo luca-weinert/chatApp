@@ -25,7 +25,7 @@ public class EventService : IEventService
             case EventType.UserInformationRequest:
                 Console.WriteLine("[Client]: received user information request event]");
                 break;
-            case EventType.UserInformationResponse:
+            case EventType.UserInformation:
                 Console.WriteLine("[Client]: received user information event");
                 break;
             default:

@@ -11,7 +11,7 @@ public class EventFactory : IEventFactory
 
     public Event<Shared.User.User> CreateUserInformationResponseEvent(Shared.User.User user)
     {
-        return new Event<Shared.User.User>(EventType.UserInformationResponse, user);
+        return new Event<Shared.User.User>(EventType.UserInformation, user);
     }
 
     public Event<object?> CreateUserInformationRequestEvent(Shared.Message.Message message)

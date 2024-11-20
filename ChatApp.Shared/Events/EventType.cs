@@ -7,12 +7,12 @@ public enum EventType
 {
     
     /// <summary>
-    /// An Event indicating a message has been received
+    /// An Event indicating that a message has been received
     /// </summary>
     MessageReceived,
     
     /// <summary>
-    /// An Event indicating a message has been read
+    /// An Event indicating that a message has been read
     /// </summary>
     MessageRead,
     
@@ -29,5 +29,15 @@ public enum EventType
     /// <summary>
     /// An Event containing user information
     /// </summary>
-    UserInformationResponse,
+    UserInformation,
+    
+    /// <summary>
+    /// An event indicating that a new user joined the session
+    /// </summary>
+    UserJoined,
+    
+    /// <summary>
+    /// An event indicating that a user left the session
+    /// </summary>
+    UserLeft,
 }

@@ -18,11 +18,10 @@ public class TcpEndpoint : IEndpoint
         IListener listener)
     {
         _connectionService = connectionService;
-        _tcpListener = new TcpListener(IPAddress.Parse("192.168.178.45"), 8080);
+        _tcpListener = new TcpListener(IPAddress.Any, 8080);
         _connectionRepository = connectionRepository;
         _listener = listener;
     }
-
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -62,13 +61,10 @@ public class TcpEndpoint : IEndpoint
     {
         try
         {
-            // save connection in connection repository 
+            // save the current (active) connection in connection repository 
             var clientConnection = await _connectionService.GetConnectionForClientAsync(client);
             await _connectionRepository.SaveConnectionAsync(clientConnection);
             var listenerTask = _listener.ListenOnConnection(clientConnection, cancellationToken);
-            
-            // do some stuff 
-            
             await listenerTask;
         }
         catch (SocketException ex)

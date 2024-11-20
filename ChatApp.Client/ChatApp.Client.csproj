@@ -11,9 +11,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ChatApp.Shared\ChatApp.Shared.csproj" />
+      <ProjectReference Include="..\ChatApp.SuperProtocol\ChatApp.SuperProtocol.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MahApps.Metro" Version="3.0.0-alpha0513" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-rc.2.24473.5" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-rc.2.24473.5" />
     </ItemGroup>

@@ -10,7 +10,7 @@ public sealed class EventService : IEventService
     public event EventHandler<MessageEventArgs>? MessageSentEvent;
     public event EventHandler? UserInformationReceivedEvent;
 
-    public async Task HandleEventAsync<T>(Event<T>? incomingEvent)
+    public async Task HandleEventAsync(Event<dynamic>? incomingEvent)
     {
         if (incomingEvent != null)
             switch (incomingEvent.EventType)
@@ -29,7 +29,7 @@ public sealed class EventService : IEventService
                 case EventType.UserInformationRequest:
                     Console.WriteLine("[EventService]: received user information request event]");
                     break;
-                case EventType.UserInformationResponse:
+                case EventType.UserInformation:
                     Console.WriteLine("[EventService]: received user information event");
                     break;
                 default:
