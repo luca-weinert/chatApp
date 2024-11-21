@@ -62,7 +62,7 @@ public class TcpEndpoint : IEndpoint
         try
         {
             // save the current (active) connection in connection repository 
-            var clientConnection = await _connectionService.GetConnectionForClientAsync(client);
+            var clientConnection = _connectionService.GetConnectionForClient(client);
             await _connectionRepository.SaveConnectionAsync(clientConnection);
             var listenerTask = _listener.ListenOnConnection(clientConnection, cancellationToken);
             await listenerTask;

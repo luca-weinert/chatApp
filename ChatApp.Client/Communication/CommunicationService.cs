@@ -58,14 +58,14 @@ public class CommunicationService : ICommunicationService
     
     public void SendChatDataToServer()
     {
-        var user = new Shared.User.User("Luca Weinert");
+        var user = new Shared.User.User("Hans Peter");
         var serializedUser = JsonSerializer.Serialize(user);
         
         var chatAppUserDataPackage = new ChatAppDataPackage(ChatAppDataTypes.User, serializedUser);
         var serialize = JsonSerializer.Serialize(chatAppUserDataPackage);
         _connection?.WriteAsync(serialize);
         
-        var message = new Shared.Message.Message(Guid.NewGuid(), Guid.NewGuid(), "this is a new message");
+        var message = new Shared.Message.Message(Guid.NewGuid(), user.Id, "this is a new message");
         var serializedMessage = JsonSerializer.Serialize(message);
         
         var chatAppMessageDataPackage = new ChatAppDataPackage(ChatAppDataTypes.Message, serializedMessage);

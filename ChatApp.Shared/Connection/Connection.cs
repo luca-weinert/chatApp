@@ -7,7 +7,7 @@ namespace ChatApp.Shared.Connection;
 public class Connection : IConnection
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
-    public Guid UserId { get;  set; }
+    public Guid UserId { get;  set; } = Guid.Empty;
     public TcpClient Client { get; private set; }
     public Stream NetworkStream { get; private set; }
 

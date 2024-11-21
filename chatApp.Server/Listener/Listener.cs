@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using chatApp_server.Events;
 using ChatApp.Shared.Connection;
 using ChatApp.SuperProtocol;
 
@@ -6,57 +7,61 @@ namespace chatApp_server.Listener
 {
     public class Listener : IListener
     {
+        public event EventHandler<MessageEventArgs> MessageReceived;
+        public event EventHandler<UserEventArgs> UserReceived;
+        protected virtual void OnMessageReceived(MessageEventArgs e) => MessageReceived?.Invoke(this, e);
+        protected virtual void OnUserReceived(UserEventArgs e) => UserReceived?.Invoke(this, e);
+
         public async Task ListenOnConnection(IConnection connection, CancellationToken cancellationToken)
         {
-            try
+            while (!cancellationToken.IsCancellationRequested)
             {
-                while (!cancellationToken.IsCancellationRequested)
-                { 
-                    // waiting for incoming data
+                try
+                {
                     var receivedData = await connection.ReadAsync(cancellationToken);
-                    
-                    Console.WriteLine($"[Server]: received data: {receivedData}");
                     if (string.IsNullOrEmpty(receivedData)) continue;
-
-                    var chatData = JsonSerializer.Deserialize<ChatAppDataPackage>(receivedData);
-                    switch (chatData.DataType)
-                    {
-                        case ChatAppDataTypes.Message:
-                            Console.WriteLine($"message!");
-                            if (!string.IsNullOrWhiteSpace(chatData.Data))
-                            {
-                                var message = JsonSerializer.Deserialize<ChatApp.Shared.Message.Message>(chatData.Data);
-                                if (message != null)
-                                {
-                                    Console.WriteLine($"message: {message}");
-                                }
-                            }
-                            break;
-                        case ChatAppDataTypes.User:
-                            Console.WriteLine($"user!");
-                            if (!string.IsNullOrWhiteSpace(chatData.Data))
-                            {
-                                var user = JsonSerializer.Deserialize<ChatApp.Shared.User.User>(chatData.Data);
-                                if (user != null)
-                                {
-                                    Console.WriteLine($"user: {user}");
-                                }
-                            }
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException("chatData.DataType not supported by the server");
-                            break;
-                    }
+                    HandleReceivedData(receivedData, connection);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
                 }
             }
-            catch (JsonException e)
+        }
+
+        private void HandleReceivedData(string data, IConnection connection)
+        {
+            Console.WriteLine($"[Server]: received data: {data}");
+            var chatData = JsonSerializer.Deserialize<ChatAppDataPackage>(data);
+            switch (chatData.DataType)
             {
-                Console.WriteLine(e);
-                throw;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                case ChatAppDataTypes.Message:
+                    Console.WriteLine($"message!");
+                    if (!string.IsNullOrWhiteSpace(chatData.Data))
+                    {
+                        var message = JsonSerializer.Deserialize<ChatApp.Shared.Message.Message>(chatData.Data);
+                        if (message != null)
+                        {
+                            Console.WriteLine($"message: {message}");
+                            OnMessageReceived(new MessageEventArgs(message));
+                        }
+                    }
+
+                    break;
+                case ChatAppDataTypes.User:
+                    Console.WriteLine($"user!");
+                    if (!string.IsNullOrWhiteSpace(chatData.Data))
+                    {
+                        var user = JsonSerializer.Deserialize<ChatApp.Shared.User.User>(chatData.Data);
+                        if (user != null)
+                        {
+                            Console.WriteLine($"user: {user}");
+                            OnUserReceived(new UserEventArgs(connection, user));
+                        }
+                    }
+
+                    break;
             }
         }
     }

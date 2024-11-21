@@ -3,7 +3,7 @@
     public class User
     {
         public Guid Id { get; init; } = Guid.NewGuid(); // Ensures Id is set once and cannot be modified
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         public User(string name)
         {

@@ -37,7 +37,17 @@ internal static class Program
                 services.AddShared();
                 services.AddSingleton<IMessageService, MessageService>();
                 services.AddSingleton<IUserRepository, UserRepository>();
-                services.AddSingleton<IListener, Listener.Listener>();
+                services.AddSingleton<IListener>((provider) =>
+                {
+                    var listener = new Listener.Listener();
+                    var userService = provider.GetService<IUserService>()!;
+                    var messageService = provider.GetService<IMessageService>()!;
+                    
+                    listener.UserReceived += userService.OnUserInformationReceived; 
+                    listener.MessageReceived += messageService.OnMessageReceived;
+                    
+                    return listener;
+                });
                 services.AddSingleton<IUserService, UserService>();
                 services.AddSingleton<IEndpoint, TcpEndpoint>();
                 services.AddSingleton<App>();

@@ -1,31 +1,37 @@
 ﻿using System.Collections.Concurrent;
+using ChatApp.Shared.Connection;
 
 namespace chatApp_server.Connection;
 
 public class ConnectionRepository : IConnectionRepository
 {
-
     public ConnectionRepository()
     {
     }
     
-    private ConcurrentDictionary<Guid, ChatApp.Shared.Connection.Connection> _connections = new ConcurrentDictionary<Guid, ChatApp.Shared.Connection.Connection>();
+    private readonly ConcurrentDictionary<Guid, IConnection> _connectionPool = new ConcurrentDictionary<Guid, IConnection>();
     
-    public Task SaveConnectionAsync(ChatApp.Shared.Connection.Connection clientConnection)
+    public Task SaveConnectionAsync(IConnection clientConnection)
     {
-        _connections.TryAdd(clientConnection.Id, clientConnection);
+        _connectionPool.TryAdd(clientConnection.Id, clientConnection);
         return Task.CompletedTask;
     }
 
-    public Task RemoveConnectionAsync(ChatApp.Shared.Connection.Connection clientConnection)
+    public Task RemoveConnectionAsync(IConnection clientConnection)
     {
-        _connections.TryRemove(clientConnection.Id, out _);
+        _connectionPool.TryRemove(clientConnection.Id, out _);
         return Task.CompletedTask;
     }
 
-    public Task<ChatApp.Shared.Connection.Connection?> GetConnectionByUserId(Guid userId)
+    public Task<IConnection?> GetConnectionByUserIdAsync(Guid userId)
     {
-        var connection = _connections.Values.FirstOrDefault(c => c.UserId == userId);
+        var connection = _connectionPool.Values.FirstOrDefault(c => c.UserId == userId);
         return Task.FromResult(connection);
+    }
+
+    public IConnection UpdateConnection(IConnection connection)
+    {
+       var updatedConnection =  _connectionPool.AddOrUpdate(connection.Id, connection, (key, oldValue) => connection);
+       return updatedConnection;
     }
 }

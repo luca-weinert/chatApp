@@ -1,9 +1,12 @@
-﻿using System.Data;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
+using ChatApp.Shared.Connection;
 
 namespace chatApp_server.Connection;
 
 public interface IConnectionService
 {
-    public Task<ChatApp.Shared.Connection.Connection> GetConnectionForClientAsync(TcpClient client);
+    public IConnection GetConnectionForClient(TcpClient client);
+    public IConnection UpdateConnection(IConnection connection);
+    public Task<IConnection> GetConnectionByUserIdAsync(Guid userId);
+    public Task<bool> isUserConnected(Guid userId);
 }
