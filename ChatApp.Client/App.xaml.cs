@@ -19,11 +19,11 @@ namespace ChatApp.Client.Wpf
             var services = new ServiceCollection();
             ConfigureServices(services);
             ServiceProvider = services.BuildServiceProvider();
-            var communicationService = ServiceProvider.GetService<ICommunicationService>();
+            var communicationService = ServiceProvider.GetService<ICommunicationService>()!;
             Task.Run(() => communicationService.HandleCommunicationAsync());
         }
 
-        private void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConnectionService, ConnectionService>();
             services.AddSingleton<IListener, Listener.Listener>();

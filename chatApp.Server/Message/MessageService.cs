@@ -1,5 +1,7 @@
-﻿using chatApp_server.Connection;
+﻿using System.Text.Json;
+using chatApp_server.Connection;
 using chatApp_server.Events;
+using ChatApp.SuperProtocol;
 
 namespace chatApp_server.Message
 {
@@ -25,7 +27,11 @@ namespace chatApp_server.Message
         private async Task SendMessage(ChatApp.Shared.Message.Message message)
         {
           var targetConnection = await _connectionService.GetConnectionByUserIdAsync(message.TargetUserId);
-          await targetConnection.WriteAsync(message.ToString());
+          
+          var serializedMessage = JsonSerializer.Serialize(message);
+          var ChatAppDataPacka = new ChatAppDataPackage(ChatAppDataTypes.Message, serializedMessage);
+          var serializedChatAppData = JsonSerializer.Serialize(ChatAppDataPacka);
+          await targetConnection.WriteAsync(serializedChatAppData);
         }
     }
 }

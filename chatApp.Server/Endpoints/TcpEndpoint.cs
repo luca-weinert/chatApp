@@ -11,7 +11,7 @@ public class TcpEndpoint : IEndpoint
     private readonly IConnectionRepository _connectionRepository;
     private readonly IListener _listener;
     private readonly TcpListener _tcpListener;
-    
+
     public TcpEndpoint(
         IConnectionService connectionService,
         IConnectionRepository connectionRepository,
@@ -35,16 +35,11 @@ public class TcpEndpoint : IEndpoint
                 // waiting for incoming client connections
                 var client = await _tcpListener.AcceptTcpClientAsync(cancellationToken);
                 Console.WriteLine("[Server]: Client connected");
-                
+
                 // handle current connection on separate task so the endpoint can handle other incoming connections  
                 _ = Task.Run(() => HandleClientAsync(client, cancellationToken), cancellationToken);
             }
         }
-        catch (OperationCanceledException)
-        {
-            Console.WriteLine("[Server]: Cancellation requested. Server is stopping.");
-        }
-
         catch (Exception e)
         {
             Console.WriteLine($"[Server]: unexpected error: {e.Message}");
