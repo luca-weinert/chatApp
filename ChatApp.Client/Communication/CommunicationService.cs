@@ -42,7 +42,7 @@ public class CommunicationService : ICommunicationService
         try
         {
             var ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.178.45"), 8080);
-            _connection = await _connectionService.GetConnectionAsync(ipEndPoint);
+            _connection = await _connectionService.ConnectToServerAsync(ipEndPoint);
             return _connection != null;
         }
         catch (Exception ex)
@@ -56,15 +56,15 @@ public class CommunicationService : ICommunicationService
     {
         var user = new Shared.User.User("Hans Peter");
         var serializedUser = JsonSerializer.Serialize(user);
-        var chatAppUserDataPackage = new ChatAppDataPackage(ChatAppDataTypes.User, serializedUser);
-        var serialize = JsonSerializer.Serialize(chatAppUserDataPackage);
+        var chatAppUserDataPackage = new SuperProtocolDataPackage(SuperProtocolDataTypes.User, serializedUser);
+        var serialize = SuperProtocol.SuperProtocol.Serialize(chatAppUserDataPackage);
         _connection?.WriteAsync(serialize);
         Console.WriteLine($"[Client]: Sent user to server");
         
         var message = new Shared.Message.Message(Guid.NewGuid(), user.Id, "this is a new message");
         var serializedMessage = JsonSerializer.Serialize(message);
-        var chatAppMessageDataPackage = new ChatAppDataPackage(ChatAppDataTypes.Message, serializedMessage);
-        var serializedChatApplicationData = JsonSerializer.Serialize(chatAppMessageDataPackage);
+        var chatAppMessageDataPackage = new SuperProtocolDataPackage(SuperProtocolDataTypes.Message, serializedMessage);
+        var serializedChatApplicationData= SuperProtocol.SuperProtocol.Serialize(chatAppMessageDataPackage);
         _connection?.WriteAsync(serializedChatApplicationData);
         Console.WriteLine($"[Client]: Sent message to server");
     }

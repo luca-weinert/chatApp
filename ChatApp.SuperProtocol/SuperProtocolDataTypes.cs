@@ -1,6 +1,6 @@
 ﻿namespace ChatApp.SuperProtocol;
 
-public enum ChatAppDataTypes
+public enum SuperProtocolDataTypes
 {
     Message,
     User,

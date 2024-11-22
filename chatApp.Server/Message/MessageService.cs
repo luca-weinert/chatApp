@@ -27,11 +27,9 @@ namespace chatApp_server.Message
         private async Task SendMessage(ChatApp.Shared.Message.Message message)
         {
           var targetConnection = await _connectionService.GetConnectionByUserIdAsync(message.TargetUserId);
-          
-          var serializedMessage = JsonSerializer.Serialize(message);
-          var ChatAppDataPacka = new ChatAppDataPackage(ChatAppDataTypes.Message, serializedMessage);
-          var serializedChatAppData = JsonSerializer.Serialize(ChatAppDataPacka);
-          await targetConnection.WriteAsync(serializedChatAppData);
+          var superProtocolPackage = new SuperProtocolDataPackage(SuperProtocolDataTypes.Message, JsonSerializer.Serialize(message));
+          var serialized = SuperProtocol.Serialize(superProtocolPackage);
+          await targetConnection.WriteAsync(serialized);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace ChatApp.SuperProtocol; 
-public struct ChatAppDataPackage
+public struct SuperProtocolDataPackage
 {
-    public ChatAppDataPackage(ChatAppDataTypes dataType, string? data)
+    public SuperProtocolDataPackage(SuperProtocolDataTypes dataType, string? data)
     {
         Timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
         DataType = dataType;
@@ -12,7 +12,7 @@ public struct ChatAppDataPackage
 
     public string Timestamp { get; init; }
 
-    public ChatAppDataTypes DataType { get; init; }
+    public SuperProtocolDataTypes DataType { get; init; }
 
     public string? Data { get; init; }
 }   

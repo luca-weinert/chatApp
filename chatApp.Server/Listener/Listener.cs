@@ -18,9 +18,9 @@ namespace chatApp_server.Listener
             {
                 try
                 {
-                    var receivedData = await connection.ReadAsync(cancellationToken);
-                    if (string.IsNullOrEmpty(receivedData)) continue;
-                    HandleReceivedData(receivedData, connection);
+                    var rawData = await connection.ReadAsync(cancellationToken);
+                    var chatData = SuperProtocol.Deserialize(rawData);
+                    HandleReceivedData(chatData, connection);
                 }
                 catch (Exception e)
                 {
@@ -30,17 +30,16 @@ namespace chatApp_server.Listener
             }
         }
 
-        private void HandleReceivedData(string data, IConnection connection)
+        private void HandleReceivedData(SuperProtocolDataPackage dataPackage, IConnection connection)
         {
-            Console.WriteLine($"[Server]: received data: {data}");
-            var chatData = JsonSerializer.Deserialize<ChatAppDataPackage>(data);
-            switch (chatData.DataType)
+            Console.WriteLine($"[Server]: received data: {dataPackage}");
+            switch (dataPackage.DataType)
             {
-                case ChatAppDataTypes.Message:
+                case SuperProtocolDataTypes.Message:
                     Console.WriteLine($"message!");
-                    if (!string.IsNullOrWhiteSpace(chatData.Data))
+                    if (!string.IsNullOrWhiteSpace(dataPackage.Data))
                     {
-                        var message = JsonSerializer.Deserialize<ChatApp.Shared.Message.Message>(chatData.Data);
+                        var message = JsonSerializer.Deserialize<ChatApp.Shared.Message.Message>(dataPackage.Data);
                         if (message != null)
                         {
                             Console.WriteLine($"message: {message}");
@@ -49,11 +48,11 @@ namespace chatApp_server.Listener
                     }
 
                     break;
-                case ChatAppDataTypes.User:
+                case SuperProtocolDataTypes.User:
                     Console.WriteLine($"user!");
-                    if (!string.IsNullOrWhiteSpace(chatData.Data))
+                    if (!string.IsNullOrWhiteSpace(dataPackage.Data))
                     {
-                        var user = JsonSerializer.Deserialize<ChatApp.Shared.User.User>(chatData.Data);
+                        var user = JsonSerializer.Deserialize<ChatApp.Shared.User.User>(dataPackage.Data);
                         if (user != null)
                         {
                             Console.WriteLine($"user: {user}");

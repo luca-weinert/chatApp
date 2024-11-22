@@ -5,7 +5,7 @@ namespace ChatApp.Client.Wpf.Connection
 {
     public class ConnectionService : IConnectionService
     {
-        public async Task<Shared.Connection.Connection?> GetConnectionAsync(IPEndPoint serverEndPoint)
+        public async Task<Shared.Connection.Connection?> ConnectToServerAsync(IPEndPoint serverEndPoint)
         {
             Console.WriteLine("[Client]: Attempting to connect to the server...");
 
@@ -27,6 +27,11 @@ namespace ChatApp.Client.Wpf.Connection
                 Console.WriteLine($"[Client]: Unexpected error while connecting to server: {ex.Message}");
                 throw;
             }
+        }
+
+        public void Disconnect()
+        {
+            throw new NotImplementedException();
         }
     }
 }
