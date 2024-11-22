@@ -1,18 +1,18 @@
 ﻿using System.Text.Json;
-using ChatApp.Shared.Connection;
+using ChatApp.Client.Wpf.Connection;
 using ChatApp.SuperProtocol;
 
 namespace ChatApp.Client.Wpf.Listener
 {
     public class Listener : IListener
     {
-        public async Task ListenOnConnection(IConnection connection, CancellationToken cancellationToken)
+        public async Task ListenOnConnection(IServerConnection serverConnection, CancellationToken cancellationToken)
         {
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    var rawData = await connection.ReadAsync(cancellationToken);
+                    var rawData = await serverConnection.ReadAsync();
                     var superProtocolDataPackage = SuperProtocol.SuperProtocol.Deserialize(rawData);
                     switch (superProtocolDataPackage.DataType)
                     {

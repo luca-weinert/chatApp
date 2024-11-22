@@ -4,6 +4,6 @@ namespace ChatApp.Client.Wpf.Connection;
 
 public interface IConnectionService
 {
-    public Task<Shared.Connection.Connection?> ConnectToServerAsync(IPEndPoint serverEndPoint);
+    public Task<IServerConnection?> ConnectToServerAsync(IPEndPoint serverEndPoint);
     public void Disconnect();
 }

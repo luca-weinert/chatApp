@@ -3,7 +3,6 @@ using System.Text.Json;
 using System.Windows;
 using ChatApp.Client.Wpf.Connection;
 using ChatApp.Client.Wpf.Listener;
-using ChatApp.Shared.Connection;
 using ChatApp.SuperProtocol;
 
 namespace ChatApp.Client.Wpf.Communication;
@@ -12,7 +11,7 @@ public class CommunicationService : ICommunicationService
 {
     private readonly IConnectionService _connectionService;
     private readonly IListener _listener;
-    private IConnection? _connection;
+    private IServerConnection? _serverConnection;
 
     public CommunicationService(IConnectionService connectionService, IListener listener)
     {
@@ -26,7 +25,7 @@ public class CommunicationService : ICommunicationService
         {
             var source = new CancellationTokenSource();
             var token = source.Token;
-            _ = Task.Run(() => _listener.ListenOnConnection(_connection, token), token);
+            _ = Task.Run(() => _listener.ListenOnConnection(_serverConnection, token), token);
             
             SendChatDataToServer();
         }
@@ -42,8 +41,8 @@ public class CommunicationService : ICommunicationService
         try
         {
             var ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.178.45"), 8080);
-            _connection = await _connectionService.ConnectToServerAsync(ipEndPoint);
-            return _connection != null;
+            _serverConnection = await _connectionService.ConnectToServerAsync(ipEndPoint);
+            return _serverConnection != null;
         }
         catch (Exception ex)
         {
@@ -57,15 +56,13 @@ public class CommunicationService : ICommunicationService
         var user = new Shared.User.User("Hans Peter");
         var serializedUser = JsonSerializer.Serialize(user);
         var chatAppUserDataPackage = new SuperProtocolDataPackage(SuperProtocolDataTypes.User, serializedUser);
-        var serialize = SuperProtocol.SuperProtocol.Serialize(chatAppUserDataPackage);
-        _connection?.WriteAsync(serialize);
+        _serverConnection?.WriteAsync(chatAppUserDataPackage);
         Console.WriteLine($"[Client]: Sent user to server");
         
         var message = new Shared.Message.Message(Guid.NewGuid(), user.Id, "this is a new message");
         var serializedMessage = JsonSerializer.Serialize(message);
         var chatAppMessageDataPackage = new SuperProtocolDataPackage(SuperProtocolDataTypes.Message, serializedMessage);
-        var serializedChatApplicationData= SuperProtocol.SuperProtocol.Serialize(chatAppMessageDataPackage);
-        _connection?.WriteAsync(serializedChatApplicationData);
+        _serverConnection?.WriteAsync(chatAppMessageDataPackage);
         Console.WriteLine($"[Client]: Sent message to server");
     }
 }

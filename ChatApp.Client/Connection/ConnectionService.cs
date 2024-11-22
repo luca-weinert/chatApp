@@ -5,7 +5,7 @@ namespace ChatApp.Client.Wpf.Connection
 {
     public class ConnectionService : IConnectionService
     {
-        public async Task<Shared.Connection.Connection?> ConnectToServerAsync(IPEndPoint serverEndPoint)
+        public async Task<IServerConnection?> ConnectToServerAsync(IPEndPoint serverEndPoint)
         {
             Console.WriteLine("[Client]: Attempting to connect to the server...");
 
@@ -13,9 +13,8 @@ namespace ChatApp.Client.Wpf.Connection
             {
                 var tcpClient = new TcpClient();
                 await tcpClient.ConnectAsync(serverEndPoint.Address, serverEndPoint.Port);
-
                 Console.WriteLine("[Client]: Connection established successfully");
-                return new Shared.Connection.Connection(tcpClient);
+                return new ServerConnection(tcpClient);
             }
             catch (SocketException ex)
             {
