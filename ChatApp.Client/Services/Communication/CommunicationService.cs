@@ -1,23 +1,16 @@
 ﻿using System.Net;
 using System.Text.Json;
-using System.Windows;
-using ChatApp.Client.Wpf.Connection;
-using ChatApp.Client.Wpf.Listener;
+using ChatApp.Client.Wpf.Services.Connection;
+using ChatApp.Client.Wpf.Services.Listener;
 using ChatApp.SuperProtocol;
 
-namespace ChatApp.Client.Wpf.Communication;
+namespace ChatApp.Client.Wpf.Services.Communication;
 
-public class CommunicationService : ICommunicationService
+public class CommunicationService(IConnectionService connectionService, IListener listener) : ICommunicationService
 {
-    private readonly IConnectionService _connectionService;
-    private readonly IListener _listener;
+    private readonly IConnectionService _connectionService = connectionService;
+    private readonly IListener _listener = listener;
     private IServerConnection? _serverConnection;
-
-    public CommunicationService(IConnectionService connectionService, IListener listener)
-    {
-        _connectionService = connectionService;
-        _listener = listener;
-    }
 
     public async Task HandleCommunicationAsync()
     {
@@ -26,13 +19,10 @@ public class CommunicationService : ICommunicationService
             var source = new CancellationTokenSource();
             var token = source.Token;
             _ = Task.Run(() => _listener.ListenOnConnection(_serverConnection, token), token);
-            
-            SendChatDataToServer();
         }
         else
         {
             Console.WriteLine("[Client]: Could not establish a connection to the server.");
-            MessageBox.Show("Could not establish a connection to the server ):");
         }
     }
 

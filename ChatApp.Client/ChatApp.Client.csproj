@@ -15,9 +15,35 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MahApps.Metro" Version="3.0.0-alpha0513" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-rc.2.24473.5" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-rc.2.24473.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Controls\LoginControl.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="View\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="MVVM\View\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="MVVM\View\MessageReceiverControl.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="MVVM\ViewModell\" />
+      <Folder Include="MVVM\Model\" />
+      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>

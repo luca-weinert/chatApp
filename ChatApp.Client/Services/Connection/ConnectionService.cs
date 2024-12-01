@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace ChatApp.Client.Wpf.Connection
+namespace ChatApp.Client.Wpf.Services.Connection
 {
     public class ConnectionService : IConnectionService
     {

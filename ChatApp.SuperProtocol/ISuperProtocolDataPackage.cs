@@ -1,6 +1,3 @@
 ﻿namespace ChatApp.SuperProtocol;
 
-public interface ISuperProtocolDataPackage
-{
-    
-}
+public interface ISuperProtocolDataPackage;

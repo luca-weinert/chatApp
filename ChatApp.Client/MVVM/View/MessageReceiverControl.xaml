@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="ChatApp.Client.Wpf.MVVM.View.MessageReceiverControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ChatApp.Client.Wpf"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <!-- Received Messages -->
+    <GroupBox Grid.Row="2" Header="Received Messages" Margin="0,0,0,20">
+        <ScrollViewer>
+            <ListView Name="ReceivedMessages">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <TextBlock Text="Sender: " FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding SenderUserId}"></TextBlock>
+                            <TextBlock Text=" Content: " FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding Content}"></TextBlock>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+    </GroupBox>
+</UserControl>

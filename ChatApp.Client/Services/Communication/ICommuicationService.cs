@@ -1,4 +1,4 @@
-﻿namespace ChatApp.Client.Wpf.Communication;
+﻿namespace ChatApp.Client.Wpf.Services.Communication;
 
 public interface ICommunicationService
 {

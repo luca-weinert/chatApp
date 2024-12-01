@@ -1,11 +1,10 @@
 ﻿using System.Windows;
-using ChatApp.Client.Wpf.Communication;
-using ChatApp.Client.Wpf.Connection;
-using ChatApp.Client.Wpf.Listener;
-using ChatApp.Client.Wpf.Message;
-using ChatApp.Client.Wpf.User;
+using ChatApp.Client.Wpf.Services.Communication;
+using ChatApp.Client.Wpf.Services.Connection;
+using ChatApp.Client.Wpf.Services.Listener;
+using ChatApp.Client.Wpf.Services.Message;
 using Microsoft.Extensions.DependencyInjection;
-using ICommunicationService = ChatApp.Client.Wpf.Communication.ICommunicationService;
+using ICommunicationService = ChatApp.Client.Wpf.Services.Communication.ICommunicationService;
 
 namespace ChatApp.Client.Wpf
 {
@@ -26,8 +25,7 @@ namespace ChatApp.Client.Wpf
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConnectionService, ConnectionService>();
-            services.AddSingleton<IListener, Listener.Listener>();
-            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<IListener, Listener>();
             services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<ICommunicationService, CommunicationService>();
         }

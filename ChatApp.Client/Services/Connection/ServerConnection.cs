@@ -2,11 +2,11 @@
 using System.Text;
 using ChatApp.SuperProtocol;
 
-namespace ChatApp.Client.Wpf.Connection;
+namespace ChatApp.Client.Wpf.Services.Connection;
 
 public class ServerConnection : IServerConnection
 {
-    private NetworkStream _stream;
+    private readonly NetworkStream _stream;
 
     public ServerConnection(TcpClient client)
     {
@@ -20,8 +20,11 @@ public class ServerConnection : IServerConnection
         await _stream.WriteAsync(bytes);
     }
 
-    public Task<string> ReadAsync()
+    public async Task<string> ReadAsync()
     {
-        throw new NotImplementedException();
+        var buffer = new byte[1024];
+        var receivedBytes = await _stream.ReadAsync(buffer);
+        var result = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+        return result;
     }
 }

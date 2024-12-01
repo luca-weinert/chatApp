@@ -1,4 +1,4 @@
-﻿namespace ChatApp.Client.Wpf.Message;
+﻿namespace ChatApp.Client.Wpf.Services.Message;
 
 public interface IMessageService
 {

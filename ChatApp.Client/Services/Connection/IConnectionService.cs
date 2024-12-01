@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace ChatApp.Client.Wpf.Connection;
+namespace ChatApp.Client.Wpf.Services.Connection;
 
 public interface IConnectionService
 {

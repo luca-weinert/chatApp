@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
-using ChatApp.Client.Wpf.Connection;
+using ChatApp.Client.Wpf.Services.Connection;
 using ChatApp.SuperProtocol;
 
-namespace ChatApp.Client.Wpf.Listener
+namespace ChatApp.Client.Wpf.Services.Listener
 {
     public class Listener : IListener
     {

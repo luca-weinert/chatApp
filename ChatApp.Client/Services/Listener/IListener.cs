@@ -1,7 +1,6 @@
-﻿using ChatApp.Client.Wpf.Connection;
-using ChatApp.Shared.Connection;
+﻿using ChatApp.Client.Wpf.Services.Connection;
 
-namespace ChatApp.Client.Wpf.Listener
+namespace ChatApp.Client.Wpf.Services.Listener
 {
     public interface IListener
     {
