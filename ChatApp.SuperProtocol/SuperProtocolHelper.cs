@@ -2,7 +2,7 @@
 
 namespace ChatApp.SuperProtocol;
 
-public static class SuperProtocol
+public static class SuperProtocolHelper
 {
     public static string Serialize(SuperProtocolDataPackage superProtocolDataPackage)
     {

@@ -15,11 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-rc.2.24473.5" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-rc.2.24473.5" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Page Update="Controls\LoginControl.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
@@ -33,7 +28,7 @@
       <Page Update="MVVM\View\MainWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
       </Page>
-      <Page Update="MVVM\View\MessageReceiverControl.xaml">
+      <Page Update="MVVM\View\MessageReceiverView.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
@@ -41,9 +36,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="MVVM\ViewModell\" />
-      <Folder Include="MVVM\Model\" />
       <Folder Include="Services\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Ninject" Version="4.0.0-beta.1" />
     </ItemGroup>
 
 </Project>

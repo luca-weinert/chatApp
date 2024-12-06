@@ -28,7 +28,7 @@ namespace chatApp_server.Message
         {
           var targetConnection = await _connectionService.GetConnectionByUserIdAsync(message.TargetUserId);
           var superProtocolPackage = new SuperProtocolDataPackage(SuperProtocolDataTypes.Message, JsonSerializer.Serialize(message));
-          var serialized = SuperProtocol.Serialize(superProtocolPackage);
+          var serialized = SuperProtocolHelper.Serialize(superProtocolPackage);
           await targetConnection.WriteAsync(serialized);
         }
     }

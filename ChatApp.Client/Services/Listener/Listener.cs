@@ -13,7 +13,7 @@ namespace ChatApp.Client.Wpf.Services.Listener
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     var rawData = await serverConnection.ReadAsync();
-                    var superProtocolDataPackage = SuperProtocol.SuperProtocol.Deserialize(rawData);
+                    var superProtocolDataPackage = SuperProtocol.SuperProtocolHelper.Deserialize(rawData);
                     switch (superProtocolDataPackage.DataType)
                     {
                         case SuperProtocolDataTypes.Message:

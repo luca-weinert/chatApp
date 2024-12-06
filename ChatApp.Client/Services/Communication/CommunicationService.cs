@@ -30,7 +30,7 @@ public class CommunicationService(IConnectionService connectionService, IListene
     {
         try
         {
-            var ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.178.45"), 8080);
+            var ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.8.61"), 8080);
             _serverConnection = await _connectionService.ConnectToServerAsync(ipEndPoint);
             return _serverConnection != null;
         }

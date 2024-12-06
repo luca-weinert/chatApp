@@ -19,7 +19,7 @@ namespace chatApp_server.Listener
                 try
                 {
                     var rawData = await connection.ReadAsync(cancellationToken);
-                    var chatData = SuperProtocol.Deserialize(rawData);
+                    var chatData = SuperProtocolHelper.Deserialize(rawData);
                     HandleReceivedData(chatData, connection);
                 }
                 catch (Exception e)

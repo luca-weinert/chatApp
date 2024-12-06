@@ -1,33 +1,28 @@
 ﻿using System.Windows;
+using ChatApp.Client.Wpf.MVVM.View;
 using ChatApp.Client.Wpf.Services.Communication;
 using ChatApp.Client.Wpf.Services.Connection;
 using ChatApp.Client.Wpf.Services.Listener;
 using ChatApp.Client.Wpf.Services.Message;
-using Microsoft.Extensions.DependencyInjection;
-using ICommunicationService = ChatApp.Client.Wpf.Services.Communication.ICommunicationService;
+using Ninject;
 
 namespace ChatApp.Client.Wpf
 {
     public partial class App : Application
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
-        
         protected override void OnStartup(StartupEventArgs e)
         {
+            Iockernel.Initialze(new IocConfiguration());
             base.OnStartup(e);
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-            ServiceProvider = services.BuildServiceProvider();
-            var communicationService = ServiceProvider.GetService<ICommunicationService>()!;
-            Task.Run(() => communicationService.HandleCommunicationAsync());
+           // ComposeObjects();
+           // Current.MainWindow.Show();
         }
+        
 
-        private static void ConfigureServices(IServiceCollection services)
+        private void ComposeObjects()
         {
-            services.AddSingleton<IConnectionService, ConnectionService>();
-            services.AddSingleton<IListener, Listener>();
-            services.AddSingleton<IMessageService, MessageService>();
-            services.AddSingleton<ICommunicationService, CommunicationService>();
+            Current.MainWindow = Iockernel.Get<MainWindow>();
+            Current.MainWindow.Title = "DI Test";
         }
     }
 }

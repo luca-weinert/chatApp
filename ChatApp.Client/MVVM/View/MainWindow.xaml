@@ -30,9 +30,9 @@
         </StackPanel>
         
         <!-- received Messages -->
-        <view:MessageReceiverControl Grid.Row="2"></view:MessageReceiverControl>
+        <view:MessageReceiverView Grid.Row="2" DataContext="{Binding MessageReceiverViewModel, Source={StaticResource ViewModelLocator}}"></view:MessageReceiverView>
         
         <!-- Message Input -->
-        <view:MessageInput Grid.Row="3"></view:MessageInput>
+        <view:MessageInputView Grid.Row="3"></view:MessageInputView>
     </Grid>
 </Window>

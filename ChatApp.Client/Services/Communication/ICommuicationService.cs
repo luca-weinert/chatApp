@@ -3,6 +3,5 @@
 public interface ICommunicationService
 {
     public Task HandleCommunicationAsync();
-
-    public void SendChatDataToServer();
+    
 }

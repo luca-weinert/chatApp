@@ -1,4 +1,4 @@
-﻿using ChatApp.SuperProtocol;
+﻿using System.Windows;
 using ICommunicationService = ChatApp.Client.Wpf.Services.Communication.ICommunicationService;
 
 namespace ChatApp.Client.Wpf.Services.Message
@@ -13,9 +13,8 @@ namespace ChatApp.Client.Wpf.Services.Message
         }
         
         public async Task SendMessageAsync(Shared.Message.Message message)
-        {
-            var dataPackage = new SuperProtocolDataPackage(SuperProtocolDataTypes.Message, message.ToString());
-            var serializedPackage = SuperProtocol.SuperProtocol.Serialize(dataPackage);
+        { 
+            MessageBox.Show("Message sent");
         }
     }
 }

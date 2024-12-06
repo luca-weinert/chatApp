@@ -15,7 +15,7 @@ public class ServerConnection : IServerConnection
     
     public async Task WriteAsync(SuperProtocolDataPackage package)
     {
-        var serializedPackage = SuperProtocol.SuperProtocol.Serialize(package);
+        var serializedPackage = SuperProtocol.SuperProtocolHelper.Serialize(package);
         var bytes = Encoding.UTF8.GetBytes(serializedPackage);
         await _stream.WriteAsync(bytes);
     }
