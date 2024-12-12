@@ -1,18 +1,18 @@
 ﻿using System.Collections.Concurrent;
 
-namespace chatApp_server.User;
+namespace chatApp_server.Repositorys.User;
 
 public class UserRepository : IUserRepository
 {
-    private ConcurrentDictionary<Guid,ChatApp.Shared.User.User> _users = new();
+    private ConcurrentDictionary<Guid,ChatApp.Shared.Model.User.User> _users = new();
     
-    public Task SaveUserAsync(ChatApp.Shared.User.User user)
+    public Task SaveUserAsync(ChatApp.Shared.Model.User.User user)
     {
         _users.TryAdd(user.Id, user);
         return Task.CompletedTask;
     }
 
-    public Task<ChatApp.Shared.User.User?> GetUserByIdAsync(Guid userId)
+    public Task<ChatApp.Shared.Model.User.User?> GetUserByIdAsync(Guid userId)
     {
         _users.TryGetValue(userId, out var user);
         return Task.FromResult(user);

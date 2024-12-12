@@ -1,10 +1,10 @@
-﻿using chatApp_server.Connection;
-using chatApp_server.Connection.Repository;
-using chatApp_server.Connection.Services;
-using chatApp_server.Endpoints;
-using chatApp_server.Listener;
-using chatApp_server.Message;
-using chatApp_server.User;
+﻿using chatApp_server.Endpoints;
+using chatApp_server.Repositorys.Connection;
+using chatApp_server.Repositorys.User;
+using chatApp_server.Services.ConnectionService;
+using chatApp_server.Services.ListenerService;
+using chatApp_server.Services.MessageService;
+using chatApp_server.Services.UserService;
 using ChatApp.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,7 +41,7 @@ internal static class Program
                 services.AddSingleton<IUserRepository, UserRepository>();
                 services.AddSingleton<IListenerService>((provider) =>
                 {
-                    var listener = new Listener.IListenerServiceService();
+                    var listener = new IListenerServiceService();
                     var userService = provider.GetService<IUserService>()!;
                     var messageService = provider.GetService<IMessageService>()!;
                     

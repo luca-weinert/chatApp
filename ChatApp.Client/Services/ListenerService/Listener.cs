@@ -1,10 +1,10 @@
-﻿using System.Net.Sockets;
-using System.Text.Json;
+﻿using System.Text.Json;
 using ChatApp.ChatProtocol;
 using ChatApp.Client.Wpf.Model.Connection;
-using ChatApp.Client.Wpf.Services.Network;
+using ChatApp.Client.Wpf.Services.NetworkService;
+using ChatApp.Shared.Model.Message;
 
-namespace ChatApp.Client.Wpf.Services.Listener
+namespace ChatApp.Client.Wpf.Services.ListenerService
 {
     public class Listener : IListener
     {
@@ -26,7 +26,7 @@ namespace ChatApp.Client.Wpf.Services.Listener
                     switch (superProtocolDataPackage.DataType)
                     {
                         case ChatProtocolDataTypes.Message:
-                            var message = JsonSerializer.Deserialize<Shared.Message.Message>(superProtocolDataPackage.Data);
+                            var message = JsonSerializer.Deserialize<Message>(superProtocolDataPackage.Data);
                             Console.WriteLine($"[Client]: received message");
                             var serializedMessage = JsonSerializer.Serialize(message);
                             Console.WriteLine($"[Client]: serialized message: {serializedMessage}");

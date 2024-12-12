@@ -1,6 +1,6 @@
 ﻿using chatApp_server.Events;
 
-namespace chatApp_server.Message;
+namespace chatApp_server.Services.MessageService;
 
 public interface IMessageService
 {

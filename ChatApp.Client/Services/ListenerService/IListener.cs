@@ -1,6 +1,6 @@
 ﻿using ChatApp.Client.Wpf.Model.Connection;
 
-namespace ChatApp.Client.Wpf.Services.Listener
+namespace ChatApp.Client.Wpf.Services.ListenerService
 {
     public interface IListener
     {

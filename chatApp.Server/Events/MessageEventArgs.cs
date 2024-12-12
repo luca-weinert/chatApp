@@ -1,10 +1,12 @@
-﻿namespace chatApp_server.Events;
+﻿using ChatApp.Shared.Model.Message;
+
+namespace chatApp_server.Events;
 
 public class MessageEventArgs : EventArgs
 {
-    public ChatApp.Shared.Message.Message Message { get; private set; }
+    public Message Message { get; private set; }
 
-    public MessageEventArgs(ChatApp.Shared.Message.Message message)
+    public MessageEventArgs(Message message)
     {
         Message = message;
     }

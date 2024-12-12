@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
-using ChatApp.Shared.Connection;
+using ChatApp.Shared.Model.Connection;
 
-namespace chatApp_server.Connection.Services;
+namespace chatApp_server.Services.ConnectionService;
 
 public interface IConnectionService
 {

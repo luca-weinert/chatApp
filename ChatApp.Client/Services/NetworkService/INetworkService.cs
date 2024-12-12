@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace ChatApp.Client.Wpf.Services.Network;
+namespace ChatApp.Client.Wpf.Services.NetworkService;
 
 public interface INetworkService
 {

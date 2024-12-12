@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
-using chatApp_server.Connection;
-using chatApp_server.Connection.Services;
 using chatApp_server.Events;
+using chatApp_server.Services.ConnectionService;
 using ChatApp.ChatProtocol;
+using ChatApp.Shared.Model.Message;
 
-namespace chatApp_server.Message
+namespace chatApp_server.Services.MessageService
 {
     public class MessageService : IMessageService
     {
@@ -25,7 +25,7 @@ namespace chatApp_server.Message
             }
         }
 
-        private async Task SendMessage(ChatApp.Shared.Message.Message message)
+        private async Task SendMessage(Message message)
         {
           var targetConnection = await _connectionService.GetConnectionByUserIdAsync(message.TargetUserId);
           var superProtocolPackage = new ChatProtocolDataPackage(ChatProtocolDataTypes.Message, JsonSerializer.Serialize(message));

@@ -1,9 +1,8 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using chatApp_server.Connection;
-using chatApp_server.Connection.Repository;
-using chatApp_server.Connection.Services;
-using chatApp_server.Listener;
+using chatApp_server.Repositorys.Connection;
+using chatApp_server.Services.ConnectionService;
+using chatApp_server.Services.ListenerService;
 
 namespace chatApp_server.Endpoints;
 

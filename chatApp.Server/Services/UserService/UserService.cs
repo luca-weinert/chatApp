@@ -1,9 +1,10 @@
-﻿using chatApp_server.Connection;
-using chatApp_server.Connection.Services;
-using chatApp_server.Events;
-using ChatApp.Shared.Connection;
+﻿using chatApp_server.Events;
+using chatApp_server.Repositorys.User;
+using chatApp_server.Services.ConnectionService;
+using ChatApp.Shared.Model.Connection;
+using ChatApp.Shared.Model.User;
 
-namespace chatApp_server.User;
+namespace chatApp_server.Services.UserService;
 
 public class UserService : IUserService
 {
@@ -36,7 +37,7 @@ public class UserService : IUserService
         return Task.CompletedTask;
     }
     
-    public Task HandleUserInformationAsync(IConnection clientConnection, ChatApp.Shared.User.User user)
+    public Task HandleUserInformationAsync(IConnection clientConnection, User user)
     {
         return Task.CompletedTask;
     }

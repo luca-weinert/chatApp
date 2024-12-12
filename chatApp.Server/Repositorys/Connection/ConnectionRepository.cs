@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
-using ChatApp.Shared.Connection;
+using ChatApp.Shared.Model.Connection;
 
-namespace chatApp_server.Connection.Repository;
+namespace chatApp_server.Repositorys.Connection;
 
 public class ConnectionRepository : IConnectionRepository
 {

@@ -1,9 +1,11 @@
 ﻿using System.Text.Json;
 using chatApp_server.Events;
 using ChatApp.ChatProtocol;
-using ChatApp.Shared.Connection;
+using ChatApp.Shared.Model.Connection;
+using ChatApp.Shared.Model.Message;
+using ChatApp.Shared.Model.User;
 
-namespace chatApp_server.Listener
+namespace chatApp_server.Services.ListenerService
 {
     public sealed class IListenerServiceService : IListenerService
     {
@@ -39,7 +41,7 @@ namespace chatApp_server.Listener
                     Console.WriteLine($"message!");
                     if (!string.IsNullOrWhiteSpace(dataPackage.Data))
                     {
-                        var message = JsonSerializer.Deserialize<ChatApp.Shared.Message.Message>(dataPackage.Data);
+                        var message = JsonSerializer.Deserialize<Message>(dataPackage.Data);
                         if (message != null)
                         {
                             Console.WriteLine($"message: {message}");
@@ -52,7 +54,7 @@ namespace chatApp_server.Listener
                     Console.WriteLine($"user!");
                     if (!string.IsNullOrWhiteSpace(dataPackage.Data))
                     {
-                        var user = JsonSerializer.Deserialize<ChatApp.Shared.User.User>(dataPackage.Data);
+                        var user = JsonSerializer.Deserialize<User>(dataPackage.Data);
                         if (user != null)
                         {
                             Console.WriteLine($"user: {user}");

@@ -1,7 +1,7 @@
 using System.Net;
 using ChatApp.ChatProtocol;
 
-namespace ChatApp.Client.Wpf.Services.Network;
+namespace ChatApp.Client.Wpf.Services.ChatProtocolService;
 
 public interface IChatProtocolService
 {

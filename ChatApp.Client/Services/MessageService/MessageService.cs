@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
-using System.Threading.Channels;
 using ChatApp.ChatProtocol;
-using ChatApp.Client.Wpf.Services.Network;
+using ChatApp.Client.Wpf.Services.ChatProtocolService;
+using ChatApp.Shared.Model.Message;
 
-namespace ChatApp.Client.Wpf.Services.Message
+namespace ChatApp.Client.Wpf.Services.MessageService
 {
     public class MessageService : IMessageService
     {
@@ -14,7 +14,7 @@ namespace ChatApp.Client.Wpf.Services.Message
             _chatProtocolService = chatProtocolService;
         }
         
-        public async Task SendMessageAsync(Shared.Message.Message message)
+        public async Task SendMessageAsync(Message message)
         {
             var serializedMessage = JsonSerializer.Serialize(message);
             Console.WriteLine($"[Client] Message to send: {serializedMessage}");

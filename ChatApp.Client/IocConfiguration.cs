@@ -1,6 +1,7 @@
-﻿using ChatApp.Client.Wpf.Services.Listener;
-using ChatApp.Client.Wpf.Services.Message;
-using ChatApp.Client.Wpf.Services.Network;
+﻿using ChatApp.Client.Wpf.Services.ChatProtocolService;
+using ChatApp.Client.Wpf.Services.ListenerService;
+using ChatApp.Client.Wpf.Services.MessageService;
+using ChatApp.Client.Wpf.Services.NetworkService;
 using Ninject.Modules;
 
 namespace ChatApp.Client.Wpf;

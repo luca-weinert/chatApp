@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using ChatApp.Client.Wpf.MVVM.ViewModel;
-using ChatApp.Shared.Message;
+using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Client.Wpf.MVVM.View;
 

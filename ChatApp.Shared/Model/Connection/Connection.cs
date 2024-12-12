@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace ChatApp.Shared.Connection;
+namespace ChatApp.Shared.Model.Connection;
 
 public class Connection : IConnection
 {

@@ -2,7 +2,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 
-namespace chatApp_server.Connection.Model;
+namespace chatApp_server.Models.Connection;
 
 public class ClientConnection
 {

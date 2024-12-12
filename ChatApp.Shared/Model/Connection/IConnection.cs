@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace ChatApp.Shared.Connection;
+namespace ChatApp.Shared.Model.Connection;
 
 public interface IConnection
 {

@@ -1,4 +1,4 @@
-﻿namespace ChatApp.Shared.User
+﻿namespace ChatApp.Shared.Model.User
 {
     public class User
     {

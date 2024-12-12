@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Windows;
-using ChatApp.Client.Wpf.Services.Network;
+using ChatApp.Client.Wpf.Services.ChatProtocolService;
 
 namespace ChatApp.Client.Wpf
 {

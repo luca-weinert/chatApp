@@ -1,8 +1,8 @@
 ﻿using System.Net.Sockets;
-using chatApp_server.Connection.Repository;
-using ChatApp.Shared.Connection;
+using chatApp_server.Repositorys.Connection;
+using ChatApp.Shared.Model.Connection;
 
-namespace chatApp_server.Connection.Services;
+namespace chatApp_server.Services.ConnectionService;
 
 public class ConnectionService : IConnectionService
 {
@@ -15,7 +15,7 @@ public class ConnectionService : IConnectionService
 
     public IConnection GetConnectionForClient(TcpClient tcpClient)
     {
-        var connection = new ChatApp.Shared.Connection.Connection(tcpClient);
+        var connection = new Connection(tcpClient);
         return connection;
     }
 

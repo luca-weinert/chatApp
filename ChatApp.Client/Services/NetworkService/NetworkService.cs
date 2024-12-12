@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using ChatApp.Client.Wpf.Model.Connection;
 
-namespace ChatApp.Client.Wpf.Services.Network;
+namespace ChatApp.Client.Wpf.Services.NetworkService;
 
 public class NetworkService : INetworkService
 {

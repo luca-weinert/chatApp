@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using ChatApp.Client.Wpf.Services.Message;
-using ChatApp.Shared.Message;
+using ChatApp.Client.Wpf.Services.MessageService;
+using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Client.Wpf.MVVM.ViewModel;
 
