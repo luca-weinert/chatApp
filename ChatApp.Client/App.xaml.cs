@@ -1,10 +1,6 @@
-﻿using System.Windows;
-using ChatApp.Client.Wpf.MVVM.View;
-using ChatApp.Client.Wpf.Services.Communication;
-using ChatApp.Client.Wpf.Services.Connection;
-using ChatApp.Client.Wpf.Services.Listener;
-using ChatApp.Client.Wpf.Services.Message;
-using Ninject;
+﻿using System.Net;
+using System.Windows;
+using ChatApp.Client.Wpf.Services.Network;
 
 namespace ChatApp.Client.Wpf
 {
@@ -14,15 +10,10 @@ namespace ChatApp.Client.Wpf
         {
             Iockernel.Initialze(new IocConfiguration());
             base.OnStartup(e);
-           // ComposeObjects();
-           // Current.MainWindow.Show();
-        }
-        
-
-        private void ComposeObjects()
-        {
-            Current.MainWindow = Iockernel.Get<MainWindow>();
-            Current.MainWindow.Title = "DI Test";
+            
+            var serverIpEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080);
+            var chatProtocolService = Iockernel.Get<IChatProtocolService>();
+            chatProtocolService.ConnectAsync(serverIpEndpoint);
         }
     }
 }

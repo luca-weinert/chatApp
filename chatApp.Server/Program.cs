@@ -1,4 +1,6 @@
 ﻿using chatApp_server.Connection;
+using chatApp_server.Connection.Repository;
+using chatApp_server.Connection.Services;
 using chatApp_server.Endpoints;
 using chatApp_server.Listener;
 using chatApp_server.Message;
@@ -37,9 +39,9 @@ internal static class Program
                 services.AddShared();
                 services.AddSingleton<IMessageService, MessageService>();
                 services.AddSingleton<IUserRepository, UserRepository>();
-                services.AddSingleton<IListener>((provider) =>
+                services.AddSingleton<IListenerService>((provider) =>
                 {
-                    var listener = new Listener.Listener();
+                    var listener = new Listener.IListenerServiceService();
                     var userService = provider.GetService<IUserService>()!;
                     var messageService = provider.GetService<IMessageService>()!;
                     

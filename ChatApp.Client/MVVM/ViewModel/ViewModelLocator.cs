@@ -6,4 +6,9 @@ public class ViewModelLocator
     {
         get { return Iockernel.Get<MessageReceiverViewModel>(); }
     }
+
+    public MessageInputViewModel MessageInputViewModel
+    {
+        get { return Iockernel.Get<MessageInputViewModel>(); }
+    }
 }

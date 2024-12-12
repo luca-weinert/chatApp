@@ -23,10 +23,10 @@ public class MessageReceiverViewModel : INotifyPropertyChanged
     public MessageReceiverViewModel(IMessageService messageService)
     {
         _messageService = messageService;
-        ReceivedMessages = new ObservableCollection<Message>
-        {
-            new Message(Guid.NewGuid(), Guid.NewGuid(), "123")
-        };
+      //  ReceivedMessages = new ObservableCollection<Message>
+      //  {
+      //      new Message(Guid.NewGuid(), Guid.NewGuid(), "123")
+      //  };
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

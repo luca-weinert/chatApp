@@ -1,7 +1,6 @@
-﻿using ChatApp.Client.Wpf.Services.Communication;
-using ChatApp.Client.Wpf.Services.Connection;
-using ChatApp.Client.Wpf.Services.Listener;
+﻿using ChatApp.Client.Wpf.Services.Listener;
 using ChatApp.Client.Wpf.Services.Message;
+using ChatApp.Client.Wpf.Services.Network;
 using Ninject.Modules;
 
 namespace ChatApp.Client.Wpf;
@@ -10,9 +9,9 @@ public class IocConfiguration : NinjectModule
 {
     public override void Load()
     {
-        Bind<IConnectionService>().To<ConnectionService>().InSingletonScope();
         Bind<IListener>().To<Listener>().InSingletonScope();
-        Bind<ICommunicationService>().To<CommunicationService>().InSingletonScope();
+        Bind<INetworkService>().To<NetworkService>().InSingletonScope();
+        Bind<IChatProtocolService>().To<ChatProtocolService>().InSingletonScope(); 
         Bind<IMessageService>().To<MessageService>().InSingletonScope();
     }
 }

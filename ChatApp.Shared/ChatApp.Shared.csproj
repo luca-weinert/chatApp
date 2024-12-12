@@ -10,4 +10,9 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-rc.2.24473.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Model\" />
+      <Folder Include="Service\" />
+    </ItemGroup>
+
 </Project>

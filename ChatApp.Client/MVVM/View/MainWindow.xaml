@@ -33,6 +33,6 @@
         <view:MessageReceiverView Grid.Row="2" DataContext="{Binding MessageReceiverViewModel, Source={StaticResource ViewModelLocator}}"></view:MessageReceiverView>
         
         <!-- Message Input -->
-        <view:MessageInputView Grid.Row="3"></view:MessageInputView>
+        <view:MessageInputView Grid.Row="3" DataContext="{Binding MessageInputViewModel, Source={StaticResource ViewModelLocator}}"></view:MessageInputView>
     </Grid>
 </Window>

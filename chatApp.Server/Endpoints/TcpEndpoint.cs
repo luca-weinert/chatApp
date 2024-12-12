@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using chatApp_server.Connection;
+using chatApp_server.Connection.Repository;
+using chatApp_server.Connection.Services;
 using chatApp_server.Listener;
 
 namespace chatApp_server.Endpoints;
@@ -9,18 +11,18 @@ public class TcpEndpoint : IEndpoint
 {
     private readonly IConnectionService _connectionService;
     private readonly IConnectionRepository _connectionRepository;
-    private readonly IListener _listener;
+    private readonly IListenerService _iListenerService;
     private readonly TcpListener _tcpListener;
 
     public TcpEndpoint(
         IConnectionService connectionService,
         IConnectionRepository connectionRepository,
-        IListener listener)
+        IListenerService iListenerService)
     {
         _connectionService = connectionService;
         _tcpListener = new TcpListener(IPAddress.Any, 8080);
         _connectionRepository = connectionRepository;
-        _listener = listener;
+        _iListenerService = iListenerService;
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
@@ -59,7 +61,7 @@ public class TcpEndpoint : IEndpoint
             // save the current (active) connection in connection repository 
             var clientConnection = _connectionService.GetConnectionForClient(client);
             await _connectionRepository.SaveConnectionAsync(clientConnection);
-            var listenerTask = _listener.ListenOnConnection(clientConnection, cancellationToken);
+            var listenerTask = _iListenerService.ListenOnConnection(clientConnection, cancellationToken);
             await listenerTask;
         }
         catch (SocketException ex)

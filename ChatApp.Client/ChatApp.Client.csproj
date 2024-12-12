@@ -11,7 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ChatApp.Shared\ChatApp.Shared.csproj" />
-      <ProjectReference Include="..\ChatApp.SuperProtocol\ChatApp.SuperProtocol.csproj" />
+      <ProjectReference Include="..\ChatApp.ChatProtocol\ChatApp.ChatProtocol.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -36,11 +36,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Services\" />
+      <PackageReference Include="Ninject" Version="4.0.0-beta.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Ninject" Version="4.0.0-beta.1" />
+      <Folder Include="Model\" />
     </ItemGroup>
 
 </Project>
