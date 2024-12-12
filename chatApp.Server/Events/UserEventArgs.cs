@@ -1,8 +1,7 @@
-﻿using System.Data;
-using ChatApp.Shared.Model.Connection;
+﻿using ChatApp.Shared.Model.Connection;
 using ChatApp.Shared.Model.User;
 
-namespace chatApp_server.Events;
+namespace ChatApp.Server.Events;
 
 public class UserEventArgs : EventArgs
 {

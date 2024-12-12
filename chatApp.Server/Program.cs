@@ -1,15 +1,15 @@
-﻿using chatApp_server.Endpoints;
-using chatApp_server.Repositorys.Connection;
-using chatApp_server.Repositorys.User;
-using chatApp_server.Services.ConnectionService;
-using chatApp_server.Services.ListenerService;
-using chatApp_server.Services.MessageService;
-using chatApp_server.Services.UserService;
+﻿using ChatApp.Server.Endpoints;
+using ChatApp.Server.Repositorys.Connection;
+using ChatApp.Server.Repositorys.User;
+using ChatApp.Server.Services.ConnectionService;
+using ChatApp.Server.Services.ListenerService;
+using ChatApp.Server.Services.MessageService;
+using ChatApp.Server.Services.UserService;
 using ChatApp.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace chatApp_server;
+namespace ChatApp.Server;
 
 internal static class Program
 {

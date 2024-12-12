@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace chatApp_server.Repositorys.User;
+namespace ChatApp.Server.Repositorys.User;
 
 public class UserRepository : IUserRepository
 {

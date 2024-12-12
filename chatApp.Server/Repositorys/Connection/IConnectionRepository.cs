@@ -1,6 +1,6 @@
 ﻿using ChatApp.Shared.Model.Connection;
 
-namespace chatApp_server.Repositorys.Connection;
+namespace ChatApp.Server.Repositorys.Connection;
 
 public interface IConnectionRepository
 {

@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
-using chatApp_server.Events;
-using chatApp_server.Services.ConnectionService;
 using ChatApp.ChatProtocol;
+using ChatApp.Server.Events;
+using ChatApp.Server.Services.ConnectionService;
 using ChatApp.Shared.Model.Message;
 
-namespace chatApp_server.Services.MessageService
+namespace ChatApp.Server.Services.MessageService
 {
     public class MessageService : IMessageService
     {

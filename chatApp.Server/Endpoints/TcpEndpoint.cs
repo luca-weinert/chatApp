@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using chatApp_server.Repositorys.Connection;
-using chatApp_server.Services.ConnectionService;
-using chatApp_server.Services.ListenerService;
+using ChatApp.Server.Repositorys.Connection;
+using ChatApp.Server.Services.ConnectionService;
+using ChatApp.Server.Services.ListenerService;
 
-namespace chatApp_server.Endpoints;
+namespace ChatApp.Server.Endpoints;
 
 public class TcpEndpoint : IEndpoint
 {

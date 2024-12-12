@@ -1,7 +1,7 @@
-﻿using chatApp_server.Events;
+﻿using ChatApp.Server.Events;
 using ChatApp.Shared.Model.Connection;
 
-namespace chatApp_server.Services.ListenerService
+namespace ChatApp.Server.Services.ListenerService
 {
     public interface IListenerService
     {

@@ -1,8 +1,8 @@
 ﻿using System.Net.Sockets;
-using chatApp_server.Repositorys.Connection;
+using ChatApp.Server.Repositorys.Connection;
 using ChatApp.Shared.Model.Connection;
 
-namespace chatApp_server.Services.ConnectionService;
+namespace ChatApp.Server.Services.ConnectionService;
 
 public class ConnectionService : IConnectionService
 {

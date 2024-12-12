@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
-using chatApp_server.Events;
 using ChatApp.ChatProtocol;
+using ChatApp.Server.Events;
 using ChatApp.Shared.Model.Connection;
 using ChatApp.Shared.Model.Message;
 using ChatApp.Shared.Model.User;
 
-namespace chatApp_server.Services.ListenerService
+namespace ChatApp.Server.Services.ListenerService
 {
     public sealed class IListenerServiceService : IListenerService
     {

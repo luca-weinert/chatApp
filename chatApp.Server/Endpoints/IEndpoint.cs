@@ -1,4 +1,4 @@
-﻿namespace chatApp_server.Endpoints;
+﻿namespace ChatApp.Server.Endpoints;
 
 public interface IEndpoint
 {

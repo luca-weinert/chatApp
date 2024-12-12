@@ -1,8 +1,8 @@
-﻿using chatApp_server.Events;
+﻿using ChatApp.Server.Events;
 using ChatApp.Shared.Model.Connection;
 using ChatApp.Shared.Model.User;
 
-namespace chatApp_server.Services.UserService;
+namespace ChatApp.Server.Services.UserService;
 
 public interface IUserService
 {

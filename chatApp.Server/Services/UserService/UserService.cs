@@ -1,10 +1,10 @@
-﻿using chatApp_server.Events;
-using chatApp_server.Repositorys.User;
-using chatApp_server.Services.ConnectionService;
+﻿using ChatApp.Server.Events;
+using ChatApp.Server.Repositorys.User;
+using ChatApp.Server.Services.ConnectionService;
 using ChatApp.Shared.Model.Connection;
 using ChatApp.Shared.Model.User;
 
-namespace chatApp_server.Services.UserService;
+namespace ChatApp.Server.Services.UserService;
 
 public class UserService : IUserService
 {
