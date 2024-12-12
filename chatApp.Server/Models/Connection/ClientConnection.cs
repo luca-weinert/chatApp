@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace ChatApp.Server.Models.Connection;
 
-public class ClientConnection
+public class ClientConnection : IClientConnection
 {
     private readonly NetworkStream _stream;
 

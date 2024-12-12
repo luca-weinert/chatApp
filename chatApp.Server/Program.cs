@@ -41,7 +41,7 @@ internal static class Program
                 services.AddSingleton<IUserRepository, UserRepository>();
                 services.AddSingleton<IListenerService>((provider) =>
                 {
-                    var listener = new IListenerServiceService();
+                    var listener = new ListenerServiceService();
                     var userService = provider.GetService<IUserService>()!;
                     var messageService = provider.GetService<IMessageService>()!;
                     

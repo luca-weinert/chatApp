@@ -7,7 +7,7 @@ using ChatApp.Shared.Model.User;
 
 namespace ChatApp.Server.Services.ListenerService
 {
-    public sealed class IListenerServiceService : IListenerService
+    public sealed class ListenerServiceService : IListenerService
     {
         public event EventHandler<MessageEventArgs> MessageReceived;
         public event EventHandler<UserEventArgs> UserReceived;
