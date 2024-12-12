@@ -1,4 +1,5 @@
 ﻿using ChatApp.Server.Events;
+using ChatApp.Server.Models.Connection;
 using ChatApp.Server.Repositorys.User;
 using ChatApp.Server.Services.ConnectionService;
 using ChatApp.Shared.Model.Connection;
@@ -32,12 +33,12 @@ public class UserService : IUserService
         _connectionService.UpdateConnection(connection);
     }
     
-    public Task RequestUserInformationForAsync(IConnection clientConnection)
+    public Task RequestUserInformationForAsync(IClientConnection clientConnection)
     {
         return Task.CompletedTask;
     }
     
-    public Task HandleUserInformationAsync(IConnection clientConnection, User user)
+    public Task HandleUserInformationAsync(IClientConnection clientConnection, User user)
     {
         return Task.CompletedTask;
     }

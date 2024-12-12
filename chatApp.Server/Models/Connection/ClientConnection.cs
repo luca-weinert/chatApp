@@ -14,6 +14,7 @@ public class ClientConnection : IClientConnection
     }
     
     public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid UserId { get;  set; }
     
     public async Task WriteAsync(string rawMessage)
     {

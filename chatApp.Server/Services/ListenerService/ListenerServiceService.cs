@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using ChatApp.ChatProtocol;
 using ChatApp.Server.Events;
+using ChatApp.Server.Models.Connection;
 using ChatApp.Shared.Model.Connection;
 using ChatApp.Shared.Model.Message;
 using ChatApp.Shared.Model.User;
@@ -14,13 +15,13 @@ namespace ChatApp.Server.Services.ListenerService
         private void OnMessageReceived(MessageEventArgs e) => MessageReceived?.Invoke(this, e);
         private void OnUserReceived(UserEventArgs e) => UserReceived?.Invoke(this, e);
 
-        public async Task ListenOnConnection(IConnection connection, CancellationToken cancellationToken)
+        public async Task ListenOnConnection(IClientConnection connection, CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    var rawData = await connection.ReadAsync(cancellationToken);
+                    var rawData = await connection.ReadAsync();
                     var chatData = ChatProtocolHelper.Deserialize(rawData);
                     HandleReceivedData(chatData, connection);
                 }
@@ -32,7 +33,7 @@ namespace ChatApp.Server.Services.ListenerService
             }
         }
 
-        private void HandleReceivedData(ChatProtocolDataPackage dataPackage, IConnection connection)
+        private void HandleReceivedData(ChatProtocolDataPackage dataPackage, IClientConnection connection)
         {
             Console.WriteLine($"[Server]: received data: {dataPackage}");
             switch (dataPackage.DataType)

@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using ChatApp.Server.Models.Connection;
 using ChatApp.Server.Repositorys.Connection;
 using ChatApp.Shared.Model.Connection;
 
@@ -13,19 +14,19 @@ public class ConnectionService : IConnectionService
         _connectionRepository = connectionRepository;
     }
 
-    public IConnection GetConnectionForClient(TcpClient tcpClient)
+    public IClientConnection GetConnectionForClient(TcpClient tcpClient)
     {
-        var connection = new Connection(tcpClient);
+        var connection = new ClientConnection(tcpClient);
         return connection;
     }
 
-    public  IConnection UpdateConnection(IConnection connection)
+    public  IClientConnection UpdateConnection(IClientConnection connection)
     {
        var updatedConnection =  _connectionRepository.UpdateConnection(connection);
        return updatedConnection;
     }
     
-    public async Task<IConnection> GetConnectionByUserIdAsync(Guid userId)
+    public async Task<IClientConnection> GetConnectionByUserIdAsync(Guid userId)
     {
         var connection = await _connectionRepository.GetConnectionByUserIdAsync(userId);
         return connection;
