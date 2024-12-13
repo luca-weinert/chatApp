@@ -36,11 +36,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="Ninject" Version="4.0.0-beta.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Models\Events\" />
     </ItemGroup>
 
 </Project>

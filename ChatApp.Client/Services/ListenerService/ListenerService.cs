@@ -1,34 +1,32 @@
 ﻿using System.Text.Json;
 using ChatApp.ChatProtocol;
-using ChatApp.Client.Wpf.Model.Connection;
-using ChatApp.Client.Wpf.Services.NetworkService;
+using ChatApp.Client.Wpf.Models.Connection;
 using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Client.Wpf.Services.ListenerService
 {
-    public class Listener : IListener
+    public class ListenerService
     {
-        private INetworkService _networkService;
+        private ChatProtocolService.ChatProtocolService _chatProtocolService;
         
-        public Listener(INetworkService networkService)
+        public ListenerService(ServerConnection serverConnection)
         {
-            _networkService = networkService;
+            _chatProtocolService = new ChatProtocolService.ChatProtocolService();
         }
         
-        public async Task HandleIncomingData(IServerConnection serverConnection, CancellationToken cancellationToken)
+        public async Task ListenOnServerConnection(CancellationToken cancellationToken)
         {
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    var rawData = await _networkService.ListenAsync(); 
-                    var superProtocolDataPackage = ChatProtocolHelper.Deserialize(rawData);
-                    switch (superProtocolDataPackage.DataType)
+                    var superProtocolDataPackage = await _chatProtocolService.ListenAsync();
+                    switch (superProtocolDataPackage.PayloadType)
                     {
-                        case ChatProtocolDataTypes.Message:
-                            var message = JsonSerializer.Deserialize<Message>(superProtocolDataPackage.Data);
+                        case ChatProtocolPayloadTypes.Message:
+                            var message = (Message)superProtocolDataPackage.Payload;
                             Console.WriteLine($"[Client]: received message");
-                            var serializedMessage = JsonSerializer.Serialize(message);
+                            var serializedMessage = message.ToJson();
                             Console.WriteLine($"[Client]: serialized message: {serializedMessage}");
                             break;
                         default:
@@ -49,4 +47,3 @@ namespace ChatApp.Client.Wpf.Services.ListenerService
         }
     }
 }
-

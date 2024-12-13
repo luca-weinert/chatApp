@@ -1,19 +1,27 @@
-﻿namespace ChatApp.ChatProtocol; 
+﻿using Newtonsoft.Json;
+
+namespace ChatApp.ChatProtocol; 
 
 public struct ChatProtocolDataPackage
 {
-    public ChatProtocolDataPackage(ChatProtocolDataTypes dataType, string? data)
+    public ChatProtocolDataPackage(ChatProtocolPayloadTypes payloadType, object payload)
     {
         Timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
-        DataType = dataType;
-        Data = data;
+        PayloadType = payloadType;
+        Payload = payload;
     }
     
-    public string PackageVersion { get; init; } = "1.0.0.0";
+    public string ChatProtocolVersion { get; init; } = "1.0.0.0";
 
     public string Timestamp { get; init; }
 
-    public ChatProtocolDataTypes DataType { get; init; }
+    public ChatProtocolPayloadTypes PayloadType { get; init; }
 
-    public string? Data { get; init; }
+    public object Payload { get; init; }
+
+    public string ToJson()
+    {
+        var json = JsonConvert.SerializeObject(this);
+        return json;
+    }
 }   

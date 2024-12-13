@@ -1,12 +1,12 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using ChatApp.Client.Wpf.Model.Connection;
+using ChatApp.Client.Wpf.Models.Connection;
 
 namespace ChatApp.Client.Wpf.Services.NetworkService;
 
-public class NetworkService : INetworkService
+public class NetworkService
 {
-    private ServerConnection? _serverConnection;
+    private ServerConnection _serverConnection;
     
     public NetworkService()
     {
@@ -39,18 +39,14 @@ public class NetworkService : INetworkService
     public async Task<string> ListenAsync()
     {
         if (_serverConnection == null) throw new Exception("no connection to server established");
-        var receivedMessage = await _serverConnection.ReadAsync();
-        return receivedMessage;
+        var receivedData = await _serverConnection.ReadAsync();
+        return receivedData;
     }
 
-    public async Task SendAsnAsync(string message)
+    public async Task SendAsnAsync(string data)
     {
         if (_serverConnection == null) throw new Exception("no connection to server established");
-        Console.WriteLine($"[Client]: Sending Data: {message}");
-        
-        
-        
-        
-        await _serverConnection.WriteAsync(message);
+        Console.WriteLine($"[Client]: Sending Data: {data}");
+        await _serverConnection.WriteAsync(data);
     }
 }

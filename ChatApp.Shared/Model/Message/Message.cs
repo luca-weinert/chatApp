@@ -1,4 +1,6 @@
-﻿namespace ChatApp.Shared.Model.Message
+﻿using Newtonsoft.Json;
+
+namespace ChatApp.Shared.Model.Message
 {
     public class Message
     {
@@ -22,5 +24,11 @@
         public Guid TargetUserId { get; init; } 
         public DateTime CreatedAt { get; init; } 
         public string Content { get; init; }
+
+        public string ToJson()
+        {
+            var json = JsonConvert.SerializeObject(this);
+            return json;
+        }
     }
 }

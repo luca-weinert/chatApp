@@ -1,18 +1,19 @@
-﻿using System.Text.Json;
-using ChatApp.ChatProtocol;
+﻿using ChatApp.ChatProtocol;
 using ChatApp.Server.Events;
-using ChatApp.Server.Services.ConnectionService;
+using ChatApp.Server.Models.Connection;
 using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Server.Services.MessageService
 {
-    public class MessageService : IMessageService
+    public class MessageService
     {
-        private readonly IConnectionService _connectionService;
+        private readonly ClientConnection _clientConnection;
+        private readonly ConnectionService.ConnectionService _connectionService;
         
-        public MessageService(IConnectionService connectionService)
+        public MessageService(ClientConnection clientConnection)
         {
-            _connectionService = connectionService;
+            _clientConnection = clientConnection;
+            _connectionService = new ConnectionService.ConnectionService();
         }
 
         public async void OnMessageReceived(object? sender, MessageEventArgs messageEventArgs)
@@ -28,9 +29,9 @@ namespace ChatApp.Server.Services.MessageService
         private async Task SendMessage(Message message)
         {
           var targetConnection = await _connectionService.GetConnectionByUserIdAsync(message.TargetUserId);
-          var superProtocolPackage = new ChatProtocolDataPackage(ChatProtocolDataTypes.Message, JsonSerializer.Serialize(message));
-          var serialized = ChatProtocolHelper.Serialize(superProtocolPackage);
-          await targetConnection.WriteAsync(serialized);
+          var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
+          var chatProtocolPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message);
+          await chatProtocolService.SendAsync(chatProtocolPackage);
         }
     }
 }

@@ -2,9 +2,9 @@
 using System.Text;
 using System.Text.Json;
 
-namespace ChatApp.Client.Wpf.Model.Connection;
+namespace ChatApp.Client.Wpf.Models.Connection;
 
-public class ServerConnection : IServerConnection
+public class ServerConnection
 {
     private readonly NetworkStream _stream;
 

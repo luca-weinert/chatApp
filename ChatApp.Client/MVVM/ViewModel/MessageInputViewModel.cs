@@ -5,9 +5,9 @@ namespace ChatApp.Client.Wpf.MVVM.ViewModel;
 
 public class MessageInputViewModel
 {
-    private IMessageService _messageService;
+    private MessageService _messageService;
 
-    public MessageInputViewModel(IMessageService messageService)
+    public MessageInputViewModel(MessageService messageService)
     {
         _messageService = messageService;
     }

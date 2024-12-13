@@ -1,23 +1,22 @@
 using System.Net;
 using ChatApp.ChatProtocol;
-using ChatApp.Client.Wpf.Services.NetworkService;
 
 namespace ChatApp.Client.Wpf.Services.ChatProtocolService;
 
-public class ChatProtocolService : IChatProtocolService
+public class ChatProtocolService
 {
-    private INetworkService _networkService;
-
-    public ChatProtocolService(INetworkService networkService)
+    private NetworkService.NetworkService _networkService;
+    
+    public ChatProtocolService()
     {
-        _networkService = networkService;
+        _networkService = new NetworkService.NetworkService();
     }
 
-    public async Task ConnectAsync(IPEndPoint endPoint)
+    public async Task ConnectAsync(IPEndPoint ip)
     {
         try
         {
-            await _networkService.ConnectAsync(endPoint);
+            await _networkService.ConnectAsync(ip);
         }
         catch (Exception e)
         {
@@ -28,8 +27,7 @@ public class ChatProtocolService : IChatProtocolService
 
     public async Task SendAsync(ChatProtocolDataPackage chatProtocolDataPackage)
     {
-        var serializedProtocolData = ChatProtocolHelper.Serialize(chatProtocolDataPackage);
-        await _networkService.SendAsnAsync(serializedProtocolData);
+        await _networkService.SendAsnAsync(chatProtocolDataPackage.ToJson());
     }
 
     public Task<ChatProtocolDataPackage> ListenAsync()

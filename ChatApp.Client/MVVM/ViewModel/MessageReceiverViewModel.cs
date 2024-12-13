@@ -8,7 +8,7 @@ namespace ChatApp.Client.Wpf.MVVM.ViewModel;
 public class MessageReceiverViewModel : INotifyPropertyChanged
 {
     private ObservableCollection<Message> _receivedMessages; 
-    private IMessageService _messageService;
+    private MessageService _messageService;
     
     public ObservableCollection<Message> ReceivedMessages
     {
@@ -20,7 +20,7 @@ public class MessageReceiverViewModel : INotifyPropertyChanged
         }
     }
 
-    public MessageReceiverViewModel(IMessageService messageService)
+    public MessageReceiverViewModel(MessageService messageService)
     {
         _messageService = messageService;
       //  ReceivedMessages = new ObservableCollection<Message>

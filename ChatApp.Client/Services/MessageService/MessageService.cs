@@ -1,24 +1,20 @@
-﻿using System.Text.Json;
-using ChatApp.ChatProtocol;
-using ChatApp.Client.Wpf.Services.ChatProtocolService;
+﻿using ChatApp.ChatProtocol;
 using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Client.Wpf.Services.MessageService
 {
-    public class MessageService : IMessageService
+    public class MessageService
     {
-        private IChatProtocolService _chatProtocolService;
+        private ChatProtocolService.ChatProtocolService _chatProtocolService;
         
-        public MessageService(IChatProtocolService chatProtocolService)
+        public MessageService()
         {
-            _chatProtocolService = chatProtocolService;
+            _chatProtocolService = new ChatProtocolService.ChatProtocolService();
         }
         
         public async Task SendMessageAsync(Message message)
         {
-            var serializedMessage = JsonSerializer.Serialize(message);
-            Console.WriteLine($"[Client] Message to send: {serializedMessage}");
-            var superProtocolDataPackage = new ChatProtocolDataPackage(ChatProtocolDataTypes.Message, serializedMessage);
+            var superProtocolDataPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message);
             await _chatProtocolService.SendAsync(superProtocolDataPackage);
         }
     }

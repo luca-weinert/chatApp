@@ -1,6 +1,6 @@
 ﻿namespace ChatApp.ChatProtocol;
 
-public enum ChatProtocolDataTypes
+public enum ChatProtocolPayloadTypes
 {
     Message,
     User,

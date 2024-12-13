@@ -6,11 +6,9 @@ namespace ChatApp.Server.Events;
 public class UserEventArgs : EventArgs
 {
     public User User { get; private set; }
-    public IClientConnection Connection { get; private set; }
     
-    public UserEventArgs(IClientConnection connection, User user)
+    public UserEventArgs(User user)
     {
-        Connection = connection;
         User = user;
     }
 }

@@ -1,32 +1,31 @@
 ﻿using System.Net.Sockets;
 using ChatApp.Server.Models.Connection;
 using ChatApp.Server.Repositorys.Connection;
-using ChatApp.Shared.Model.Connection;
 
 namespace ChatApp.Server.Services.ConnectionService;
 
-public class ConnectionService : IConnectionService
+public class ConnectionService
 {
-    private readonly IConnectionRepository _connectionRepository;
+    private readonly ConnectionRepository _connectionRepository;
 
-    public ConnectionService(IConnectionRepository connectionRepository)
+    public ConnectionService()
     {
-        _connectionRepository = connectionRepository;
+        _connectionRepository = new ConnectionRepository();
     }
 
-    public IClientConnection GetConnectionForClient(TcpClient tcpClient)
+    public ClientConnection GetConnectionForClient(TcpClient tcpClient)
     {
         var connection = new ClientConnection(tcpClient);
         return connection;
     }
 
-    public  IClientConnection UpdateConnection(IClientConnection connection)
+    public ClientConnection UpdateConnection(ClientConnection connection)
     {
        var updatedConnection =  _connectionRepository.UpdateConnection(connection);
        return updatedConnection;
     }
     
-    public async Task<IClientConnection> GetConnectionByUserIdAsync(Guid userId)
+    public async Task<ClientConnection> GetConnectionByUserIdAsync(Guid userId)
     {
         var connection = await _connectionRepository.GetConnectionByUserIdAsync(userId);
         return connection;
