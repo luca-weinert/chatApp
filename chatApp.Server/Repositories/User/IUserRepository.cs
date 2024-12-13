@@ -1,4 +1,4 @@
-﻿namespace ChatApp.Server.Repositorys.User;
+﻿namespace ChatApp.Server.Repositories.User;
 
 public interface IUserRepository
 {

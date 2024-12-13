@@ -14,8 +14,8 @@ namespace ChatApp.Client.Wpf.Services.MessageService
         
         public async Task SendMessageAsync(Message message)
         {
-            var superProtocolDataPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message);
-            await _chatProtocolService.SendAsync(superProtocolDataPackage);
+            var chatProtocolDataPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message);
+            await _chatProtocolService.SendAsync(chatProtocolDataPackage);
         }
     }
 }

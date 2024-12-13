@@ -26,7 +26,7 @@ public class ChatProtocolService
     {
         if (clientConnection == null) throw new Exception("clientConnection is null");
         var receivedData = await networkService.ListenAsync();
-        var chatProtocolDataPackage = JsonSerializer.Deserialize<ChatProtocolDataPackage>(receivedData);
+        var chatProtocolDataPackage = ChatProtocolHelper.Deserialize(receivedData);
         return chatProtocolDataPackage;
     }
 }

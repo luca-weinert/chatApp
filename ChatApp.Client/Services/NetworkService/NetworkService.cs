@@ -7,9 +7,27 @@ namespace ChatApp.Client.Wpf.Services.NetworkService;
 public class NetworkService
 {
     private ServerConnection _serverConnection;
-    
-    public NetworkService()
+    private static NetworkService instance = null;
+    private static readonly object padlock = new object();
+
+    private NetworkService()
     {
+    }
+
+    public static NetworkService Instance
+    {
+        get
+        {
+            lock (padlock)
+            {
+                if (instance == null)
+                {
+                    instance = new NetworkService();
+                }
+
+                return instance;
+            }
+        }
     }
 
     public async Task ConnectAsync(IPEndPoint ipEndPoint)

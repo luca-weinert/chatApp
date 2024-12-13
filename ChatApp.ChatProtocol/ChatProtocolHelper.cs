@@ -1,15 +1,10 @@
-﻿using System.Text.Json;
+﻿using Newtonsoft.Json;
+using JsonException = System.Text.Json.JsonException;
 
 namespace ChatApp.ChatProtocol;
 
 public static class ChatProtocolHelper
 {
-    public static string Serialize(ChatProtocolDataPackage chatProtocolDataPackage)
-    {
-        var serializedData = JsonSerializer.Serialize(chatProtocolDataPackage);
-        return serializedData;
-    }
-
     public static ChatProtocolDataPackage Deserialize(string rawData)
     {
         if (string.IsNullOrWhiteSpace(rawData))
@@ -19,7 +14,7 @@ public static class ChatProtocolHelper
 
         try
         {
-            return JsonSerializer.Deserialize<ChatProtocolDataPackage>(rawData);
+            return JsonConvert.DeserializeObject<ChatProtocolDataPackage>(rawData);
         }
         catch (JsonException ex)
         {

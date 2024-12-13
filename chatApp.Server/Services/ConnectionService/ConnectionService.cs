@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 using ChatApp.Server.Models.Connection;
-using ChatApp.Server.Repositorys.Connection;
+using ChatApp.Server.Repositories.Connection;
 
 namespace ChatApp.Server.Services.ConnectionService;
 

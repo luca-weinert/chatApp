@@ -1,6 +1,6 @@
 ﻿using ChatApp.Server.Events;
 using ChatApp.Server.Models.Connection;
-using ChatApp.Server.Repositorys.User;
+using ChatApp.Server.Repositories.User;
 using ChatApp.Shared.Model.User;
 
 namespace ChatApp.Server.Services.UserService;

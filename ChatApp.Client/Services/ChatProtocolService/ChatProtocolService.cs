@@ -9,14 +9,14 @@ public class ChatProtocolService
     
     public ChatProtocolService()
     {
-        _networkService = new NetworkService.NetworkService();
+        _networkService = NetworkService.NetworkService.Instance;
     }
 
-    public async Task ConnectAsync(IPEndPoint ip)
+    public async Task ConnectAsync(IPEndPoint ipEndPoint)
     {
         try
         {
-            await _networkService.ConnectAsync(ip);
+            await _networkService.ConnectAsync(ipEndPoint);
         }
         catch (Exception e)
         {
@@ -30,8 +30,10 @@ public class ChatProtocolService
         await _networkService.SendAsnAsync(chatProtocolDataPackage.ToJson());
     }
 
-    public Task<ChatProtocolDataPackage> ListenAsync()
+    public async Task<ChatProtocolDataPackage> ListenAsync()
     {
-        throw new NotImplementedException();
+        var receivedData = await _networkService.ListenAsync();
+        var chatProtocolDataPackage = ChatProtocolHelper.Deserialize(receivedData);
+        return chatProtocolDataPackage;
     }
 }
