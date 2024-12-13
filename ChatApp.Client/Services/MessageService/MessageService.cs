@@ -1,4 +1,4 @@
-﻿using ChatApp.ChatProtocol;
+﻿using ChatApp.ChatProtocol.Models;
 using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Client.Wpf.Services.MessageService
@@ -14,7 +14,7 @@ namespace ChatApp.Client.Wpf.Services.MessageService
         
         public async Task SendMessageAsync(Message message)
         {
-            var chatProtocolDataPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message);
+            var chatProtocolDataPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message.ToJson());
             await _chatProtocolService.SendAsync(chatProtocolDataPackage);
         }
     }

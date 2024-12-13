@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using ChatApp.ChatProtocol;
+using ChatApp.ChatProtocol.Models;
 using ChatApp.Client.Wpf.Models.Connection;
 using ChatApp.Shared.Model.Message;
 
@@ -20,14 +20,13 @@ namespace ChatApp.Client.Wpf.Services.ListenerService
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    var superProtocolDataPackage = await _chatProtocolService.ListenAsync();
-                    switch (superProtocolDataPackage.PayloadType)
+                    var chatProtocolDataPackage = await _chatProtocolService.ListenAsync();
+                    switch (chatProtocolDataPackage.PayloadType)
                     {
                         case ChatProtocolPayloadTypes.Message:
-                            var message = (Message)superProtocolDataPackage.Payload;
                             Console.WriteLine($"[Client]: received message");
-                            var serializedMessage = message.ToJson();
-                            Console.WriteLine($"[Client]: serialized message: {serializedMessage}");
+                            var chatProtocolPayload = chatProtocolDataPackage.Payload;
+                            // var message = (Message)chatProtocolPayload;
                             break;
                         default:
                             Console.WriteLine($"[Client]: received unknown message");

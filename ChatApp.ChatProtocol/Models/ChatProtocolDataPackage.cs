@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 
-namespace ChatApp.ChatProtocol; 
+namespace ChatApp.ChatProtocol.Models; 
 
 public struct ChatProtocolDataPackage
 {
-    public ChatProtocolDataPackage(ChatProtocolPayloadTypes payloadType, object payload)
+    public ChatProtocolDataPackage(ChatProtocolPayloadTypes payloadType, string payload)
     {
-        Timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+        Timestamp = DateTime.Now.ToString("yyyyMMddHHmm");
         PayloadType = payloadType;
         Payload = payload;
     }
@@ -17,7 +17,7 @@ public struct ChatProtocolDataPackage
 
     public ChatProtocolPayloadTypes PayloadType { get; init; }
 
-    public object Payload { get; init; }
+    public string Payload { get; init; }
 
     public string ToJson()
     {

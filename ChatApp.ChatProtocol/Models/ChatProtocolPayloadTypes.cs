@@ -1,4 +1,4 @@
-﻿namespace ChatApp.ChatProtocol;
+﻿namespace ChatApp.ChatProtocol.Models;
 
 public enum ChatProtocolPayloadTypes
 {

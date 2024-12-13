@@ -1,5 +1,6 @@
 using System.Net;
-using ChatApp.ChatProtocol;
+using ChatApp.ChatProtocol.Helper;
+using ChatApp.ChatProtocol.Models;
 
 namespace ChatApp.Client.Wpf.Services.ChatProtocolService;
 

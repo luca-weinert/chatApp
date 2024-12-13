@@ -1,18 +1,15 @@
-﻿using ChatApp.ChatProtocol;
+﻿using ChatApp.ChatProtocol.Models;
 using ChatApp.Server.Events;
-using ChatApp.Server.Models.Connection;
 using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Server.Services.MessageService
 {
     public class MessageService
     {
-        private readonly ClientConnection _clientConnection;
         private readonly ConnectionService.ConnectionService _connectionService;
         
-        public MessageService(ClientConnection clientConnection)
+        public MessageService()
         {
-            _clientConnection = clientConnection;
             _connectionService = new ConnectionService.ConnectionService();
         }
 
@@ -29,7 +26,7 @@ namespace ChatApp.Server.Services.MessageService
         {
           var targetConnection = await _connectionService.GetConnectionByUserIdAsync(message.TargetUserId);
           var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
-          var chatProtocolPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message);
+          var chatProtocolPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message.ToJson());
           await chatProtocolService.SendAsync(chatProtocolPackage);
         }
     }
