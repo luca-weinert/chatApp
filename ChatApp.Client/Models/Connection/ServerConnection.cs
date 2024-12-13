@@ -1,6 +1,5 @@
 ﻿using System.Net.Sockets;
 using System.Text;
-using System.Text.Json;
 
 namespace ChatApp.Client.Wpf.Models.Connection;
 
@@ -13,10 +12,9 @@ public class ServerConnection
         _stream = client.GetStream();
     }
     
-    public async Task WriteAsync(string rawMessage)
+    public async Task WriteAsync(string rawData)
     {
-        var serializedMessage = JsonSerializer.Serialize(rawMessage);
-        var bytes = Encoding.UTF8.GetBytes(serializedMessage);
+        var bytes = Encoding.ASCII.GetBytes(rawData);
         await _stream.WriteAsync(bytes);
     }
 
@@ -24,7 +22,7 @@ public class ServerConnection
     {
         var buffer = new byte[1024];
         var receivedBytes = await _stream.ReadAsync(buffer);
-        var result = Encoding.UTF8.GetString(buffer, 0, receivedBytes);
+        var result = Encoding.ASCII.GetString(buffer, 0, receivedBytes);
         return result;
     }
 }
