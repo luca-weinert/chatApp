@@ -18,7 +18,6 @@ namespace ChatApp.Server.Services.MessageService
 
         public async void OnMessageReceived(object? sender, MessageEventArgs messageEventArgs)
         {
-            Console.WriteLine("in message service");
             var message = messageEventArgs.Message;
             if (await _connectionService.isUserConnected(message.TargetUserId))
             {
