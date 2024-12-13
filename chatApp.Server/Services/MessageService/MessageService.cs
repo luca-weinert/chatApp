@@ -1,33 +1,33 @@
 ﻿using ChatApp.ChatProtocol.Models;
 using ChatApp.Server.Events;
+using ChatApp.Server.Repositories.Connection;
 using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Server.Services.MessageService
 {
     public class MessageService
     {
-        private readonly ConnectionService.ConnectionService _connectionService;
-        
+        private readonly ConnectionRepository _connectionRepository;
+
         public MessageService()
         {
-            _connectionService = new ConnectionService.ConnectionService();
+            _connectionRepository = new ConnectionRepository();
         }
 
         public async void OnMessageReceived(object? sender, MessageEventArgs messageEventArgs)
         {
             var message = messageEventArgs.Message;
-            if (await _connectionService.isUserConnected(message.TargetUserId))
-            {
-                await SendMessage(message);
-            }
+            await SendMessage(message);
         }
 
         private async Task SendMessage(Message message)
         {
-          var targetConnection = await _connectionService.GetConnectionByUserIdAsync(message.TargetUserId);
-          var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
-          var chatProtocolPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message.ToJson());
-          await chatProtocolService.SendAsync(chatProtocolPackage);
+            Console.WriteLine("[Server]: Sending message to target client");
+            var targetConnection = await _connectionRepository.GetConnectionByUserIdAsync(message.TargetUserId);
+            if (targetConnection == null) return;
+            var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
+            var chatProtocolPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message.ToJson());
+            await chatProtocolService.SendAsync(chatProtocolPackage);
         }
     }
 }

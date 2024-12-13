@@ -1,26 +1,31 @@
-﻿using System.Collections.Concurrent;
+﻿using ChatApp.Server.Models.User;
 
 namespace ChatApp.Server.Repositories.User;
 
-public class UserRepository : IUserRepository
+public class UserRepository
 {
-    private ConcurrentDictionary<Guid,ChatApp.Shared.Model.User.User> _users = new();
+   private UserPool _userPool;
+
+   public UserRepository()
+   {
+       _userPool = UserPool.Instance;
+   }
     
     public Task SaveUserAsync(ChatApp.Shared.Model.User.User user)
     {
-        _users.TryAdd(user.Id, user);
+        _userPool.users.TryAdd(user.Id, user);
         return Task.CompletedTask;
     }
 
     public Task<ChatApp.Shared.Model.User.User?> GetUserByIdAsync(Guid userId)
     {
-        _users.TryGetValue(userId, out var user);
+        _userPool.users.TryGetValue(userId, out var user);
         return Task.FromResult(user);
     }
 
     public Task RemoveUserByIdAsync(Guid userId)
     {
-        _users.TryRemove(userId, out var user);
+        _userPool.users.TryRemove(userId, out var user);
         return Task.CompletedTask;
     }
 }

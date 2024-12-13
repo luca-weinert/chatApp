@@ -1,5 +1,6 @@
 ﻿using ChatApp.Server.Events;
 using ChatApp.Server.Models.Connection;
+using ChatApp.Server.Repositories.Connection;
 using ChatApp.Server.Repositories.User;
 using ChatApp.Shared.Model.User;
 
@@ -7,28 +8,21 @@ namespace ChatApp.Server.Services.UserService;
 
 public class UserService
 {
-    private readonly IUserRepository _userRepository;
-    private readonly ClientConnection _connectionService;
+    private readonly UserRepository _userRepository;
+    private readonly ConnectionRepository _connectionRepository;
     
-    public UserService(IUserRepository userRepository, ClientConnection connectionService)
+    public UserService()
     {
-        _userRepository = userRepository;
-        _connectionService = connectionService;
+        _userRepository = new UserRepository();
+        _connectionRepository = new ConnectionRepository();
     }
     
-    public void OnUserInformationReceived(object? sender, UserEventArgs userEventArgs)
+    public async void OnUserInformationReceived(object? sender, UserEventArgs userEventArgs)
     {
-        // // save received user information in the user repository
-        // _userRepository.SaveUserAsync(userEventArgs.User);
-        //
-        // // get the connection related to the current user
-        // var connection = userEventArgs.Connection;
-        //
-        // // set the userId in the connection to the id of the current user
-        // connection.UserId = userEventArgs.User.Id;
-        //
-        // // update the connection with the new received userid (that is related to this connection)
-        // _connectionService.UpdateConnection(connection);
+        _userRepository.SaveUserAsync(userEventArgs.User);
+        var userRelatedConnection = await _connectionRepository.GetConnectionByConnectionId(userEventArgs.ConnectionID);
+        userRelatedConnection.UserId = userEventArgs.User.Id;
+        _connectionRepository.UpdateConnection(userRelatedConnection);
     }
     
     public Task RequestUserInformationForAsync(ClientConnection clientConnection)

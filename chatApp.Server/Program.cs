@@ -1,4 +1,4 @@
-﻿using ChatApp.Server.Endpoints;
+﻿using ChatApp.Server.Services.TcpEndpointService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

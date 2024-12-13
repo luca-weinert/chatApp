@@ -11,7 +11,7 @@ public class ConnectionRepository
         _clientConnectionPool = ClientConnectionPool.Instance;
     }
     
-    public Task AddConnectionAsync(ClientConnection clientConnection)
+    public  Task AddConnectionAsync(ClientConnection clientConnection)
     {
         _clientConnectionPool.connectedCliens.TryAdd(clientConnection.Id, clientConnection);
         return Task.CompletedTask;
@@ -23,9 +23,14 @@ public class ConnectionRepository
         return Task.CompletedTask;
     }
 
-    public Task<ClientConnection?> GetConnectionByUserIdAsync(Guid userId)
+    public  Task<ClientConnection?> GetConnectionByUserIdAsync(Guid userId)
     {
         var connection = _clientConnectionPool.connectedCliens.Values.FirstOrDefault(c => c.UserId == userId);
+        return Task.FromResult(connection);
+    }    
+    public  Task<ClientConnection?> GetConnectionByConnectionId(Guid connectionId)
+    {
+        var connection = _clientConnectionPool.connectedCliens.Values.FirstOrDefault(c => c.Id == connectionId);
         return Task.FromResult(connection);
     }
 

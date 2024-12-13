@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using ChatApp.ChatProtocol.Models;
+﻿using ChatApp.ChatProtocol.Models;
 using ChatApp.Server.Events;
 using ChatApp.Server.Models.Connection;
 using ChatApp.Shared.Model.Message;
@@ -42,21 +41,21 @@ namespace ChatApp.Server.Services.ConnectionListenerService
 
         private void HandleReceivedData(ChatProtocolDataPackage dataPackage)
         {
-            Console.WriteLine($"[Server]: received data: {dataPackage}");
+            Console.WriteLine($"[Server]: Received data: {dataPackage}");
             var chatProtocolPayload = dataPackage.Payload;
             switch (dataPackage.PayloadType)
             { 
                 case ChatProtocolPayloadTypes.Message:
-                    Console.WriteLine($"[Server]: received data containing a message");
+                    Console.WriteLine($"[Server]: Received data containing a message");
                     var message = JsonConvert.DeserializeObject<Message>(chatProtocolPayload) ;
                     if (message == null) return;
                     OnMessageReceived(new MessageEventArgs(message));
                     break;
                 case ChatProtocolPayloadTypes.User:
-                    Console.WriteLine($"[Server]: received data containing a user");
+                    Console.WriteLine($"[Server]: Received data containing a user");
                     var user = JsonConvert.DeserializeObject<User>(chatProtocolPayload) ;
                     if (user == null) return;
-                    OnUserReceived(new UserEventArgs(user));
+                    OnUserReceived(new UserEventArgs(user, _clientConnection.Id));
                     break;
             }
         }

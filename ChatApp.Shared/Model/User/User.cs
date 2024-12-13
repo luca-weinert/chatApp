@@ -1,4 +1,6 @@
-﻿namespace ChatApp.Shared.Model.User
+﻿using Newtonsoft.Json;
+
+namespace ChatApp.Shared.Model.User
 {
     public class User
     {
@@ -8,6 +10,11 @@
         public User(string name)
         {
             Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentException("Name cannot be empty", nameof(name));
+        }
+
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

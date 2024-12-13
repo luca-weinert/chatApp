@@ -1,13 +1,13 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using ChatApp.Server.Models.Connection;
-using ChatApp.Server.Services.ConnectionListenerService;
+using ChatApp.Server.Repositories.Connection;
 
-namespace ChatApp.Server.Endpoints;
+namespace ChatApp.Server.Services.TcpEndpointService;
 
 public class TcpEndpoint
 {
-    private readonly ConnectionListenerService _connectionListenerService;
+    private readonly ConnectionListenerService.ConnectionListenerService _connectionListenerService;
     private readonly TcpListener tcpSocket;
     private static TcpEndpoint instance = null;
 
@@ -58,10 +58,18 @@ public class TcpEndpoint
     {
         try
         {
+            var connectionRepository = new ConnectionRepository();
             var clientConnection = new ClientConnection(client);
+            await connectionRepository.AddConnectionAsync(clientConnection);
             
             // start a background task that listen on the connection
-            var connectionListenerService = new ConnectionListenerService(clientConnection);
+            var connectionListenerService = new ConnectionListenerService.ConnectionListenerService(clientConnection);
+            var messageService = new MessageService.MessageService();
+            var userService = new UserService.UserService(); 
+            
+            connectionListenerService.MessageReceived += messageService.OnMessageReceived;
+            connectionListenerService.UserReceived += userService.OnUserInformationReceived;
+            
             var listenerTask = connectionListenerService.ListenOnConnection(cancellationToken);
             await listenerTask;
         }
