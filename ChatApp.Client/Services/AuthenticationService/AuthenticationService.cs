@@ -33,10 +33,10 @@ public class AuthenticationService
         }
     }
 
-    public void AuthenticateUser()
+    public async Task AuthenticateUserAsync()
     {
         var chatProtocolDataPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.User, _user.ToJson());
-        _chatProtocolService.SendAsync(chatProtocolDataPackage);
+        await _chatProtocolService.SendAsync(chatProtocolDataPackage);
     }
 
     public User GetUser() => _user;

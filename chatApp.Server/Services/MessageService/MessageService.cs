@@ -1,6 +1,6 @@
 ﻿using ChatApp.ChatProtocol.Models;
-using ChatApp.Server.Events;
 using ChatApp.Server.Repositories.Connection;
+using ChatApp.Shared.Events;
 using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Server.Services.MessageService

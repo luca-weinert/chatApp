@@ -1,6 +1,6 @@
 ﻿using ChatApp.Shared.Model.User;
 
-namespace ChatApp.Server.Events;
+namespace ChatApp.Shared.Events;
 
 public class UserEventArgs : EventArgs
 {

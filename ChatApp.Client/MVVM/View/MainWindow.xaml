@@ -9,10 +9,10 @@
         Title="ChatApp" Height="600" Width="800">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Header -->
-            <RowDefinition Height="Auto"/> <!-- Connection Info -->
-            <RowDefinition Height="Auto"/>    <!-- Message Display -->
-            <RowDefinition Height="Auto"/> <!-- Target User Input -->
+            <RowDefinition Height="Auto"/> <!-- title -->
+            <RowDefinition Height="Auto"/> <!-- connection and user information -->
+            <RowDefinition Height="Auto"/> <!-- list received messages -->
+            <RowDefinition Height="Auto"/> <!-- message / target user input -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

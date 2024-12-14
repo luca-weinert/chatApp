@@ -7,9 +7,9 @@ public class MessageInputViewModel
 {
     private MessageService _messageService;
 
-    public MessageInputViewModel(MessageService messageService)
+    public MessageInputViewModel()
     {
-        _messageService = messageService;
+        _messageService = MessageService.Instance;
     }
 
     public void SendMessage(Message message)

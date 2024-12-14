@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace ChatApp.Client.Wpf.MVVM.Model;
+﻿namespace ChatApp.Client.Wpf.MVVM.Model;
 
 public class MessageReceiverModel
 {

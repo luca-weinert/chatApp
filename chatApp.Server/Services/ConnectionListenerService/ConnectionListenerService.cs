@@ -1,6 +1,6 @@
 ﻿using ChatApp.ChatProtocol.Models;
-using ChatApp.Server.Events;
 using ChatApp.Server.Models.Connection;
+using ChatApp.Shared.Events;
 using ChatApp.Shared.Model.Message;
 using ChatApp.Shared.Model.User;
 using Newtonsoft.Json;

@@ -8,10 +8,9 @@
              d:DesignHeight="300" d:DesignWidth="300">
     
     <!-- Received Messages -->
-    <GroupBox Grid.Row="2" Header="Received Messages" Margin="0,0,0,20">
+    <GroupBox Header="Received Messages" Margin="0,0,0,20">
         <ScrollViewer>
             <StackPanel>
-                <Button Click="OnMessageReceived">Test</Button>
                 <ListView ItemsSource="{Binding ReceivedMessages}">
                     <ListView.ItemTemplate>
                         <DataTemplate>

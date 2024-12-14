@@ -1,15 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using ChatApp.Client.Wpf.Services.MessageService;
+using ChatApp.Shared.Events;
 using ChatApp.Shared.Model.Message;
 
 namespace ChatApp.Client.Wpf.MVVM.ViewModel;
 
 public class MessageReceiverViewModel : INotifyPropertyChanged
 {
-    private ObservableCollection<Message> _receivedMessages; 
-    private MessageService _messageService;
-    
+    private ObservableCollection<Message> _receivedMessages = new ObservableCollection<Message>();
+    private MessageService _messageService = MessageService.Instance;
+
+    public MessageReceiverViewModel()
+    {
+        _messageService.MessageReceived += OnMessageReceived;
+    }
+
     public ObservableCollection<Message> ReceivedMessages
     {
         get => _receivedMessages;
@@ -20,20 +26,28 @@ public class MessageReceiverViewModel : INotifyPropertyChanged
         }
     }
 
-    public MessageReceiverViewModel(MessageService messageService)
+    private void OnMessageReceived(object? sender, MessageEventArgs messageEventArgs)
     {
-        _messageService = messageService;
-      //  ReceivedMessages = new ObservableCollection<Message>
-      //  {
-      //      new Message(Guid.NewGuid(), Guid.NewGuid(), "123")
-      //  };
+        if (messageEventArgs?.Message == null) return;
+        Console.WriteLine("viewModel received the message");
+
+        if (System.Windows.Application.Current.Dispatcher.CheckAccess())
+        {
+            _receivedMessages.Add(messageEventArgs.Message);
+        }
+        else
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                _receivedMessages.Add(messageEventArgs.Message);
+            });
+        }
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private void OnPropertyChanged(string propertyName)
+    protected virtual void OnPropertyChanged(string propertyName)
     {
-        _messageService.SendMessageAsync(new Message(Guid.NewGuid(), Guid.NewGuid(), "123")); 
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
