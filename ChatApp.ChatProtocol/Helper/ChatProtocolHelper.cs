@@ -6,13 +6,8 @@ namespace ChatApp.ChatProtocol.Helper;
 
 public static class ChatProtocolHelper
 {
-    public static ChatProtocolDataPackage Deserialize(string rawData)
+    public static ChatProtocolDataPackage? Deserialize(string rawData)
     {
-        if (string.IsNullOrWhiteSpace(rawData))
-        {
-            throw new ArgumentException("Input data is null or empty.", nameof(rawData));
-        }
-
         try
         {
             return JsonConvert.DeserializeObject<ChatProtocolDataPackage>(rawData);

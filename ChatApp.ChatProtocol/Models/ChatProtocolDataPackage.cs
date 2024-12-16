@@ -2,7 +2,7 @@
 
 namespace ChatApp.ChatProtocol.Models; 
 
-public struct ChatProtocolDataPackage
+public class ChatProtocolDataPackage
 {
     public ChatProtocolDataPackage(ChatProtocolPayloadTypes payloadType, string payload)
     {

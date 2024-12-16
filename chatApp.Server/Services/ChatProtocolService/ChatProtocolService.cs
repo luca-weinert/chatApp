@@ -21,7 +21,7 @@ public class ChatProtocolService
         await _networkService.WriteAsync(chatProtocolDataPackage.ToJson());
     }
 
-    public async Task<ChatProtocolDataPackage> ListenAsync()
+    public async Task<ChatProtocolDataPackage?> ListenAsync()
     {
         if (_clientConnection == null) throw new Exception("clientConnection is null");
         var receivedData = await _networkService.ListenAsync();

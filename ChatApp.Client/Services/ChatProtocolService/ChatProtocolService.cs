@@ -31,7 +31,7 @@ public class ChatProtocolService
         await _networkService.SendAsnAsync(chatProtocolDataPackage.ToJson());
     }
 
-    public async Task<ChatProtocolDataPackage> ListenAsync()
+    public async Task<ChatProtocolDataPackage?> ListenAsync()
     {
         var receivedData = await _networkService.ListenAsync();
         var chatProtocolDataPackage = ChatProtocolHelper.Deserialize(receivedData);

@@ -7,7 +7,7 @@ namespace ChatApp.Server.Services.FileService;
 
 public class FileService
 {
-    private ConnectionRepository _connectionRepository;
+    private readonly ConnectionRepository _connectionRepository;
     private const string TargetDirectory = @"C:\Users\igus\Documents\ReceivedFiles";
 
     public FileService()

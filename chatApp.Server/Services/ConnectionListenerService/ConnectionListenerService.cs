@@ -49,7 +49,7 @@ namespace ChatApp.Server.Services.ConnectionListenerService
             }
         }
 
-        private void HandleReceivedData(ChatProtocolDataPackage receivedPackage)
+        private void HandleReceivedData(ChatProtocolDataPackage? receivedPackage)
         {
             Console.WriteLine($"[Server]: Received data: {receivedPackage}");
             Action<string> handler = receivedPackage.PayloadType switch
