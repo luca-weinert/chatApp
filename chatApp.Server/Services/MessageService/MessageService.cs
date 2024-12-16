@@ -16,39 +16,48 @@ namespace ChatApp.Server.Services.MessageService
 
         public async void OnMessageReceived(object? sender, MessageEventArgs messageEventArgs)
         {
-            var message = messageEventArgs.Message;
-            await SendMessage(message);
+            if (messageEventArgs?.Message == null) return;
+            await SendMessageToTargetClient(messageEventArgs.Message);
         }
 
         public async void OnMessageReceivedConfirmationReceived(object? sender,
             MessageReceivedConformationEventArgs messageReceivedConformationEventArgs)
         {
             Console.WriteLine("OnMessageReceivedConfirmation");
-            await SendMessageReceivedConfirmation(messageReceivedConformationEventArgs.ReceivedMessage);
+            await SendMessageReceivedConfirmationToSenderClient(messageReceivedConformationEventArgs.ReceivedMessage);
         }
 
-        public async Task SendMessageReceivedConfirmation(MessageReceivedConfirmation messageReceivedConfirmation)
+        private async Task SendMessageReceivedConfirmationToSenderClient(
+            MessageReceivedConfirmation messageReceivedConfirmation)
         {
             Console.WriteLine("[Server]: Sending message received confirmation to sender client");
-            var targetConnection =
-                await _connectionRepository.GetConnectionByUserIdAsync(messageReceivedConfirmation.ReceivedMessage
-                    .SenderUserId);
-            if (targetConnection == null) return;
-            var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
-            var chatProtocolPackage = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.MessageReceivedConfirmation,
+            await TrySendDataToTargetClientAsync(messageReceivedConfirmation.ReceivedMessage.SenderUserId,
+                ChatProtocolPayloadTypes.MessageReceivedConfirmation,
                 messageReceivedConfirmation.ReceivedMessage.ToJson());
-            await chatProtocolService.SendAsync(chatProtocolPackage);
         }
 
-        private async Task SendMessage(Message message)
+        private async Task SendMessageToTargetClient(Message message)
         {
-            Console.WriteLine("[Server]: Sending message to target client");
-            var targetConnection = await _connectionRepository.GetConnectionByUserIdAsync(message.TargetUserId);
-            if (targetConnection == null) return;
+            Console.WriteLine("[Server]: Attempting to send message to target client...");
+            await TrySendDataToTargetClientAsync(message.TargetUserId, ChatProtocolPayloadTypes.Message,
+                message.ToJson());
+        }
+
+        private async Task<bool> TrySendDataToTargetClientAsync(Guid targetUserId,
+            ChatProtocolPayloadTypes chatProtocolPayloadType, string JsonData)
+        {
+            var targetConnection = await _connectionRepository.GetConnectionByUserIdAsync(targetUserId);
+            if (targetConnection == null)
+            {
+                Console.WriteLine($"[Server]: No active connection found for UserId: {targetUserId}");
+                return false;
+            }
+
             var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
-            var chatProtocolPackage =
-                new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message.ToJson());
+            var chatProtocolPackage = new ChatProtocolDataPackage(chatProtocolPayloadType, JsonData);
             await chatProtocolService.SendAsync(chatProtocolPackage);
+            Console.WriteLine($"[Server]: Data sent successfully to UserId: {targetUserId}");
+            return true;
         }
     }
 }

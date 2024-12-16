@@ -1,32 +1,54 @@
+using ChatApp.ChatProtocol.Models;
+using ChatApp.Server.Repositories.Connection;
 using ChatApp.Shared.Events;
+using ChatApp.Shared.Model.File;
 
 namespace ChatApp.Server.Services.FileService;
 
 public class FileService
 {
-    public void OnFileTransferReceived(object sender, FileTransferEventArgs e)
-    {
-        var fileTransfer = e.FileTransfer;
-        const string targetDirectory = @"C:\Users\igus\Documents\ReceivedFiles";
-        var fileName = string.IsNullOrWhiteSpace(fileTransfer.FileName)
-            ? "unknown_file"
-            : fileTransfer.FileName;
-        var fullPath = Path.Combine(targetDirectory, fileName);
+    private ConnectionRepository _connectionRepository;
+    private const string TargetDirectory = @"C:\Users\igus\Documents\ReceivedFiles";
 
+    public FileService()
+    { 
+       _connectionRepository = new ConnectionRepository();
+    }
+    
+    public async void OnFileTransferReceived(object sender, FileTransferEventArgs fileTransferEvent)
+    {
+        var fileTransfer = fileTransferEvent.FileTransfer;
+
+        var fileName = string.IsNullOrWhiteSpace(fileTransfer.FileName)
+            ? "[Server]: unknown_file"
+            : fileTransfer.FileName;
+        var fullPath = Path.Combine(TargetDirectory, fileName);
+        
         try
         {
-            if (!Directory.Exists(targetDirectory))
+            if (!Directory.Exists(TargetDirectory))
             {
-                Directory.CreateDirectory(targetDirectory);
-                Console.WriteLine($"[Server]: Created directory: {targetDirectory}");
+                Directory.CreateDirectory(TargetDirectory);
+                Console.WriteLine($"[Server]: Created directory: {TargetDirectory}");
             }
 
-            File.WriteAllBytes(fullPath, fileTransfer.Content);
-            Console.WriteLine($"[Server]: File transfered to: {fullPath}");
+            await File.WriteAllBytesAsync(fullPath, fileTransfer.Content);
+            Console.WriteLine($"[Server]: File transferred to: {fullPath}");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"[Server]: Failed to write file transfer: {ex}");
         }
+        
+        await SendFileToTargetClientAsync(fileTransfer);
+    }
+
+    private async Task SendFileToTargetClientAsync(FileTransfer fileTransfer)
+    {
+        var targetConnection = await _connectionRepository.GetConnectionByUserIdAsync(fileTransfer.TargetUserId);
+        if (targetConnection == null) return;
+        var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
+        var package = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.FileTransfer, fileTransfer.ToJson());
+        await chatProtocolService.SendAsync(package);
     }
 }
