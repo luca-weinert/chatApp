@@ -14,7 +14,7 @@ namespace ChatApp.Shared.Model.User
 
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this);
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
     }
 }

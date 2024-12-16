@@ -20,7 +20,7 @@ namespace ChatApp.Server.Services.MessageService
             await SendMessage(message);
         }
 
-        public async void OnMessageReceivedConfirmation(object? sender,
+        public async void OnMessageReceivedConfirmationReceived(object? sender,
             MessageReceivedConformationEventArgs messageReceivedConformationEventArgs)
         {
             Console.WriteLine("OnMessageReceivedConfirmation");

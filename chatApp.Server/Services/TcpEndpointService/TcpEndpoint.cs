@@ -66,11 +66,13 @@ public class TcpEndpoint
             var connectionListenerService = new ConnectionListenerService.ConnectionListenerService(clientConnection);
             var messageService = new MessageService.MessageService();
             var userService = new UserService.UserService(); 
+            var fileService = new FileService.FileService();
             
             connectionListenerService.MessageReceived += messageService.OnMessageReceived;
-            connectionListenerService.MessageReceivedConfirmation += messageService.OnMessageReceivedConfirmation;
-            
+            connectionListenerService.MessageReceivedConfirmationReceived += messageService.OnMessageReceivedConfirmationReceived;
             connectionListenerService.UserReceived += userService.OnUserInformationReceived;
+            connectionListenerService.FileReceived += fileService.OnFileTransferReceived;
+            
             
             var listenerTask = connectionListenerService.ListenOnConnection(cancellationToken);
             await listenerTask;

@@ -27,7 +27,7 @@ namespace ChatApp.Shared.Model.Message
 
         public string ToJson()
         {
-            var json = JsonConvert.SerializeObject(this);
+            var json = JsonConvert.SerializeObject(this, Formatting.Indented);
             return json;
         }
     }

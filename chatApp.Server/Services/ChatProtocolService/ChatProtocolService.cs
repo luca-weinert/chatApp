@@ -1,4 +1,3 @@
-using ChatApp.ChatProtocol;
 using ChatApp.ChatProtocol.Helper;
 using ChatApp.ChatProtocol.Models;
 using ChatApp.Server.Models.Connection;

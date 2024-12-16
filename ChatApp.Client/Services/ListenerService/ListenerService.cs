@@ -45,6 +45,9 @@ namespace ChatApp.Client.Wpf.Services.ListenerService
                             if (messageReceivedConfirmation == null) return;
                             OnMessageReceivedConformationReceived(new MessageReceivedConformationEventArgs(messageReceivedConfirmation));
                             break;
+                        case ChatProtocolPayloadTypes.FileTransfer:
+                            Console.WriteLine($"[Client]: Received data containing a file transfer");
+                            break;
                     }
                 }
             }

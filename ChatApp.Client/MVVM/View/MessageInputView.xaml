@@ -20,7 +20,7 @@
             <TextBox Name="TargetUserIdInput" Width="200" VerticalAlignment="Center" ToolTip="Enter the ID of the user you want to send the message to." />
         </StackPanel>
 
-        <!-- Message Input -->
+        <!-- Message Input (Text) -->
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10" VerticalAlignment="Center">
             <TextBlock Text="Message:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" />
             <TextBox Name="MessageBoxInput" Width="500" Margin="0,0,10,0" VerticalAlignment="Center" ToolTip="Type your message here." />
@@ -30,6 +30,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,10" VerticalAlignment="Center">
             <TextBlock Text="File:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" />
             <TextBox Name="FileInput" Width="500" Margin="0,0,10,0" VerticalAlignment="Center" ToolTip="Provide a file path if you want to attach a file." />
+            <Button Content="Select a file" Click="SelectFile" Width="100" Height="35" VerticalAlignment="Center" ToolTip="Click to select a file." />
         </StackPanel>
 
         <!-- Send Button -->

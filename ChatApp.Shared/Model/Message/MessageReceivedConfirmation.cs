@@ -17,6 +17,6 @@ public class MessageReceivedConfirmation : EventArgs
     
     public string ToJson()
     {
-        return JsonConvert.SerializeObject(this);
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
     }
 }
