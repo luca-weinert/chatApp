@@ -68,6 +68,8 @@ public class TcpEndpoint
             var userService = new UserService.UserService(); 
             
             connectionListenerService.MessageReceived += messageService.OnMessageReceived;
+            connectionListenerService.MessageReceivedConfirmation += messageService.OnMessageReceivedConfirmation;
+            
             connectionListenerService.UserReceived += userService.OnUserInformationReceived;
             
             var listenerTask = connectionListenerService.ListenOnConnection(cancellationToken);

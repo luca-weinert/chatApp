@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ChatApp.Client.Wpf.MVVM.View"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="600">
     
     <!-- Received Messages -->
-    <GroupBox Header="Received Messages" Margin="0,0,0,20">
-        <ScrollViewer>
-            <StackPanel>
-                <ListView ItemsSource="{Binding ReceivedMessages}">
+    <GroupBox Header="Received Messages" Margin="10">
+        <Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="300">
+                <ListView ItemsSource="{Binding ReceivedMessages}" Background="White">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <WrapPanel>
@@ -23,7 +23,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </StackPanel>
-        </ScrollViewer>
+            </ScrollViewer>
+        </Grid>
     </GroupBox>
 </UserControl>

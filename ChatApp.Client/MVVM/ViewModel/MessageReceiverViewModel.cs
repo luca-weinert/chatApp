@@ -29,7 +29,6 @@ public class MessageReceiverViewModel : INotifyPropertyChanged
     private void OnMessageReceived(object? sender, MessageEventArgs messageEventArgs)
     {
         if (messageEventArgs?.Message == null) return;
-        Console.WriteLine("viewModel received the message");
 
         if (System.Windows.Application.Current.Dispatcher.CheckAccess())
         {

@@ -4,4 +4,5 @@ public enum ChatProtocolPayloadTypes
 {
     Message,
     User,
+    MessageReceivedConfirmation
 }

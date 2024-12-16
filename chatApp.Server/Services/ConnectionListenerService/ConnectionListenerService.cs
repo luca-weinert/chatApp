@@ -10,8 +10,10 @@ namespace ChatApp.Server.Services.ConnectionListenerService
     public sealed class ConnectionListenerService
     {
         public event EventHandler<MessageEventArgs> MessageReceived;
+        public event EventHandler<MessageReceivedConformationEventArgs> MessageReceivedConfirmation;
         public event EventHandler<UserEventArgs> UserReceived;
         private void OnMessageReceived(MessageEventArgs e) => MessageReceived?.Invoke(this, e);
+        private void OnMessageReceivedConfirmation(MessageReceivedConformationEventArgs e) => MessageReceivedConfirmation?.Invoke(this, e);
         private void OnUserReceived(UserEventArgs e) => UserReceived?.Invoke(this, e);
 
         private ClientConnection _clientConnection;
@@ -56,6 +58,12 @@ namespace ChatApp.Server.Services.ConnectionListenerService
                     var user = JsonConvert.DeserializeObject<User>(chatProtocolPayload) ;
                     if (user == null) return;
                     OnUserReceived(new UserEventArgs(user, _clientConnection.Id));
+                    break;
+                case ChatProtocolPayloadTypes.MessageReceivedConfirmation:
+                    Console.WriteLine($"[Server]: Received data containing a message confirmation");
+                    var messageReceivedConfirmation = JsonConvert.DeserializeObject<MessageReceivedConfirmation>(chatProtocolPayload);
+                    if (messageReceivedConfirmation == null) return;
+                    OnMessageReceivedConfirmation(new MessageReceivedConformationEventArgs(messageReceivedConfirmation));
                     break;
             }
         }

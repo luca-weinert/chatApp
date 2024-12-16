@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Windows;
-using ChatApp.Client.Wpf.MVVM.ViewModel;
 using ChatApp.Client.Wpf.Services.AuthenticationService;
 using ChatApp.Client.Wpf.Services.ChatProtocolService;
 using ChatApp.Client.Wpf.Services.ListenerService;
@@ -24,11 +23,14 @@ namespace ChatApp.Client.Wpf
             var messageService = MessageService.Instance;
 
             listenerService.MessageReceived += messageService.OnMessageReceived;
+            listenerService.MessageReceivedConformationReceived += messageService.OnMessageReceivedConfirmationReceived;
             
             try
             {
                 await chatProtocolService.ConnectAsync(serverIpEndpoint);
                 await authenticationService.AuthenticateUserAsync();
+                var user = authenticationService.GetUser();
+                Console.WriteLine($"[Client]: your userId is: {user.Id}");
             }
             catch (Exception exception)
             {

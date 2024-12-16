@@ -5,23 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ChatApp.Client.Wpf.MVVM.View"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="250" d:DesignWidth="700">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Target User Input -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Center">
             <TextBlock Text="Target User ID:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" />
-            <TextBox Name="TargetUserIdInput" Width="300" VerticalAlignment="Center" />
+            <TextBox Name="TargetUserIdInput" Width="200" VerticalAlignment="Center" ToolTip="Enter the ID of the user you want to send the message to." />
         </StackPanel>
 
-        <!-- Input Area -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBox Name="MessageBoxInput" Width="600" Margin="0,0,10,0" VerticalAlignment="Center" />
-            <Button Content="Send" Click="SendMessage" Width="80" Height="30" VerticalAlignment="Center" />
+        <!-- Message Input -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10" VerticalAlignment="Center">
+            <TextBlock Text="Message:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <TextBox Name="MessageBoxInput" Width="500" Margin="0,0,10,0" VerticalAlignment="Center" ToolTip="Type your message here." />
+        </StackPanel>
+
+        <!-- File Input -->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,10" VerticalAlignment="Center">
+            <TextBlock Text="File:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <TextBox Name="FileInput" Width="500" Margin="0,0,10,0" VerticalAlignment="Center" ToolTip="Provide a file path if you want to attach a file." />
+        </StackPanel>
+
+        <!-- Send Button -->
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="0">
+            <Button Content="Send" Click="SendMessage" Width="100" Height="35" VerticalAlignment="Center" ToolTip="Click to send the message." />
         </StackPanel>
     </Grid>
 </UserControl>

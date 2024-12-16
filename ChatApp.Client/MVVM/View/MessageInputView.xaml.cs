@@ -10,18 +10,20 @@ public partial class MessageInputView : UserControl
     public MessageInputView()
     {
         InitializeComponent();
-     
     }
 
-    public void SendMessage(Object source, EventArgs eventArgs)
+    public void SendMessage(object source, EventArgs eventArgs)
     {
-        var _viewModel = DataContext as MessageInputViewModel;
+        // if (!string.IsNullOrEmpty(TargetUserIdInput.Text) && !string.IsNullOrEmpty(MessageBoxInput.Text)) return;
+        var viewModel  = (MessageInputViewModel)DataContext;
+        
         var authService = AuthenticationService.Instance;
         var user = authService.GetUser();
+        
         var senderUserId = user.Id;
-        var targetUserId = user.Id;
+        var targetUserId = new Guid(TargetUserIdInput.Text);
         var messageContent = MessageBoxInput.Text;
         var message = new Message(senderUserId, targetUserId, messageContent);
-        _viewModel.SendMessage(message);
+        viewModel.SendMessage(message);
     }
 }

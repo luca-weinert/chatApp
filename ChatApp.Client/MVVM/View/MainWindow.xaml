@@ -2,37 +2,37 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.microsoft.com/markup-compatibility/2006"
         xmlns:msRcv="clr-namespace:ChatApp.Client.Wpf"
         xmlns:view="clr-namespace:ChatApp.Client.Wpf.MVVM.View"
-        mc:Ignorable="d"
         Title="ChatApp" Height="600" Width="800">
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- title -->
-            <RowDefinition Height="Auto"/> <!-- connection and user information -->
-            <RowDefinition Height="Auto"/> <!-- list received messages -->
-            <RowDefinition Height="Auto"/> <!-- message / target user input -->
+            <RowDefinition Height="Auto" /> <!-- Title -->
+            <RowDefinition Height="Auto" /> <!-- Connection Info -->
+            <RowDefinition Height="*" />   <!-- Received Messages -->
+            <RowDefinition Height="Auto" /> <!-- Message Input -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" Text="ChatApp" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        <TextBlock Grid.Row="0" Text="ChatApp" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20" />
 
         <!-- Connection Info -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,20">
-            <TextBlock Text="Your User ID:" FontWeight="Bold" Margin="0,0,10,0"/>
-            <TextBlock Text="123456789" Margin="0,0,20,0"/>
-            <TextBlock Text="Connection State:" FontWeight="Bold" Margin="0,0,10,0"/>
-            <TextBlock Text="Connected" Foreground="Green"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,20" VerticalAlignment="Center">
+            <TextBlock Text="Your User ID:" FontWeight="Bold" Margin="0,0,10,0" />
+            <TextBlock Text="123456789" Margin="0,0,20,0" />
+            <TextBlock Text="Connection State:" FontWeight="Bold" Margin="0,0,10,0" />
+            <TextBlock Text="Connected" Foreground="Green" />
         </StackPanel>
-        
-        <!-- received Messages -->
-        <view:MessageReceiverView Grid.Row="2" DataContext="{Binding MessageReceiverViewModel, Source={StaticResource ViewModelLocator}}"></view:MessageReceiverView>
-        
+
+        <!-- Received Messages -->
+        <view:MessageReceiverView Grid.Row="2" DataContext="{Binding MessageReceiverViewModel, Source={StaticResource ViewModelLocator}}" />
+
         <!-- Message Input -->
-        <view:MessageInputView Grid.Row="3" DataContext="{Binding MessageInputViewModel, Source={StaticResource ViewModelLocator}}"></view:MessageInputView>
+        <view:MessageInputView Grid.Row="3" DataContext="{Binding MessageInputViewModel, Source={StaticResource ViewModelLocator}}" />
     </Grid>
 </Window>
