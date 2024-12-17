@@ -1,0 +1,26 @@
+@startuml
+!include .\\Program.puml
+!include .\\Models\Connection\ClientConnection.puml
+!include .\\Models\Connection\ClientConnectionPool.puml
+!include .\\Models\User\UserPool.puml
+!include .\\Repositories\Connection\ConnectionRepository.puml
+!include .\\Repositories\User\UserRepository.puml
+!include .\\Services\ChatProtocolService\ChatProtocolService.puml
+!include .\\Services\ConnectionListenerService\Listener.puml
+!include .\\Services\FileService\FileService.puml
+!include .\\Services\MessageService\MessageService.puml
+!include .\\Services\NetworkService\NetwrokService.puml
+!include .\\Services\TcpEndpointService\TcpEndpoint.puml
+!include .\\Services\UserService\UserService.puml
+!include .\\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.puml
+!include .\\obj\Debug\net8.0\chatApp.Server.AssemblyInfo.puml
+!include .\\obj\Debug\net8.0\chatApp.Server.GlobalUsings.g.puml
+!include .\\obj\Debug\net8.0\chatApp_server.AssemblyInfo.puml
+!include .\\obj\Debug\net8.0\chatApp_server.GlobalUsings.g.puml
+!include .\\obj\Release\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.puml
+!include .\\obj\Release\net8.0\chatApp.Server.AssemblyInfo.puml
+!include .\\obj\Release\net8.0\chatApp.Server.GlobalUsings.g.puml
+!include .\\obj\Release\net8.0\win-x64\.NETCoreApp,Version=v8.0.AssemblyAttributes.puml
+!include .\\obj\Release\net8.0\win-x64\chatApp.Server.AssemblyInfo.puml
+!include .\\obj\Release\net8.0\win-x64\chatApp.Server.GlobalUsings.g.puml
+@enduml

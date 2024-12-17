@@ -1,0 +1,10 @@
+@startuml
+class UserService {
+    + UserService()
+    + <<async>> OnUserInformationReceived(sender:object?, userEventArgs:UserEventArgs) : void
+    + RequestUserInformationForAsync(clientConnection:ClientConnection) : Task
+    + HandleUserInformationAsync(clientConnection:ClientConnection, user:User) : Task
+}
+UserService --> "_userRepository" UserRepository
+UserService --> "_connectionRepository" ConnectionRepository
+@enduml

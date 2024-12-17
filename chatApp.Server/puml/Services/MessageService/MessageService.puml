@@ -1,0 +1,11 @@
+@startuml
+class MessageService {
+    + MessageService()
+    + <<async>> OnMessageReceived(sender:object?, messageEventArgs:MessageEventArgs) : void
+    + <<async>> OnMessageReceivedConfirmationReceived(sender:object?, messageReceivedConformationEventArgs:MessageReceivedConformationEventArgs) : void
+    - <<async>> SendMessageReceivedConfirmationToSenderClient(messageReceivedConfirmation:MessageReceivedConfirmation) : Task
+    - <<async>> SendMessageToTargetClient(message:Message) : Task
+    - <<async>> TrySendDataToTargetClientAsync(targetUserId:Guid, chatProtocolPayloadType:ChatProtocolPayloadTypes, JsonData:string) : Task<bool>
+}
+MessageService --> "_connectionRepository" ConnectionRepository
+@enduml

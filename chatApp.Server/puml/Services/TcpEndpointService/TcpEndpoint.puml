@@ -1,0 +1,11 @@
+@startuml
+class TcpEndpoint {
+    - {static} _instance : TcpEndpoint?
+    - TcpEndpoint()
+    + {static} GetTcpEndpoint() : TcpEndpoint?
+    + <<async>> StartAsync(cancellationToken:CancellationToken) : Task
+    - {static} <<async>> HandleClientAsync(client:TcpClient, cancellationToken:CancellationToken) : Task
+    + StopAsync(cancellationToken:CancellationToken) : Task
+}
+TcpEndpoint --> "_tcpSocket" TcpListener
+@enduml

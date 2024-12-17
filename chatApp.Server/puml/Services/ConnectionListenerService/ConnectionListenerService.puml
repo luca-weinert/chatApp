@@ -1,0 +1,10 @@
+@startuml
+class ConnectionListenerService <<sealed>> {
+    +  <<event>> MessageReceived : EventHandler<MessageEventArgs>? 
+    +  <<event>> UserReceived : EventHandler<UserEventArgs>? 
+    +  <<event>> FileReceived : EventHandler<FileTransferEventArgs>? 
+    +  <<event>> MessageReceivedConfirmationReceived : EventHandler<MessageReceivedConformationEventArgs>? 
+    + ConnectionListenerService(clientConnection:ClientConnection)
+    + <<async>> ListenOnConnection(cancellationToken:CancellationToken) : Task
+}
+@enduml

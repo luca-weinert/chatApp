@@ -1,0 +1,11 @@
+@startuml
+class UserPool {
+    - UserPool()
+    - {static} <<readonly>> padlock : object
+}
+class "ConcurrentDictionary`2"<T1,T2> {
+}
+UserPool --> "_instance" UserPool
+UserPool o-> "users<Guid,Shared.Model.User.User>" "ConcurrentDictionary`2"
+UserPool --> "Instance" UserPool
+@enduml

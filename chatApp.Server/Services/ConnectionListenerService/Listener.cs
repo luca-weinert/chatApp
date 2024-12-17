@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace ChatApp.Server.Services.ConnectionListenerService
 {
-    public sealed class ConnectionListenerService
+    public sealed class Listener
     {
         public event EventHandler<MessageEventArgs>? MessageReceived;
         public event EventHandler<UserEventArgs>? UserReceived;
@@ -24,11 +24,11 @@ namespace ChatApp.Server.Services.ConnectionListenerService
 
         private void OnUserInformationReceived(UserEventArgs e) => UserReceived?.Invoke(this, e);
 
-        private readonly ClientConnection _clientConnection;
+        private ClientConnection ClientConnection {get; set;}
 
-        public ConnectionListenerService(ClientConnection clientConnection)
+        public Listener(ClientConnection clientConnection)
         {
-            _clientConnection = clientConnection;
+            ClientConnection = clientConnection;
         }
 
         public async Task ListenOnConnection(CancellationToken cancellationToken)
@@ -37,7 +37,7 @@ namespace ChatApp.Server.Services.ConnectionListenerService
             {
                 try
                 {
-                    var chatProtocolService = new ChatProtocolService.ChatProtocolService(_clientConnection);
+                    var chatProtocolService = new ChatProtocolService.ChatProtocolService(ClientConnection);
                     var chatData = await chatProtocolService.ListenAsync();
                     HandleReceivedData(chatData);
                 }
@@ -80,7 +80,7 @@ namespace ChatApp.Server.Services.ConnectionListenerService
         {
             var user = DeserializePayload<User>(payload);
             if (user == null) return;
-            OnUserInformationReceived(new UserEventArgs(user, _clientConnection.Id));
+            OnUserInformationReceived(new UserEventArgs(user, ClientConnection.Id));
         }
 
         private void HandleMessage(string payload)

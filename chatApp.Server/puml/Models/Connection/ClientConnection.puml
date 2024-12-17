@@ -1,0 +1,10 @@
+@startuml
+class ClientConnection {
+    + ClientConnection(client:TcpClient)
+    + <<async>> WriteAsync(rawData:string) : Task
+    + <<async>> ReadAsync() : Task<string>
+}
+ClientConnection --> "_stream" NetworkStream
+ClientConnection o-> "Id" Guid
+ClientConnection --> "UserId" Guid
+@enduml

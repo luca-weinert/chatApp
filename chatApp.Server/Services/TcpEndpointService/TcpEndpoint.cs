@@ -7,27 +7,26 @@ namespace ChatApp.Server.Services.TcpEndpointService;
 
 public class TcpEndpoint
 {
-    private readonly ConnectionListenerService.ConnectionListenerService _connectionListenerService;
-    private readonly TcpListener tcpSocket;
-    private static TcpEndpoint instance = null;
+    private readonly TcpListener _tcpSocket;
+    private static TcpEndpoint? _instance;
 
     private TcpEndpoint()
     {
-        tcpSocket = new TcpListener(IPAddress.Any, 8080);
+        _tcpSocket = new TcpListener(IPAddress.Any, 8080);
     }
     
-    public static TcpEndpoint GetTcpEndpoint()
+    public static TcpEndpoint? GetTcpEndpoint()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = new TcpEndpoint();
+            _instance = new TcpEndpoint();
         }
-        return instance;
+        return _instance;
     }
     
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        tcpSocket.Start();
+        _tcpSocket.Start();
         Console.WriteLine($"[Server]: Server started and waiting for connections");
 
         try
@@ -35,7 +34,7 @@ public class TcpEndpoint
             while (!cancellationToken.IsCancellationRequested)
             {
                 // waiting for incoming client connections
-                var client = await tcpSocket.AcceptTcpClientAsync(cancellationToken);
+                var client = await _tcpSocket.AcceptTcpClientAsync(cancellationToken);
                 Console.WriteLine("[Server]: A client connected to server");
 
                 // handle current connection on separate task so the endpoint can handle other incoming connections  
@@ -49,7 +48,7 @@ public class TcpEndpoint
         }
         finally
         {
-            tcpSocket.Stop();
+            _tcpSocket.Stop();
             Console.WriteLine("[Server]: Server stopped");
         }
     }
@@ -63,7 +62,7 @@ public class TcpEndpoint
             await connectionRepository.AddConnectionAsync(clientConnection);
             
             // start a background task that listen on the connection
-            var connectionListenerService = new ConnectionListenerService.ConnectionListenerService(clientConnection);
+            var connectionListenerService = new ConnectionListenerService.Listener(clientConnection);
             var messageService = new MessageService.MessageService();
             var userService = new UserService.UserService(); 
             var fileService = new FileService.FileService();
@@ -93,7 +92,7 @@ public class TcpEndpoint
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        tcpSocket.Stop();
+        _tcpSocket.Stop();
         Console.WriteLine("[Server]: tcpEndpoint stopped");
         return Task.CompletedTask;
     }

@@ -1,0 +1,6 @@
+@startuml
+class Program <<static>> {
+    - {static} <<readonly>> TcpEndpoint : TcpEndpoint?
+    + {static} <<async>> Main(args:string[]) : Task
+}
+@enduml

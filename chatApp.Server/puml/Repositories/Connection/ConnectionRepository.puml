@@ -1,0 +1,11 @@
+@startuml
+class ConnectionRepository {
+    + ConnectionRepository()
+    + AddConnectionAsync(clientConnection:ClientConnection) : Task
+    + RemoveConnectionAsync(clientConnection:ClientConnection) : Task
+    + GetConnectionByUserIdAsync(userId:Guid) : Task<ClientConnection?>
+    + GetConnectionByConnectionId(connectionId:Guid) : Task<ClientConnection?>
+    + UpdateConnection(connection:ClientConnection) : ClientConnection
+}
+ConnectionRepository --> "_clientConnectionPool" ClientConnectionPool
+@enduml

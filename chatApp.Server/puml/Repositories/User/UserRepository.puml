@@ -1,0 +1,9 @@
+@startuml
+class UserRepository {
+    + UserRepository()
+    + SaveUserAsync(user:ChatApp.Shared.Model.User.User) : Task
+    + GetUserByIdAsync(userId:Guid) : Task<ChatApp.Shared.Model.User.User?>
+    + RemoveUserByIdAsync(userId:Guid) : Task
+}
+UserRepository --> "_userPool" UserPool
+@enduml

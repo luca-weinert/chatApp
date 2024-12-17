@@ -1,0 +1,9 @@
+@startuml
+class FileService {
+    - <<const>> TargetDirectory : string = @"C:\Users\igus\Documents\ReceivedFiles"
+    + FileService()
+    + <<async>> OnFileTransferReceived(sender:object, fileTransferEvent:FileTransferEventArgs) : void
+    - <<async>> SendFileToTargetClientAsync(fileTransfer:FileTransfer) : Task
+}
+FileService --> "_connectionRepository" ConnectionRepository
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class ClientConnectionPool {
+    - {static} <<readonly>> padlock : object
+    - ClientConnectionPool()
+}
+class "ConcurrentDictionary`2"<T1,T2> {
+}
+ClientConnectionPool o-> "instance" ClientConnectionPool
+ClientConnectionPool --> "Instance" ClientConnectionPool
+ClientConnectionPool o-> "connectedCliens<Guid,ClientConnection>" "ConcurrentDictionary`2"
+@enduml

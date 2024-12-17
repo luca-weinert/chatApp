@@ -1,0 +1,8 @@
+@startuml
+class NetworkService {
+    + NetworkService(clientConnection:ClientConnection)
+    + <<async>> ListenAsync() : Task<string>
+    + <<async>> WriteAsync(data:string) : Task
+}
+NetworkService --> "ClientConnection" ClientConnection
+@enduml
