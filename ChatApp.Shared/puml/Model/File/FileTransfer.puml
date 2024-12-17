@@ -1,0 +1,15 @@
+@startuml
+class FileTransfer {
+    + FileTransfer()
+    + FileTransfer(senderUserId:Guid, targetUserId:Guid, fileName:string, fileContent:byte[])
+    + FileName : string <<get>> <<init>>
+    + FileSize : long <<get>> <<init>>
+    + ToJson() : string
+    + {static} FromJson(json:string) : FileTransfer?
+    + GetContentAsBase64() : string
+    + {static} FromBase64(senderUserId:Guid, targetUserId:Guid, fileName:string, base64Content:string) : FileTransfer
+}
+FileTransfer --> "Id" Guid
+FileTransfer --> "SenderUserId" Guid
+FileTransfer --> "TargetUserId" Guid
+@enduml

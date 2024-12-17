@@ -1,0 +1,7 @@
+@startuml
+class Iockernel <<static>> {
+    + {static} Get() : T
+    + {static} Initialze(modules:INinjectModule[]) : void
+}
+Iockernel --> "_kernel" StandardKernel
+@enduml

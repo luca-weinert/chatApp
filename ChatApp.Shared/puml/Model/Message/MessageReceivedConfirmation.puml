@@ -1,0 +1,9 @@
+@startuml
+class MessageReceivedConfirmation {
+    + MessageReceivedConfirmation()
+    + MessageReceivedConfirmation(receivedMessage:Message)
+    + ToJson() : string
+}
+EventArgs <|-- MessageReceivedConfirmation
+MessageReceivedConfirmation --> "ReceivedMessage" Message
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class NetworkService {
+    - {static} _instance : NetworkService?
+    - {static} <<readonly>> Lock : object
+    - NetworkService()
+    + <<async>> ConnectAsync(ipEndPoint:IPEndPoint) : Task
+    + <<async>> ListenAsync() : Task<string>
+    + <<async>> SendAsnAsync(data:string) : Task
+}
+NetworkService --> "_serverConnection" ServerConnection
+NetworkService --> "Instance" NetworkService
+@enduml

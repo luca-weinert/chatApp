@@ -1,0 +1,8 @@
+@startuml
+class ServerConnection {
+    + ServerConnection(client:TcpClient)
+    + <<async>> WriteAsync(rawData:string) : Task
+    + <<async>> ReadAsync() : Task<string>
+}
+ServerConnection --> "_stream" NetworkStream
+@enduml

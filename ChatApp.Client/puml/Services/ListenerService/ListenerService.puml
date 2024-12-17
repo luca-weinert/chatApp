@@ -1,0 +1,10 @@
+@startuml
+class ListenerService {
+    +  <<event>> MessageReceived : EventHandler<MessageEventArgs> 
+    +  <<event>> MessageReceivedConformationReceived : EventHandler<MessageReceivedConformationEventArgs> 
+    - OnMessageReceivedConformationReceived(messageReceivedConformation:MessageReceivedConformationEventArgs) : void
+    - OnMessageReceived(e:MessageEventArgs) : void
+    + ListenerService()
+    + <<async>> ListenOnServerConnection(cancellationToken:CancellationToken) : Task
+}
+@enduml

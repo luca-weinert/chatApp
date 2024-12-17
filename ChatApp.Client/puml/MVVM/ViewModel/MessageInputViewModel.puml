@@ -1,0 +1,9 @@
+@startuml
+class MessageInputViewModel {
+    + MessageInputViewModel()
+    + SendMessage(message:Message) : void
+    + <<async>> SendFileAsync(fileInfo:FileInfo) : Task
+}
+MessageInputViewModel --> "_messageService" MessageService
+MessageInputViewModel --> "_fileService" FileService
+@enduml

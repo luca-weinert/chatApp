@@ -1,0 +1,8 @@
+@startuml
+class UserEventArgs {
+    + UserEventArgs(user:User, connectionID:Guid)
+}
+EventArgs <|-- UserEventArgs
+UserEventArgs --> "User" User
+UserEventArgs --> "ConnectionID" Guid
+@enduml

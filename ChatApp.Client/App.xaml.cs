@@ -11,7 +11,6 @@ namespace ChatApp.Client.Wpf
     {
         protected async override void OnStartup(StartupEventArgs e)
         {
-            Iockernel.Initialze(new IocConfiguration());
             base.OnStartup(e);
             
             var serverIpEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080);

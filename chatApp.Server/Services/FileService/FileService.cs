@@ -49,6 +49,6 @@ public class FileService
         if (targetConnection == null) return;
         var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
         var package = new ChatProtocolDataPackage(ChatProtocolPayloadTypes.FileTransfer, fileTransfer.ToJson());
-        await chatProtocolService.SendAsync(package);
+        await chatProtocolService.WriteProtocolDataAsync(package);
     }
 }

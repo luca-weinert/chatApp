@@ -10,10 +10,10 @@ namespace ChatApp.Server.Services.ConnectionListenerService
 {
     public sealed class Listener
     {
-        public event EventHandler<MessageEventArgs>? MessageReceived;
-        public event EventHandler<UserEventArgs>? UserReceived;
-        public event EventHandler<FileTransferEventArgs>? FileReceived;
-        public event EventHandler<MessageReceivedConformationEventArgs>? MessageReceivedConfirmationReceived;
+        public  event EventHandler<MessageEventArgs> MessageReceived;
+        public event EventHandler<UserEventArgs> UserReceived;
+        public event EventHandler<FileTransferEventArgs> FileReceived;
+        public event EventHandler<MessageReceivedConformationEventArgs> MessageReceivedConfirmationReceived;
         
         private void OnMessageReceived(MessageEventArgs e) => MessageReceived?.Invoke(this, e);
 
@@ -25,21 +25,22 @@ namespace ChatApp.Server.Services.ConnectionListenerService
         private void OnUserInformationReceived(UserEventArgs e) => UserReceived?.Invoke(this, e);
 
         private ClientConnection ClientConnection {get; set;}
+        private ChatProtocolService.ChatProtocolService ChatProtocolService {get; set;}
 
         public Listener(ClientConnection clientConnection)
         {
             ClientConnection = clientConnection;
+            ChatProtocolService = new ChatProtocolService.ChatProtocolService(ClientConnection);
         }
 
-        public async Task ListenOnConnection(CancellationToken cancellationToken)
+        public async Task Listen(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    var chatProtocolService = new ChatProtocolService.ChatProtocolService(ClientConnection);
-                    var chatData = await chatProtocolService.ListenAsync();
-                    HandleReceivedData(chatData);
+                    var chatProtocolData = await ChatProtocolService.ReadProtocolDataAsync();
+                    HandleReceivedData(chatProtocolData);
                 }
                 catch (Exception e)
                 {
@@ -48,8 +49,8 @@ namespace ChatApp.Server.Services.ConnectionListenerService
                 }
             }
         }
-
-        private void HandleReceivedData(ChatProtocolDataPackage? receivedPackage)
+   
+        private void HandleReceivedData(ChatProtocolDataPackage receivedPackage)
         {
             Console.WriteLine($"[Server]: Received data: {receivedPackage}");
             Action<string> handler = receivedPackage.PayloadType switch

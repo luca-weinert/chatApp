@@ -55,7 +55,7 @@ namespace ChatApp.Server.Services.MessageService
 
             var chatProtocolService = new ChatProtocolService.ChatProtocolService(targetConnection);
             var chatProtocolPackage = new ChatProtocolDataPackage(chatProtocolPayloadType, JsonData);
-            await chatProtocolService.SendAsync(chatProtocolPackage);
+            await chatProtocolService.WriteProtocolDataAsync(chatProtocolPackage);
             Console.WriteLine($"[Server]: Data sent successfully to UserId: {targetUserId}");
             return true;
         }

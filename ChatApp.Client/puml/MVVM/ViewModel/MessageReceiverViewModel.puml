@@ -1,0 +1,14 @@
+@startuml
+class MessageReceiverViewModel {
+    + MessageReceiverViewModel()
+    - OnMessageReceived(sender:object?, messageEventArgs:MessageEventArgs) : void
+    +  <<event>> PropertyChanged : PropertyChangedEventHandler 
+    # <<virtual>> OnPropertyChanged(propertyName:string) : void
+}
+class "ObservableCollection`1"<T> {
+}
+INotifyPropertyChanged <|-- MessageReceiverViewModel
+MessageReceiverViewModel o-> "_receivedMessages<Message>" "ObservableCollection`1"
+MessageReceiverViewModel --> "_messageService" MessageService
+MessageReceiverViewModel --> "ReceivedMessages<Message>" "ObservableCollection`1"
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class ChatProtocolService {
+    + ChatProtocolService()
+    + <<async>> ConnectAsync(ipEndPoint:IPEndPoint) : Task
+    + <<async>> SendAsync(chatProtocolDataPackage:ChatProtocolDataPackage) : Task
+    + <<async>> ListenAsync() : Task<ChatProtocolDataPackage?>
+}
+@enduml

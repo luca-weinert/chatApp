@@ -1,0 +1,12 @@
+@startuml
+class Message {
+    + Message()
+    + Message(senderId:Guid, targetId:Guid, content:string)
+    + Content : string <<get>> <<init>>
+    + ToJson() : string
+}
+Message --> "Id" Guid
+Message --> "SenderUserId" Guid
+Message --> "TargetUserId" Guid
+Message --> "CreatedAt" DateTime
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class AuthenticationService {
+    - AuthenticationService()
+    - {static} _instance : AuthenticationService?
+    - {static} <<readonly>> Lock : object
+    + <<async>> AuthenticateUserAsync() : Task
+    + GetUser() : User
+}
+AuthenticationService --> "_user" User
+AuthenticationService --> "Instance" AuthenticationService
+@enduml

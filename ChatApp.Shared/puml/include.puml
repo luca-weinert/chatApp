@@ -1,0 +1,16 @@
+@startuml
+!include .\\Events\FileTransferEventArgs.puml
+!include .\\Events\MessageEventArgs.puml
+!include .\\Events\MessageReceivedConformationEventArgs.puml
+!include .\\Events\UserEventArgs.puml
+!include .\\Model\File\FileTransfer.puml
+!include .\\Model\Message\Message.puml
+!include .\\Model\Message\MessageReceivedConfirmation.puml
+!include .\\Model\User\User.puml
+!include .\\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.puml
+!include .\\obj\Debug\net8.0\ChatApp.Shared.AssemblyInfo.puml
+!include .\\obj\Debug\net8.0\ChatApp.Shared.GlobalUsings.g.puml
+!include .\\obj\Release\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.puml
+!include .\\obj\Release\net8.0\ChatApp.Shared.AssemblyInfo.puml
+!include .\\obj\Release\net8.0\ChatApp.Shared.GlobalUsings.g.puml
+@enduml

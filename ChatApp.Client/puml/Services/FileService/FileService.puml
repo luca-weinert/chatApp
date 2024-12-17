@@ -1,0 +1,9 @@
+@startuml
+class FileService {
+    - {static} _instance : FileService?
+    - {static} <<readonly>> Lock : object
+    - FileService()
+    + <<async>> SendFileAsync(fileInfo:FileInfo, senderUserId:Guid, targetUserId:Guid) : Task
+}
+FileService --> "Instance" FileService
+@enduml

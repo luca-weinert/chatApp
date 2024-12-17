@@ -1,0 +1,6 @@
+@startuml
+class ViewModelLocator {
+}
+ViewModelLocator --> "MessageReceiverViewModel" MessageReceiverViewModel
+ViewModelLocator --> "MessageInputViewModel" MessageInputViewModel
+@enduml

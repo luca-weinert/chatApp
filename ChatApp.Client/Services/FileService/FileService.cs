@@ -6,21 +6,16 @@ namespace ChatApp.Client.Wpf.Services.FileService;
 
 public class FileService
 {
-    private ChatProtocolService.ChatProtocolService _chatProtocolService;
-    private static FileService _instance;
-    private static readonly object _lock = new();
+    private readonly ChatProtocolService.ChatProtocolService _chatProtocolService;
+    private static FileService? _instance;
+    private static readonly object Lock = new();
     public static FileService Instance
     {
         get
         {
-            lock (_lock)
+            lock (Lock)
             {
-                if (_instance == null)
-                {
-                    _instance = new FileService();
-                }
-
-                return _instance;
+                return _instance ??= new FileService();
             }
         }
     }

@@ -1,0 +1,8 @@
+@startuml
+class MessageInputView <<partial>> {
+    + MessageInputView()
+    + SendMessage(source:object, eventArgs:EventArgs) : void
+    - <<async>> SelectFile(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- MessageInputView
+@enduml

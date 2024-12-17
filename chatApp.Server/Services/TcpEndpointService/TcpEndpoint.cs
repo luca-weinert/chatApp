@@ -2,26 +2,35 @@
 using System.Net.Sockets;
 using ChatApp.Server.Models.Connection;
 using ChatApp.Server.Repositories.Connection;
+using ChatApp.Server.Services.ConnectionListenerService;
 
 namespace ChatApp.Server.Services.TcpEndpointService;
 
 public class TcpEndpoint
 {
+    private static readonly object Lock = new();
     private readonly TcpListener _tcpSocket;
     private static TcpEndpoint? _instance;
-
+    private readonly ConnectionRepository _connectionRepository; 
+    private readonly MessageService.MessageService _messageService;
+    private readonly UserService.UserService _userService;
+    private readonly FileService.FileService _fileService;
+    
     private TcpEndpoint()
     {
         _tcpSocket = new TcpListener(IPAddress.Any, 8080);
+        _userService = new UserService.UserService();
+        _connectionRepository = new ConnectionRepository();
+        _messageService = new MessageService.MessageService();
+        _fileService = new FileService.FileService();
     }
     
     public static TcpEndpoint? GetTcpEndpoint()
     {
-        if (_instance == null)
+        lock (Lock)
         {
-            _instance = new TcpEndpoint();
+            return _instance ??= new TcpEndpoint();
         }
-        return _instance;
     }
     
     public async Task StartAsync(CancellationToken cancellationToken)
@@ -53,27 +62,22 @@ public class TcpEndpoint
         }
     }
 
-    private static async Task HandleClientAsync(TcpClient client, CancellationToken cancellationToken)
+    private async Task HandleClientAsync(TcpClient client, CancellationToken cancellationToken)
     {
         try
         {
-            var connectionRepository = new ConnectionRepository();
             var clientConnection = new ClientConnection(client);
-            await connectionRepository.AddConnectionAsync(clientConnection);
+            await _connectionRepository.AddConnectionAsync(clientConnection);
             
             // start a background task that listen on the connection
-            var connectionListenerService = new ConnectionListenerService.Listener(clientConnection);
-            var messageService = new MessageService.MessageService();
-            var userService = new UserService.UserService(); 
-            var fileService = new FileService.FileService();
+            var listener = new Listener(clientConnection);
             
-            connectionListenerService.MessageReceived += messageService.OnMessageReceived;
-            connectionListenerService.MessageReceivedConfirmationReceived += messageService.OnMessageReceivedConfirmationReceived;
-            connectionListenerService.UserReceived += userService.OnUserInformationReceived;
-            connectionListenerService.FileReceived += fileService.OnFileTransferReceived;
+            listener.MessageReceived += _messageService.OnMessageReceived;
+            listener.MessageReceivedConfirmationReceived += _messageService.OnMessageReceivedConfirmationReceived;
+            listener.UserReceived += _userService.OnUserInformationReceived;
+            listener.FileReceived += _fileService.OnFileTransferReceived;
             
-            
-            var listenerTask = connectionListenerService.ListenOnConnection(cancellationToken);
+            var listenerTask = listener.Listen(cancellationToken);
             await listenerTask;
         }
         catch (SocketException ex)

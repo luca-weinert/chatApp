@@ -6,7 +6,7 @@ namespace ChatApp.Client.Wpf.Services.ChatProtocolService;
 
 public class ChatProtocolService
 {
-    private NetworkService.NetworkService _networkService;
+    private readonly NetworkService.NetworkService _networkService;
     
     public ChatProtocolService()
     {

@@ -15,13 +15,13 @@ public class ChatProtocolService
         _networkService = new NetworkService.NetworkService(clientConnection);
     }
     
-    public async Task SendAsync(ChatProtocolDataPackage chatProtocolDataPackage)
+    public async Task WriteProtocolDataAsync(ChatProtocolDataPackage chatProtocolDataPackage)
     {
         if (_clientConnection == null) throw new Exception("clientConnection is null");
         await _networkService.WriteAsync(chatProtocolDataPackage.ToJson());
     }
 
-    public async Task<ChatProtocolDataPackage?> ListenAsync()
+    public async Task<ChatProtocolDataPackage> ReadProtocolDataAsync()
     {
         if (_clientConnection == null) throw new Exception("clientConnection is null");
         var receivedData = await _networkService.ListenAsync();

@@ -9,6 +9,6 @@ internal static class Program
     public static async Task Main(string[] args)
     {
         var cts = new CancellationTokenSource();
-        await TcpEndpoint.StartAsync(cts.Token);
+        await TcpEndpoint?.StartAsync(cts.Token)!;
     }
 }

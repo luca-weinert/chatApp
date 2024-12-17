@@ -1,0 +1,6 @@
+@startuml
+class MessageReceivedConformationEventArgs {
+    + MessageReceivedConformationEventArgs(receivedMessage:MessageReceivedConfirmation)
+}
+MessageReceivedConformationEventArgs --> "ReceivedMessage" MessageReceivedConfirmation
+@enduml

@@ -1,21 +1,21 @@
 @startuml
 class Listener <<sealed>> {
-    +  <<event>> MessageReceived : EventHandler<MessageEventArgs>? 
-    +  <<event>> UserReceived : EventHandler<UserEventArgs>? 
-    +  <<event>> FileReceived : EventHandler<FileTransferEventArgs>? 
-    +  <<event>> MessageReceivedConfirmationReceived : EventHandler<MessageReceivedConformationEventArgs>? 
+    +  <<event>> MessageReceived : EventHandler<MessageEventArgs> 
+    +  <<event>> UserReceived : EventHandler<UserEventArgs> 
+    +  <<event>> FileReceived : EventHandler<FileTransferEventArgs> 
+    +  <<event>> MessageReceivedConfirmationReceived : EventHandler<MessageReceivedConformationEventArgs> 
     - OnMessageReceived(e:MessageEventArgs) : void
     - OnMessageReceivedConfirmationReceived(e:MessageReceivedConformationEventArgs) : void
     - OnFileTransferReceived(e:FileTransferEventArgs) : void
     - OnUserInformationReceived(e:UserEventArgs) : void
     + Listener(clientConnection:ClientConnection)
-    + <<async>> ListenOnConnection(cancellationToken:CancellationToken) : Task
-    - HandleReceivedData(receivedPackage:ChatProtocolDataPackage?) : void
+    + <<async>> Listen(cancellationToken:CancellationToken) : Task
+    - HandleReceivedData(receivedPackage:ChatProtocolDataPackage) : void
     - {static} DeserializePayload(payload:string) : T?
     - HandleUser(payload:string) : void
     - HandleMessage(payload:string) : void
     - HandleFileTransfer(payload:string) : void
     - HandleMessageReceivedConfirmation(payload:string) : void
 }
-Listener --> "_clientConnection" ClientConnection
+Listener --> "ClientConnection" ClientConnection
 @enduml

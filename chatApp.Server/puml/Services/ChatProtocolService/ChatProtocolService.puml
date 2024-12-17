@@ -1,8 +1,8 @@
 @startuml
 class ChatProtocolService {
     + ChatProtocolService(clientConnection:ClientConnection)
-    + <<async>> SendAsync(chatProtocolDataPackage:ChatProtocolDataPackage) : Task
-    + <<async>> ListenAsync() : Task<ChatProtocolDataPackage?>
+    + <<async>> WriteProtocolDataAsync(chatProtocolDataPackage:ChatProtocolDataPackage) : Task
+    + <<async>> ReadProtocolDataAsync() : Task<ChatProtocolDataPackage>
 }
 ChatProtocolService --> "_clientConnection" ClientConnection
 @enduml

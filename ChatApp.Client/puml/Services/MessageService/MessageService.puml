@@ -1,0 +1,14 @@
+@startuml
+class MessageService {
+    - {static} _instance : MessageService?
+    - _lastMessageReceivedByTarget : bool = true
+    - {static} <<readonly>> Look : object
+    - MessageService()
+    +  <<event>> MessageReceived : EventHandler<MessageEventArgs> 
+    + <<async>> OnMessageReceived(sender:object?, messageEventArgs:MessageEventArgs) : void
+    + <<async>> OnMessageReceivedConfirmationReceived(sender:object?, messageReceivedConformationEventArgs:MessageReceivedConformationEventArgs) : void
+    - <<async>> SendMessageReceivedConfirmation(receivedMessage:Message) : Task
+    + <<async>> SendMessageAsync(message:Message) : Task
+}
+MessageService --> "Instance" MessageService
+@enduml

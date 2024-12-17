@@ -1,0 +1,6 @@
+@startuml
+class FileTransferEventArgs {
+    + FileTransferEventArgs(fileTransfer:FileTransfer)
+}
+FileTransferEventArgs --> "FileTransfer" FileTransfer
+@enduml

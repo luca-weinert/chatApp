@@ -8,11 +8,12 @@ namespace ChatApp.Client.Wpf.MVVM.ViewModel;
 
 public class MessageReceiverViewModel : INotifyPropertyChanged
 {
-    private ObservableCollection<Message> _receivedMessages = new ObservableCollection<Message>();
-    private MessageService _messageService = MessageService.Instance;
+    private ObservableCollection<Message> _receivedMessages = [];
+    private readonly MessageService _messageService;
 
     public MessageReceiverViewModel()
     {
+        _messageService = MessageService.Instance;
         _messageService.MessageReceived += OnMessageReceived;
     }
 

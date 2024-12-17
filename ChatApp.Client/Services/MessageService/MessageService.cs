@@ -6,11 +6,11 @@ namespace ChatApp.Client.Wpf.Services.MessageService
 {
     public class MessageService
     {
-        private ChatProtocolService.ChatProtocolService _chatProtocolService;
-        private static MessageService _instance;
-        private bool lastMessageReceivedByTarget = true;
+        private readonly ChatProtocolService.ChatProtocolService _chatProtocolService;
+        private static MessageService? _instance;
+        private bool _lastMessageReceivedByTarget = true;
 
-        private static object _instanceLock = new object();
+        private static readonly object Look = new object();
 
         private MessageService()
         {
@@ -21,14 +21,9 @@ namespace ChatApp.Client.Wpf.Services.MessageService
         {
             get
             {
-                lock (_instanceLock)
+                lock (Look)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new MessageService();
-                    }
-
-                    return _instance;
+                    return _instance ??= new MessageService();
                 }
             }
         }
@@ -46,7 +41,7 @@ namespace ChatApp.Client.Wpf.Services.MessageService
         public async void OnMessageReceivedConfirmationReceived(object? sender,
             MessageReceivedConformationEventArgs messageReceivedConformationEventArgs)
         {
-            lastMessageReceivedByTarget = true;
+            _lastMessageReceivedByTarget = true;
             Console.WriteLine($"[Client]: received message received confirmation");
         }
 
@@ -61,9 +56,9 @@ namespace ChatApp.Client.Wpf.Services.MessageService
 
         public async Task SendMessageAsync(Message message)
         {
-            if (lastMessageReceivedByTarget)
+            if (_lastMessageReceivedByTarget)
             {
-                lastMessageReceivedByTarget = false;
+                _lastMessageReceivedByTarget = false;
                 var chatProtocolDataPackage =
                     new ChatProtocolDataPackage(ChatProtocolPayloadTypes.Message, message.ToJson());
                 await _chatProtocolService.SendAsync(chatProtocolDataPackage);

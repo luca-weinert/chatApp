@@ -7,8 +7,8 @@ namespace ChatApp.Client.Wpf.Services.NetworkService;
 public class NetworkService
 {
     private ServerConnection _serverConnection;
-    private static NetworkService instance = null;
-    private static readonly object padlock = new object();
+    private static NetworkService? _instance;
+    private static readonly object Lock = new object();
 
     private NetworkService()
     {
@@ -18,14 +18,9 @@ public class NetworkService
     {
         get
         {
-            lock (padlock)
+            lock (Lock)
             {
-                if (instance == null)
-                {
-                    instance = new NetworkService();
-                }
-
-                return instance;
+                return _instance ??= new NetworkService();
             }
         }
     }

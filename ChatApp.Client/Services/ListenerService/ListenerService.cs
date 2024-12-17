@@ -8,7 +8,7 @@ namespace ChatApp.Client.Wpf.Services.ListenerService
 {
     public class ListenerService
     {
-        private ChatProtocolService.ChatProtocolService _chatProtocolService;
+        private readonly ChatProtocolService.ChatProtocolService _chatProtocolService;
 
         public event EventHandler<MessageEventArgs> MessageReceived;
         public event EventHandler<MessageReceivedConformationEventArgs> MessageReceivedConformationReceived;

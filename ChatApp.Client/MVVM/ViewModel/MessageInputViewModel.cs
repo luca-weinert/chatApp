@@ -18,7 +18,7 @@ public class MessageInputViewModel
 
     public void SendMessage(Message message)
     {
-        _messageService.SendMessageAsync(message);
+        _ = _messageService.SendMessageAsync(message);
     }
     
     public async Task SendFileAsync(FileInfo fileInfo)

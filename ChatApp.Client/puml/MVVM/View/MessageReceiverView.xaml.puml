@@ -1,0 +1,6 @@
+@startuml
+class MessageReceiverView <<partial>> {
+    + MessageReceiverView()
+}
+UserControl <|-- MessageReceiverView
+@enduml

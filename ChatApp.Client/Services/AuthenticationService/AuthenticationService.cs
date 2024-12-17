@@ -15,20 +15,15 @@ public class AuthenticationService
     }
 
     private static AuthenticationService? _instance;
-    private static readonly object _lock = new();
+    private static readonly object Lock = new();
 
     public static AuthenticationService Instance
     {
         get
         {
-            lock (_lock)
+            lock (Lock)
             {
-                if (_instance == null)
-                {
-                    _instance = new AuthenticationService();
-                }
-
-                return _instance;
+                return _instance ??= new AuthenticationService();
             }
         }
     }

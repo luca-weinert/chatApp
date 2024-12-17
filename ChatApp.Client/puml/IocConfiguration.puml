@@ -1,0 +1,6 @@
+@startuml
+class IocConfiguration {
+    + <<override>> Load() : void
+}
+NinjectModule <|-- IocConfiguration
+@enduml
