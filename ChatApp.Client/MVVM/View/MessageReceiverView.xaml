@@ -6,24 +6,32 @@
              xmlns:local="clr-namespace:ChatApp.Client.Wpf.MVVM.View"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    
-    <!-- Received Messages -->
-    <GroupBox Header="Received Messages" Margin="10">
-        <Grid>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="300">
-                <ListView ItemsSource="{Binding ReceivedMessages}" Background="White">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <WrapPanel>
-                                <TextBlock Text="Sender: " FontWeight="Bold" />
-                                <TextBlock Text="{Binding SenderUserId}" />
-                                <TextBlock Text=" Content: " FontWeight="Bold" />
-                                <TextBlock Text="{Binding Content}" />
-                            </WrapPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
-        </Grid>
-    </GroupBox>
+
+    <Border Background="#F9F9F9" CornerRadius="10" BorderBrush="#E0E0E0" BorderThickness="1" Padding="15" Margin="10">
+        <StackPanel>
+            <!-- Header -->
+            <TextBlock Text="Received Messages" FontSize="16" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,15" />
+
+            <!-- Messages Container -->
+            <Border Background="White" CornerRadius="10" BorderBrush="#E0E0E0" BorderThickness="1" Padding="10">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="300">
+                    <ItemsControl ItemsSource="{Binding ReceivedMessages}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#F3F4F6" CornerRadius="8" Margin="0,0,0,10" Padding="10" BorderBrush="#D6D8DA" BorderThickness="1">
+                                    <StackPanel>
+                                        <TextBlock>
+                                            <Run Text="Sender: " FontWeight="Bold" />
+                                            <Run Text="{Binding SenderUserId}" />
+                                        </TextBlock>
+                                        <TextBlock Margin="0,5,0,0" Text="{Binding Content}" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </StackPanel>
+    </Border>
 </UserControl>

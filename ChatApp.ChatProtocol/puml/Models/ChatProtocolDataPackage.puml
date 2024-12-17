@@ -1,0 +1,10 @@
+@startuml
+class ChatProtocolDataPackage {
+    + ChatProtocolDataPackage(payloadType:ChatProtocolPayloadTypes, payload:string)
+    + Timestamp : string <<get>> <<init>>
+    + Payload : string <<get>> <<init>>
+    + ToJson() : string
+}
+ChatProtocolDataPackage --> "ChatProtocolVersion" Version
+ChatProtocolDataPackage --> "PayloadType" ChatProtocolPayloadTypes
+@enduml

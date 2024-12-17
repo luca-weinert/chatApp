@@ -15,27 +15,39 @@
         </Grid.RowDefinitions>
 
         <!-- Target User Input -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Center">
-            <TextBlock Text="Target User ID:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" />
-            <TextBox Name="TargetUserIdInput" Width="200" VerticalAlignment="Center" ToolTip="Enter the ID of the user you want to send the message to." />
-        </StackPanel>
+        <Border Grid.Row="0" Margin="0,0,0,10" Padding="10" Background="#F9F9F9" CornerRadius="10" BorderBrush="#E0E0E0" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Target User ID:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="#333" />
+                <TextBox Name="TargetUserIdInput" Width="250" VerticalAlignment="Center" ToolTip="Enter the ID of the user you want to send the message to."
+                         Padding="5" BorderBrush="#CCC" BorderThickness="1" Background="White" />
+            </StackPanel>
+        </Border>
 
         <!-- Message Input (Text) -->
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10" VerticalAlignment="Center">
-            <TextBlock Text="Message:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" />
-            <TextBox Name="MessageBoxInput" Width="500" Margin="0,0,10,0" VerticalAlignment="Center" ToolTip="Type your message here." />
-        </StackPanel>
+        <Border Grid.Row="1" Margin="0,0,0,10" Padding="10" Background="#F9F9F9" CornerRadius="10" BorderBrush="#E0E0E0" BorderThickness="1">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Text="Message:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,0,5" Foreground="#333" />
+                <TextBox Name="MessageBoxInput" Height="80" Margin="0,0,0,0" VerticalAlignment="Center" ToolTip="Type your message here."
+                         Padding="5" BorderBrush="#CCC" BorderThickness="1" Background="White" TextWrapping="Wrap" AcceptsReturn="True" />
+            </StackPanel>
+        </Border>
 
         <!-- File Input -->
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,10" VerticalAlignment="Center">
-            <TextBlock Text="File:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0" />
-            <TextBox Name="FileInput" Width="500" Margin="0,0,10,0" VerticalAlignment="Center" ToolTip="Provide a file path if you want to attach a file." />
-            <Button Content="Select a file" Click="SelectFile" Width="100" Height="35" VerticalAlignment="Center" ToolTip="Click to select a file." />
-        </StackPanel>
+        <Border Grid.Row="2" Margin="0,0,0,10" Padding="10" Background="#F9F9F9" CornerRadius="10" BorderBrush="#E0E0E0" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="File:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="#333" />
+                <TextBox Name="FileInput" Width="350" VerticalAlignment="Center" ToolTip="Provide a file path if you want to attach a file."
+                         Padding="5" BorderBrush="#CCC" BorderThickness="1" Background="White" />
+                <Button Content="Browse" Click="SelectFile" Width="100" Height="35" VerticalAlignment="Center" Margin="10,0,0,0"
+                        Background="#0078D7" Foreground="White" BorderBrush="#0056A4" BorderThickness="0"/>
+            </StackPanel>
+        </Border>
 
         <!-- Send Button -->
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="0">
-            <Button Content="Send" Click="SendMessage" Width="100" Height="35" VerticalAlignment="Center" ToolTip="Click to send the message." />
+        <StackPanel Grid.Row="3" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Send" Click="SendMessage" Width="120" Height="40" VerticalAlignment="Center"
+                    Background="#0078D7" Foreground="White" BorderBrush="#0056A4" BorderThickness="0"
+                    ToolTip="Click to send the message." />
         </StackPanel>
     </Grid>
 </UserControl>

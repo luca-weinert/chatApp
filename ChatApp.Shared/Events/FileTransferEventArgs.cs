@@ -2,7 +2,7 @@ using ChatApp.Shared.Model.File;
 
 namespace ChatApp.Shared.Events;
 
-public class FileTransferEventArgs
+public class FileTransferEventArgs : EventArgs
 {
     public FileTransfer FileTransfer { get; private set; }
 

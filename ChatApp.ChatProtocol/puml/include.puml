@@ -1,0 +1,10 @@
+@startuml
+!include .\\Helper\ChatProtocolHelper.puml
+!include .\\Models\ChatProtocolDataPackage.puml
+!include .\\Models\ChatProtocolPayloadTypes.puml
+!include .\\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.puml
+!include .\\obj\Debug\net8.0\ChatApp.ChatProtocol.AssemblyInfo.puml
+!include .\\obj\Debug\net8.0\ChatApp.ChatProtocol.GlobalUsings.g.puml
+!include .\\obj\Debug\net8.0\ChatApp.SuperProtocol.AssemblyInfo.puml
+!include .\\obj\Debug\net8.0\ChatApp.SuperProtocol.GlobalUsings.g.puml
+@enduml

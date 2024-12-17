@@ -2,5 +2,6 @@
 class FileTransferEventArgs {
     + FileTransferEventArgs(fileTransfer:FileTransfer)
 }
+EventArgs <|-- FileTransferEventArgs
 FileTransferEventArgs --> "FileTransfer" FileTransfer
 @enduml

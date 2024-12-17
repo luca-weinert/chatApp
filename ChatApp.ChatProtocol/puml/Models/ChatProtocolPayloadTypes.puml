@@ -1,0 +1,8 @@
+@startuml
+enum ChatProtocolPayloadTypes {
+    Message,
+    User,
+    MessageReceivedConfirmation,
+    FileTransfer,
+}
+@enduml

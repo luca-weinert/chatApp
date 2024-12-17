@@ -11,4 +11,9 @@ public class ViewModelLocator
     {
         get => new MessageInputViewModel();
     }
+
+    public StatusBarViewModel StatusBarViewModel
+    {
+        get => new StatusBarViewModel();
+    }
 }
