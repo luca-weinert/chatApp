@@ -8,13 +8,13 @@ using Newtonsoft.Json;
 
 namespace ChatApp.Server.Services.ConnectionListenerService
 {
-    public sealed class Listener
+    public sealed class ConnectionManager
     {
-        public  event EventHandler<MessageEventArgs> MessageReceived;
+        public event EventHandler<MessageEventArgs> MessageReceived;
         public event EventHandler<UserEventArgs> UserReceived;
         public event EventHandler<FileTransferEventArgs> FileReceived;
         public event EventHandler<MessageReceivedConformationEventArgs> MessageReceivedConfirmationReceived;
-        
+
         private void OnMessageReceived(MessageEventArgs e) => MessageReceived?.Invoke(this, e);
 
         private void OnMessageReceivedConfirmationReceived(MessageReceivedConformationEventArgs e) =>
@@ -24,16 +24,16 @@ namespace ChatApp.Server.Services.ConnectionListenerService
 
         private void OnUserInformationReceived(UserEventArgs e) => UserReceived?.Invoke(this, e);
 
-        private ClientConnection ClientConnection {get; set;}
-        private ChatProtocolService.ChatProtocolService ChatProtocolService {get; set;}
+        private ClientConnection ClientConnection { get; set; }
+        private ChatProtocolService.ChatProtocolService ChatProtocolService { get; set; }
 
-        public Listener(ClientConnection clientConnection)
+        public ConnectionManager(ClientConnection clientConnection)
         {
             ClientConnection = clientConnection;
             ChatProtocolService = new ChatProtocolService.ChatProtocolService(ClientConnection);
         }
 
-        public async Task Listen(CancellationToken cancellationToken)
+        public async Task ManageConnection(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -49,7 +49,7 @@ namespace ChatApp.Server.Services.ConnectionListenerService
                 }
             }
         }
-   
+
         private void HandleReceivedData(ChatProtocolDataPackage receivedPackage)
         {
             Console.WriteLine($"[Server]: Received data: {receivedPackage}");
@@ -103,7 +103,8 @@ namespace ChatApp.Server.Services.ConnectionListenerService
         {
             var messageReceivedConfirmation = DeserializePayload<MessageReceivedConfirmation>(payload);
             if (messageReceivedConfirmation == null) return;
-            var messageReceivedConfirmationEvent = new MessageReceivedConformationEventArgs(messageReceivedConfirmation);
+            var messageReceivedConfirmationEvent =
+                new MessageReceivedConformationEventArgs(messageReceivedConfirmation);
             OnMessageReceivedConfirmationReceived(messageReceivedConfirmationEvent);
         }
     }

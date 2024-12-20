@@ -1,10 +1,19 @@
 @startuml
-!include .\\Helper\ChatProtocolHelper.puml
-!include .\\Models\ChatProtocolDataPackage.puml
-!include .\\Models\ChatProtocolPayloadTypes.puml
-!include .\\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.puml
-!include .\\obj\Debug\net8.0\ChatApp.ChatProtocol.AssemblyInfo.puml
-!include .\\obj\Debug\net8.0\ChatApp.ChatProtocol.GlobalUsings.g.puml
-!include .\\obj\Debug\net8.0\ChatApp.SuperProtocol.AssemblyInfo.puml
-!include .\\obj\Debug\net8.0\ChatApp.SuperProtocol.GlobalUsings.g.puml
+class ChatProtocolHelper <<static>> {
+    + {static} Deserialize(rawData:string) : ChatProtocolDataPackage?
+}
+class ChatProtocolDataPackage {
+    + ChatProtocolDataPackage(payloadType:ChatProtocolPayloadTypes, payload:string)
+    + Timestamp : string <<get>> <<init>>
+    + Payload : string <<get>> <<init>>
+    + ToJson() : string
+}
+ChatProtocolDataPackage --> "ChatProtocolVersion" Version
+ChatProtocolDataPackage --> "PayloadType" ChatProtocolPayloadTypes
+enum ChatProtocolPayloadTypes {
+    Message,
+    User,
+    MessageReceivedConfirmation,
+    FileTransfer,
+}
 @enduml
