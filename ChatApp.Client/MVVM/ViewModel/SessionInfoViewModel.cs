@@ -4,11 +4,11 @@ using ChatApp.Client.Wpf.Services.AuthenticationService;
 
 namespace ChatApp.Client.Wpf.MVVM.ViewModel;
 
-public class StatusBarViewModel : INotifyPropertyChanged
+public class SeassionInfoViewModel : INotifyPropertyChanged
 {
-    public StatusBarViewModel()
+    public SeassionInfoViewModel()
     {
-        var userService = AuthenticationService.Instance;
+        var userService = AuthenticationService.GetInstance;
         UserName = userService.GetUser().Name;
         UserId = userService.GetUser().Id.ToString();
     }
